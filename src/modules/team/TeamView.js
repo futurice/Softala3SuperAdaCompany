@@ -37,12 +37,17 @@ const TeamView = React.createClass({
 
   async saveTeamDetails() {
     this.setState({ disableSave: true });
-    await this.saveSlogan();
+    try {
+      await this.saveSlogan();
 
-    if (this.state.imageChanged) {
-      await this.savePicture();
+      if (this.state.imageChanged) {
+        await this.savePicture();
+      }
+      this.setState({ disableSave: false });
+    } catch (e) {
+      console.log(e);
+      this.setState({ disableSave: false });
     }
-    this.setState({ disableSave: false });
   },
 
   async saveSlogan() {

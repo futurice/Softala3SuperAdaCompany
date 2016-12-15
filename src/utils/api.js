@@ -5,7 +5,7 @@ import {getAuthenticationToken, clearAuthenticationToken} from '../utils/authent
 
 const EventEmitter = require('event-emitter');
 
-const TIMEOUT = 6000;
+const TIMEOUT = 20000;
 
 /**
  * All HTTP errors are emitted on this channel for interested listeners
