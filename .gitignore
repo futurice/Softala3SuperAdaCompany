@@ -40,5 +40,6 @@ buck-out/
 \.buckd/
 android/app/libs
 *.keystore
+*.apk
 
 ios/Pods

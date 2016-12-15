@@ -8,7 +8,8 @@ import store from '../redux/store';
 import DeveloperMenu from '../components/DeveloperMenu';
 import {setConfiguration} from '../utils/configuration';
 
-const apiRoot = 'http://localhost:3000'
+const apiRoot = __DEV__ ? 'http://localhost:3000' : 'http://superada.herokuapp.com';
+
 const AppView = React.createClass({
   propTypes: {
     isReady: PropTypes.bool.isRequired,
