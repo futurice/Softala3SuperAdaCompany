@@ -54,7 +54,7 @@ const CheckPointView = React.createClass({
   async fetchData() {
     const responseData = await get('/companies');
     this.setState({
-      dataSource: responseData.result
+      dataSource: responseData
     });
   },
 
