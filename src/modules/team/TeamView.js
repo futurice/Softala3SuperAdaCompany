@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
   Platform
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
@@ -18,46 +19,41 @@ const TeamView = React.createClass({
   },
 
   getInitialState() {
-    this.getTeamDetails();
-
     return {
       background: 'rgb(255,255,255)',
       teamDescription: '',
       avatarSource: null,
-      teamName: '',
+      teamName: ' ',
+      imageChanged: false,
+      loading: true,
+      disableSave: false
     };
   },
 
-  saveTeamDetails() {
-    //save picture and Slogan
+  async componentDidMount() {
+    await this.getTeamDetails();
+    this.setState({ loading: false });
+  },
 
-    var pictureChanged = true; // todo get from state
-    if (pictureChanged) {
-      this.savePicture();
+  async saveTeamDetails() {
+    this.setState({ disableSave: true });
+    await this.saveSlogan();
+
+    if (this.state.imageChanged) {
+      await this.savePicture();
     }
-
-    this.saveSlogan();
-
+    this.setState({ disableSave: false });
   },
 
   async saveSlogan() {
     const response = await post('/saveDescription', {
       teamDescription: this.state.teamDescription
     });
-
   },
 
   async savePicture() {
-    // this.state.avatarData
-
-    //TODO here enable loading icon
-
-    const response = await post('/savePicture', {
-        data: this.state.avatarData
-    });
-
-    //TODO here disable loading icon
-
+    await post('/savePicture', this.state.avatarData);
+    this.setState({ imageChanged: false });
   },
 
   async getTeamDetails() {
@@ -66,10 +62,11 @@ const TeamView = React.createClass({
     const response = await get('/teamDetails');
 
     this.setState({
-      teamName: response.result.name
+      teamName: response.teamName,
+      teamDescription: response.description
     });
 
-    var teamPicture = response.result.file;
+    var teamPicture = response.file;
     if (teamPicture !== null) {
       this.setState({
         avatarSource: {
@@ -77,14 +74,12 @@ const TeamView = React.createClass({
         }
       });
     }
-
-    this.setState({
-      teamDescription: response.result.description
-    });
   },
 
   openImageGallery() {
+    this.setState({ disableSave: true });
     ImagePicker.showImagePicker(options, (response) => {
+      this.setState({ disableSave: false });
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -96,11 +91,15 @@ const TeamView = React.createClass({
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        const source = {uri: 'data:image/png;base64,' + response.data, isStatic: true};
+        const source = {
+          uri: 'data:image/png;base64,' + response.data,
+          isStatic: true
+        };
 
         this.setState({
           avatarSource: source, //source,
-          avatarData: response.data
+          avatarData: response.data,
+          imageChanged: true
         });
       }
     });
@@ -112,12 +111,17 @@ const TeamView = React.createClass({
         <View style={styles.teamName}>
           <Text style={styles.teamTitle}> {this.state.teamName} </Text>
         </View>
-          <TouchableOpacity
-            onPress={this.openImageGallery}
-            style={[styles.cameraButton]}>
-            <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-            <Image source={this.state.avatarSource} style={styles.teamImage} />
-          </TouchableOpacity>
+          { this.state.loading
+            ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
+            : <TouchableOpacity
+                onPress={this.openImageGallery}
+                style={[styles.cameraButton]}>
+                { this.state.avatarSource
+                  ? <Image source={this.state.avatarSource} style={styles.teamImage} />
+                  : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+                }
+              </TouchableOpacity>
+          }
           <Text style={styles.descriptionText}>Slogan:</Text>
             <View style={styles.description}>
               <TextInput
@@ -127,9 +131,12 @@ const TeamView = React.createClass({
                 />
             </View>
           <View style={styles.submitButton}>
-            <TouchableOpacity onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-                <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-            </TouchableOpacity>
+            { this.state.loading || this.state.disableSave
+              ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
+              : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+                </TouchableOpacity>
+            }
           </View>
         </View>
     );

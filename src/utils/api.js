@@ -67,7 +67,7 @@ export async function request(method, path, body, suppressRedBox) {
 
     // Clear auth token if we get 401 errors
     if(response.status === 401) {
-        clearAuthenticationToken();
+      clearAuthenticationToken();
     }
 
     return handleResponse(
