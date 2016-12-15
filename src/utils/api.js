@@ -65,8 +65,9 @@ export async function request(method, path, body, suppressRedBox) {
   try {
     const response = await sendRequest(method, path, body, suppressRedBox);
 
-    if(response.status === 401){
-        return clearAuthenticationToken();
+    // Clear auth token if we get 401 errors
+    if(response.status === 401) {
+        clearAuthenticationToken();
     }
 
     return handleResponse(
@@ -128,8 +129,7 @@ async function handleResponse(path, response) {
       errors.emit(status.toString(), {path, message: error.message});
       errors.emit('*', {path, message: error.message}, status);
 
-      //throw error;
-      throw new exception(error);
+      throw error;
     }
 
     // parse response text

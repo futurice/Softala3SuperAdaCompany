@@ -29,16 +29,15 @@ const LoginView = React.createClass({
   },
 
   async _userLogin() {
+    try {
+      const response = await post('/teams/authenticate', {
+          name: this.state.teamname
+      });
 
-    const response = await post('/teams/authenticate', {
-        name: this.state.teamname
-    });
-
-    if (response.success === true) {
       await setAuthenticationToken(response.token.token);
 
       this.validate();
-    } else {
+    } catch (e) {
       Alert.alert(
         'Tiimiä ei löytynyt',
         'Tarkista tiimin nimi',
