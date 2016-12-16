@@ -40,8 +40,8 @@ const LoginView = React.createClass({
 
       await setAuthenticationToken(response.token.token);
 
-      this.validate();
       this.setState({ loading: false });
+      this.validate();
     } catch (e) {
       this.setState({ loading: false });
       Alert.alert(
