@@ -114,6 +114,9 @@ const CounterView = React.createClass({
 
     return (
       <View style={styles.container}>
+      <Text style={{fontSize: 24, color: '#FFF', padding: 40}}>
+        TODO: Quiz replaces this debug view
+      </Text>
 
       <ScrollView ref={(scrollView) => { _scrollView = scrollView; }}
         automaticallyAdjustContentInsets={false}
