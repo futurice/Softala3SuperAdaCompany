@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   header: {
     alignSelf: 'stretch',
     backgroundColor: '#fe9593',
+    elevation: 5,
     height: 64,
     justifyContent: 'center'
   },

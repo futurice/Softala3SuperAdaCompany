@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF'
   },
   header: {
+    elevation: 5,
     alignSelf: 'stretch',
     backgroundColor: '#fe9593',
     height: 64,
