@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-smart-splash-screen'
 import React from 'react';
 import {AppRegistry} from 'react-native';
 
-const Softala3SuperAda = React.createClass({
+const SuperAda = React.createClass({
 
   componentDidMount () {
     SplashScreen.close(SplashScreen.animationType.scale, 800, 500)
@@ -21,4 +21,4 @@ const Softala3SuperAda = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('Softala3SuperAda', () => Softala3SuperAda);
+AppRegistry.registerComponent('SuperAda', () => SuperAda);

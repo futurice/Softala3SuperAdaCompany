@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Alert,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from 'react-native';
 import {post} from '../../utils/api';
 import {setAuthenticationToken} from '../../utils/authentication'
@@ -25,12 +26,14 @@ const LoginView = React.createClass({
       teamid: '',
       token: '',
       teamname: '',
-      background: 'rgba(255,0,54,1)'
+      background: 'rgba(255,0,54,1)',
+      loading: false
     }
   },
 
   async _userLogin() {
     try {
+      this.setState({ loading: true });
       const response = await post('/teams/authenticate', {
           name: this.state.teamname.trim()
       });
@@ -38,7 +41,9 @@ const LoginView = React.createClass({
       await setAuthenticationToken(response.token.token);
 
       this.validate();
+      this.setState({ loading: false });
     } catch (e) {
+      this.setState({ loading: false });
       Alert.alert(
         'Virhe kirjautumisessa',
         e.status === 401 || e.status === 400 ? 'Tarkista joukkueen nimi' : e.toString(),
@@ -81,11 +86,14 @@ const LoginView = React.createClass({
               />
             </View>
           </View>
-          <TouchableOpacity onPress={this._userLogin}>
-            <View style={styles.button}>
+          <View style={styles.loginButtonContainer}>
+            { this.state.loading &&
+              <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70}} size="large" />
+            }
+            <TouchableOpacity onPress={this._userLogin} style={styles.loginButton}>
               <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
       </View>
     );
   }
@@ -107,13 +115,19 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150
   },
-  button: {
+  loginButtonContainer: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 70,
+    margin: 20,
+  },
+  loginButton: {
     backgroundColor: '#fe9593',
-    padding: 20,
-    marginLeft: 30,
-    marginRight: 30,
-    marginBottom: 90,
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
   },
   inputs: {
     marginTop: 2,

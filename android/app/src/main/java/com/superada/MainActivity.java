@@ -1,4 +1,4 @@
-package com.softala3superada;
+package com.superada;
 
 import com.facebook.react.ReactActivity;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Softala3SuperAda";
+        return "SuperAda";
     }
 
     @Override

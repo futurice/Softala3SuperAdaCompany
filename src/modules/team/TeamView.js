@@ -169,7 +169,7 @@ const TeamView = React.createClass({
             </View>
             <View style={styles.saveButtonContainer}>
               { this.state.loading || this.state.disableSave &&
-                <ActivityIndicator animating={true} style={{position: 'absolute', height: 70, width: 70}} size="large" />
+                <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70}} size="large" />
               }
               <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
                 <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>

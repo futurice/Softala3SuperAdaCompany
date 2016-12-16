@@ -7,16 +7,16 @@ appRoot=`dirname $0`/..
 
 [ -z "${newAppName}" ] && echo 'Missing required parameter newAppName' && exit 1
 
-grep -rI 'PepperoniAppTemplate' --exclude='rename.sh' $appRoot/* | tr ':' ' ' | awk '{print $1}' | uniq | xargs -I{} sed -i.bak "s/PepperoniAppTemplate/${newAppName}/g" {}
-grep -rI 'pepperoniapptemplate' --exclude='rename.sh' $appRoot/* | tr ':' ' ' | awk '{print $1}' | uniq | xargs -I{} sed -i.bak "s/pepperoniapptemplate/${newLowerCaseName}/g" {}
+grep -rI 'Softala3SuperAda' --exclude='rename.sh' $appRoot/* | tr ':' ' ' | awk '{print $1}' | uniq | xargs -I{} sed -i.bak "s/Softala3SuperAda/${newAppName}/g" {}
+grep -rI 'softala3superada' --exclude='rename.sh' $appRoot/* | tr ':' ' ' | awk '{print $1}' | uniq | xargs -I{} sed -i.bak "s/softala3superada/${newLowerCaseName}/g" {}
 find . -name '*.bak' -exec rm {} \;
 
-for fileToMove in `find $appRoot/ios -depth -name '*PepperoniAppTemplate*'`; do
-  mv $fileToMove `echo $fileToMove | sed "s/\(.*\)PepperoniAppTemplate/\1$newAppName/g"`
+for fileToMove in `find $appRoot/ios -depth -name '*Softala3SuperAda*'`; do
+  mv $fileToMove `echo $fileToMove | sed "s/\(.*\)Softala3SuperAda/\1$newAppName/g"`
 done
 
-for fileToMove in `find $appRoot/android -depth -name '*pepperoniapptemplate*'`; do
-  mv $fileToMove `echo $fileToMove | sed "s/\(.*\)pepperoniapptemplate/\1$newLowerCaseName/g"`
+for fileToMove in `find $appRoot/android -depth -name '*softala3superada*'`; do
+  mv $fileToMove `echo $fileToMove | sed "s/\(.*\)softala3superada/\1$newLowerCaseName/g"`
 done
 
 YELLOW='\033[1;33m'

@@ -37,8 +37,8 @@ const AppView = React.createClass({
   render() {
     if (!this.props.isReady) {
       return (
-        <View>
-          <ActivityIndicator style={styles.centered}/>
+        <View style={{flex: 1, backgroundColor:'#ed3a4b'}}>
+          <ActivityIndicator color={"#FFF"} size={'large'} style={styles.centered}/>
         </View>
       );
     } else if (!this.props.isLoggedIn) {

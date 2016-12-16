@@ -1,5 +1,5 @@
 
-# Softala3SuperAda
+# SuperAda
 
 Softala 3.  
 
@@ -9,9 +9,9 @@ Tiimien käyttöliittymä.
 
 ## Linkit liittyviin repoihin
 
-* [Rest Palvelin](https://github.com/Kortelainen/Softala3SuperAdaBackend)
-* [Admin käyttöliittymä](https://github.com/Kortelainen/Softala3SuperAdaAdmin)
-* [Company käyttöliittymä](https://github.com/Kortelainen/Softala3SuperAdaCompany)
+* [Rest Palvelin](https://github.com/Kortelainen/SuperAdaBackend)
+* [Admin käyttöliittymä](https://github.com/Kortelainen/SuperAdaAdmin)
+* [Company käyttöliittymä](https://github.com/Kortelainen/SuperAdaCompany)
 
 ===
 About React-native and pepperoni which project is build on

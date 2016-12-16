@@ -1,4 +1,4 @@
-package com.softala3superada;
+package com.superada;
 
 import android.app.Application;
 import android.util.Log;

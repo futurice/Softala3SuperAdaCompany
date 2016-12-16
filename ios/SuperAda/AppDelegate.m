@@ -22,7 +22,7 @@
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"Softala3SuperAda"
+                                                      moduleName:@"SuperAda"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
   [RCTSplashScreen open:rootView]; //activate splashscreen

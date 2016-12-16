@@ -1,5 +1,5 @@
 {
-  "name": "Softala3SuperAda",
+  "name": "SuperAda",
   "author": "Futurice",
   "description": "React Native App Starter Kit for Android and iOS",
   "license": "MIT",
@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build:android": "(cd android && ./gradlew assembleRelease) && cp android/app/build/outputs/apk/app-release.apk superada.apk",
-    "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.ios.js --bundle-output ios/Softala3SuperAda/main.jsbundle --dev=false --minify --verbose",
+    "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.ios.js --bundle-output ios/SuperAda/main.jsbundle --dev=false --minify --verbose",
     "test": "mocha src/**/*.spec.js",
     "test:watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm test'",
     "lint": "eslint src test",

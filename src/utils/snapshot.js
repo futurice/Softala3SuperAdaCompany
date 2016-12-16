@@ -1,6 +1,6 @@
 import {AsyncStorage} from 'react-native';
 import {fromJS} from 'immutable';
-const STATE_STORAGE_KEY = 'Softala3SuperAdaAppState:Latest';
+const STATE_STORAGE_KEY = 'SuperAdaAppState:Latest';
 
 export async function resetSnapshot() {
   const state = await rehydrate();

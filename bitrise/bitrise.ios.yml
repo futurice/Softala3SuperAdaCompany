@@ -3,10 +3,10 @@ format_version: 1.1.0
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
-  - BITRISE_PROJECT_PATH: ios/Softala3SuperAda.xcworkspace
+  - BITRISE_PROJECT_PATH: ios/SuperAda.xcworkspace
     opts:
       is_expand: false
-  - BITRISE_SCHEME: Softala3SuperAda
+  - BITRISE_SCHEME: SuperAda
     opts:
       is_expand: false
 trigger_map:
