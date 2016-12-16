@@ -35,7 +35,7 @@ const Welcome = React.createClass({
           backgroundColor="#ed3a4b"
           animated={false}
           barStyle="light-content"
-       />
+        />
 
         <ScrollView contentContainerStyle={{
           alignItems: 'center'

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  StatusBar,
   AsyncStorage
 } from 'react-native';
 import {post} from '../../utils/api';
@@ -62,6 +63,11 @@ const LoginView = React.createClass({
   render() {
     return (
       <View style={[styles.container, {backgroundColor: '#ed3a4b'}]}>
+        <StatusBar
+          backgroundColor="#ed3a4b"
+          animated={false}
+          barStyle="light-content"
+        />
         <View style={styles.header}>
             <Image style={styles.mark} source={require('../../../images/superada_transparent.png')}/>
         </View>
