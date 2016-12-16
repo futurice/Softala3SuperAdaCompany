@@ -31,7 +31,7 @@ const LoginView = React.createClass({
   async _userLogin() {
     try {
       const response = await post('/teams/authenticate', {
-          name: this.state.teamname
+          name: this.state.teamname.trim()
       });
 
       await setAuthenticationToken(response.token.token);
@@ -39,10 +39,10 @@ const LoginView = React.createClass({
       this.validate();
     } catch (e) {
       Alert.alert(
-        'Tiimiä ei löytynyt',
-        'Tarkista tiimin nimi',
+        'Virhe kirjautumisessa',
+        e.status === 401 || e.status === 400 ? 'Tarkista joukkueen nimi' : e.toString(),
         [
-          {text: 'OK', onPress: () => console.log('OK Pressed')}
+          {text: 'OK'}
         ]
       );
     }
