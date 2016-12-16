@@ -40,8 +40,9 @@ const LoginView = React.createClass({
 
       await setAuthenticationToken(response.token.token);
 
-      this.setState({ loading: false });
-      this.validate();
+      this.setState({ loading: false }, () => {
+        this.validate();
+      });
     } catch (e) {
       this.setState({ loading: false });
       Alert.alert(
@@ -83,11 +84,14 @@ const LoginView = React.createClass({
                 style={[styles.input, styles.whiteFont]}
                 onChangeText={(teamname) => this.setState({teamname})}
                 value={this.state.teamname}
+                autoCorrect={false}
+                underlineColorAndroid='#000'
+                selectionColor='#000'
               />
             </View>
           </View>
           <View style={styles.loginButtonContainer}>
-            <TouchableOpacity onPress={this._userLogin} style={styles.loginButton}>
+            <TouchableOpacity disabled={this.state.loading} onPress={this._userLogin} style={this.state.loading ? styles.loginButtonLoading : styles.loginButton}>
               <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
             </TouchableOpacity>
             { this.state.loading &&
@@ -129,6 +133,13 @@ const styles = StyleSheet.create({
     height: 70,
     padding: 20
   },
+  loginButtonLoading: {
+    backgroundColor: '#f14c59',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
+  },
   inputs: {
     marginTop: 2,
     marginBottom: 2,
@@ -145,7 +156,8 @@ const styles = StyleSheet.create({
     top: 60,
     right: 30,
     height: 45,
-    fontSize: 20
+    fontSize: 20,
+
   },
   inputText: {
     width: 300,
