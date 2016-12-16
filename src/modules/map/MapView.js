@@ -79,7 +79,7 @@ if (Platform.OS === 'ios') {
     },
     MapContainer: {
       flex: 1,
-      backgroundColor: 'rgba(255,0,54,1)',
+      backgroundColor: '#fafafa',
       //alignItems: 'stretch',
     },
 
@@ -87,7 +87,6 @@ if (Platform.OS === 'ios') {
       flex: 1,
       height: 300,
       width: 300,
-      backgroundColor: 'rgba(255,0,54,1)',
     },
 
   });
@@ -107,14 +106,13 @@ if (Platform.OS === 'ios') {
     },
     MapContainer: {
       flex: 1,
-      backgroundColor: 'rgba(255,0,54,1)',
+      backgroundColor: '#fafafa',
       //alignItems: 'stretch',
     },
 
     MapImage: {
       flex: 1,
       height: 300,
-      backgroundColor: 'rgba(255,0,54,1)',
     },
 
   });
