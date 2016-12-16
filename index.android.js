@@ -30,7 +30,7 @@ const Softala3SuperAda = React.createClass({
 
       // if we are not in the first tab, switch tab to the leftmost one
       if (navigationState.get('index') !== 0) {
-        store.dispatch(NavigationStateActions.switchTab(0));
+        store.dispatch(NavigationStateActions.switchTab('HomeTab'));
         return true;
       }
 
