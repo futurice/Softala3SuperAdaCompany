@@ -30,7 +30,9 @@ const Welcome = React.createClass({
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{
+          alignItems: 'center'
+        }}>
           <Text style={styles.titleText}>
               Tervetuloa!
           </Text>
