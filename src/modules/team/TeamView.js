@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {
-  KeyboardAvoidingView,
   Dimensions,
   Image,
   Text,
@@ -139,45 +138,45 @@ const TeamView = React.createClass({
         <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
           minHeight: this.state.height
         }}>
-          <KeyboardAvoidingView behavior={'padding'} style={{
+          <View style={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center'
           }}>
             <View style={styles.teamName}>
               <Text style={styles.teamTitle}> {this.state.teamName} </Text>
-            </View>
-            { this.state.loading
-              ? <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150}} size="large" />
-              : <TouchableOpacity
-                  onPress={this.openImageGallery}
-                  style={[styles.cameraButton]}>
-                  { this.state.avatarSource
-                    ? <Image source={this.state.avatarSource} style={styles.teamImage} />
-                    : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-                  }
-                </TouchableOpacity>
-            }
-            <Text style={styles.descriptionText}>Slogan:</Text>
-            <View style={styles.description}>
-              <TextInput
-                style={styles.teamInput}
-                onChangeText={(teamDescription) => this.setState({teamDescription})}
-                value={this.state.teamDescription}
-                onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
-                />
-            </View>
-            <View style={styles.saveButtonContainer}>
-              <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-                <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-              </TouchableOpacity>
-              { (this.state.loading || this.state.disableSave)
-                ? <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
-                : null
+              </View>
+              { this.state.loading
+                ? <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150}} size="large" />
+                : <TouchableOpacity
+                    onPress={this.openImageGallery}
+                    style={[styles.cameraButton]}>
+                    { this.state.avatarSource
+                      ? <Image source={this.state.avatarSource} style={styles.teamImage} />
+                      : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+                    }
+                  </TouchableOpacity>
               }
+              <Text style={styles.descriptionText}>Slogan:</Text>
+              <View style={styles.description}>
+                <TextInput
+                  style={styles.teamInput}
+                  onChangeText={(teamDescription) => this.setState({teamDescription})}
+                  value={this.state.teamDescription}
+                  onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+                  />
+              </View>
+              <View style={styles.saveButtonContainer}>
+                <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+                </TouchableOpacity>
+                { (this.state.loading || this.state.disableSave)
+                  ? <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
+                  : null
+                }
+              </View>
             </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+          </ScrollView>
         </View>
       </View>
     );
