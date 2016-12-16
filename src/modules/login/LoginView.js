@@ -87,12 +87,12 @@ const LoginView = React.createClass({
             </View>
           </View>
           <View style={styles.loginButtonContainer}>
-            { this.state.loading &&
-              <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70}} size="large" />
-            }
             <TouchableOpacity onPress={this._userLogin} style={styles.loginButton}>
               <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
             </TouchableOpacity>
+            { this.state.loading &&
+              <ActivityIndicator animating={true} color={'#FFF'} style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
+            }
           </View>
       </View>
     );
