@@ -3,7 +3,12 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import AppViewContainer from './src/modules/AppViewContainer';
 import React from 'react';
-import {AppRegistry, BackAndroid} from 'react-native';
+import {
+  AppRegistry,
+  BackAndroid,
+  StatusBar,
+  View
+} from 'react-native';
 import * as NavigationStateActions from './src/modules/navigation/NavigationState';
 import SplashScreen from 'react-native-smart-splash-screen';
 
@@ -44,7 +49,13 @@ const Softala3SuperAda = React.createClass({
   render() {
     return (
       <Provider store={store}>
-        <AppViewContainer />
+        <View style={{flex: 1}}>
+          <StatusBar
+             backgroundColor="#fe9593"
+             barStyle="light-content"
+           />
+          <AppViewContainer />
+        </View>
       </Provider>
     );
   }

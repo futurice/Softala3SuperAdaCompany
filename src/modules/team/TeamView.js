@@ -3,6 +3,7 @@ import {
   Image,
   Text,
   View,
+  ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -20,7 +21,6 @@ const TeamView = React.createClass({
 
   getInitialState() {
     return {
-      background: 'rgb(255,255,255)',
       teamDescription: '',
       avatarSource: null,
       teamName: ' ',
@@ -112,38 +112,39 @@ const TeamView = React.createClass({
 
   render() {
     return (
-      <View style={[styles.teamContainer, {backgroundColor: this.state.background}]}>
+      <ScrollView contentContainerStyle={styles.teamContainer}>
         <View style={styles.teamName}>
           <Text style={styles.teamTitle}> {this.state.teamName} </Text>
         </View>
-          { this.state.loading
+        { this.state.loading
+          ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
+          : <TouchableOpacity
+              onPress={this.openImageGallery}
+              style={[styles.cameraButton]}>
+              { this.state.avatarSource
+                ? <Image source={this.state.avatarSource} style={styles.teamImage} />
+                : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+              }
+            </TouchableOpacity>
+        }
+        <Text style={styles.descriptionText}>Slogan:</Text>
+          <View style={styles.description}>
+            <TextInput
+              style={styles.teamInput}
+              onChangeText={(teamDescription) => this.setState({teamDescription})}
+              value={this.state.teamDescription}
+              onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+              />
+          </View>
+        <View style={styles.submitButton}>
+          { this.state.loading || this.state.disableSave
             ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-            : <TouchableOpacity
-                onPress={this.openImageGallery}
-                style={[styles.cameraButton]}>
-                { this.state.avatarSource
-                  ? <Image source={this.state.avatarSource} style={styles.teamImage} />
-                  : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-                }
+            : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+                <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
               </TouchableOpacity>
           }
-          <Text style={styles.descriptionText}>Slogan:</Text>
-            <View style={styles.description}>
-              <TextInput
-                style={styles.teamInput}
-                onChangeText={(teamDescription) => this.setState({teamDescription})}
-                value={this.state.teamDescription}
-                />
-            </View>
-          <View style={styles.submitButton}>
-            { this.state.loading || this.state.disableSave
-              ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-              : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-                </TouchableOpacity>
-            }
-          </View>
         </View>
+      </ScrollView>
     );
   }
 });
@@ -159,7 +160,8 @@ const styles = StyleSheet.create({
   teamContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fafafa',
   },
   teamName: {
     marginTop: 100
@@ -180,7 +182,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     margin: 10,
-    alignItems: 'center',
   },
   teamInput: {
     width: 300,

@@ -23,20 +23,20 @@ export default React.createClass({
     isSelected: PropTypes.bool.isRequired
   },
 
-//<Image source={this.props.icon} />
-
-
-
   render() {
     return (
-    <View>
-          <TouchableOpacity
-            onPress={this.props.action}
-            style={[styles.button, this.props.isSelected && styles.selected]}>
-            <Image source={icons[this.props.text]} style={styles.buttonImage} />
-          </TouchableOpacity>
-    </View>
-
+      <View>
+        <TouchableOpacity
+          onPress={this.props.action}
+          style={styles.button}>
+          <Image
+            source={icons[this.props.text]}
+            style={[
+              styles.buttonImage,
+              this.props.isSelected && styles.selected
+            ]} />
+        </TouchableOpacity>
+      </View>
     );
   }
 });
@@ -48,12 +48,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selected: {
-    backgroundColor: 'lightpink',
-    borderRadius: 25
+    tintColor: '#ed3a4b'
   },
   buttonImage: {
     height: 55,
     width: 55
   },
-
 });

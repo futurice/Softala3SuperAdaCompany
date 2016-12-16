@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {
   NavigationExperimental,
+  ScrollView,
   View,
   Platform,
   StyleSheet,
@@ -17,7 +18,7 @@ import TabBar from '../../components/TabBar';
 // Height duplicated from React Native NavigationHeader component
 const APP_BAR_HEIGHT = Platform.OS === 'ios' ? 64 : 56;
 // Customize bottom tab bar height here if desired
-const TAB_BAR_HEIGHT = 50;
+const TAB_BAR_HEIGHT = 64;
 
 const NavigationView = React.createClass({
   propTypes: {
@@ -84,7 +85,6 @@ const NavigationView = React.createClass({
         key={'stack_' + tabKey}
         onNavigateBack={this.props.onNavigateBack}
         navigationState={scenes}
-        renderOverlay={this.renderHeader}
         renderScene={this.renderScene}
       />
     );
@@ -97,8 +97,7 @@ const NavigationView = React.createClass({
           tabs={tabs}
           currentTabIndex={tabs.index}
           switchTab={this.props.switchTab}
-        />,
-
+        />
       );
     }
 
@@ -116,12 +115,12 @@ const styles = StyleSheet.create({
   },
   sceneContainer: {
     flex: 1,
-    marginTop: APP_BAR_HEIGHT,
+    //marginTop: APP_BAR_HEIGHT,
     marginBottom: TAB_BAR_HEIGHT,
   },
   sceneContainerWithoutBar: {
     flex: 1,
-    marginTop: APP_BAR_HEIGHT,
+    //marginTop: APP_BAR_HEIGHT,
   }
 });
 

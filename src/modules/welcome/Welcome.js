@@ -29,41 +29,30 @@ const Welcome = React.createClass({
 
   render() {
     return (
-
-      <View style={[styles.container, {backgroundColor: this.state.background}]}>
-      <ScrollView ref={(scrollView) => { _scrollView = scrollView; }}
-        automaticallyAdjustContentInsets={false}
-        onScroll={() => { console.log('onScroll!'); }}
-        scrollEventThrottle={200}
-        style={styles.scrollView}>
-        <View style={styles.header}>
+      <View style={styles.container}>
+        <ScrollView>
           <Text style={styles.titleText}>
               Tervetuloa!
           </Text>
-          <Image style={styles.mark} source={require('../../../images/tervetuloa.png')}/>
-        </View>
-        <View style={styles.textContainer}>
-          <View style={styles.textField}>
-            <Text style={styles.textstyle}>
-              Kahdeksan rastia odottavat sinua!
-              Jokaisella rastilla suoritetaan tehtävä.
-              Rasteja pitävät yritykset ja oppilaitokset
-              kirjaavat rastisuoritukset puolestanne
-            </Text>
-          </View>
-          <View style={styles.textField}>
-            <Text style={styles.textstyle}>
-              Kannattaa pelata läpi myös Super-Ada Quiz.
-              Tasapistetilanteessa hyvin suoritettu Quiz ratkaisee voiton.
-            </Text>
-          </View>
-        </View>
-        <TouchableOpacity onPress={this.profile}>
-          <View style={styles.button}>
-              <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
-          </View>
-        </TouchableOpacity>
+          <Image style={styles.image} source={require('../../../images/tervetuloa.png')}/>
+          <Text style={styles.textStyle}>
+            Kahdeksan rastia odottavat sinua!
+            Jokaisella rastilla suoritetaan tehtävä.
+            Rasteja pitävät yritykset ja oppilaitokset
+            kirjaavat rastisuoritukset puolestanne
+          </Text>
+          <Text style={styles.textStyle}>
+            Kannattaa pelata läpi myös Super-Ada Quiz.
+            Tasapistetilanteessa hyvin suoritettu Quiz ratkaisee voiton.
+          </Text>
+          <Text style={styles.textStyle}>
+            ONNEA MATKAAN!
+          </Text>
         </ScrollView>
+
+        <TouchableOpacity style={styles.button} onPress={this.profile}>
+            <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
+        </TouchableOpacity>
       </View>
 
     );
@@ -72,63 +61,54 @@ const Welcome = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor: 'transparent'
-  },
-  scrollView: {
-    backgroundColor: 'rgba(255,0,54,1)',
-    flex: 1
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#ed3a4b',
   },
   header: {
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex: 0,
     backgroundColor: 'transparent',
-    marginTop: 20
   },
   titleText: {
-    fontSize: 30,
+    paddingTop: 20,
+    fontSize: 42,
     fontWeight: 'bold',
-    color: '#FFF'
+    color: '#FFF',
+    textAlign: 'center'
   },
-  mark: {
-    width: 200,
-    height: 150
+  image: {
+    resizeMode: 'contain',
+    height: 200,
+  },
+  infoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
-    backgroundColor: '#FF8A8C',
+    backgroundColor: '#fe9593',
     padding: 20,
-    marginLeft: 30,
-    marginRight: 30,
-    marginBottom: 20,
-    alignItems: 'center'
+    margin: 20,
+    alignItems: 'center',
+    alignSelf: 'stretch'
   },
   textContainer: {
-    marginTop: 2,
-    marginBottom: 2,
-    flex: .25
-  },
-  textField: {
   },
   whiteFont: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold'
   },
-  textstyle: {
+  textStyle: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 20,
     marginRight: 20,
-    marginBottom: 20
-  },
-  boldText: {
-    color: '#FFF',
-    fontSize: 18,
-    marginBottom: 15,
-    fontWeight: 'bold',
+    marginBottom: 20,
     textAlign: 'center'
   }
 });
