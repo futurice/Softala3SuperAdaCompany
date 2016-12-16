@@ -61,7 +61,7 @@ const LoginView = React.createClass({
 
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: this.state.background}]}>
+      <View style={[styles.container, {backgroundColor: '#ed3a4b'}]}>
         <View style={styles.header}>
             <Image style={styles.mark} source={require('../../../images/superada_transparent.png')}/>
         </View>
@@ -76,7 +76,7 @@ const LoginView = React.createClass({
             </View>
           </View>
           <TouchableOpacity onPress={this._userLogin}>
-            <View style={styles.signin}>
+            <View style={styles.button}>
               <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
             </View>
           </TouchableOpacity>
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150
   },
-  signin: {
-    backgroundColor: '#FF8A8C',
+  button: {
+    backgroundColor: '#fe9593',
     padding: 20,
     marginLeft: 30,
     marginRight: 30,

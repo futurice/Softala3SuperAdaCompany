@@ -15,6 +15,7 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import {options} from './image-picker-options';
 import {post, get} from '../../utils/api';
+import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const TAB_BAR_HEIGHT = 64;
 const TeamView = React.createClass({
@@ -35,6 +36,10 @@ const TeamView = React.createClass({
     };
   },
 
+  checkpoints() {
+    this.props.dispatch(NavigationState.switchTab('CheckPointsTab'));
+  },
+
   async componentDidMount() {
     await this.getTeamDetails();
     this.setState({ loading: false });
@@ -49,6 +54,7 @@ const TeamView = React.createClass({
         await this.savePicture();
       }
       this.setState({ disableSave: false });
+      this.checkpoints();
     } catch (e) {
       console.log(e);
       this.setState({ disableSave: false });
@@ -117,54 +123,61 @@ const TeamView = React.createClass({
 
   render() {
     return (
-      <View style={{flex: 1}} onLayout={(e) => {
-        var {x, y, width, height} = e.nativeEvent.layout;
-        // TODO: any more sane way of passing this View's height down?
-        if (height !== this.state.height) {
-          this.setState({ width, height });
-        }
-      }}>
-      <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
-        minHeight: this.state.height
-      }}>
-        <KeyboardAvoidingView behavior={'padding'} style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <View style={styles.teamName}>
-            <Text style={styles.teamTitle}> {this.state.teamName} </Text>
-          </View>
-          { this.state.loading
-            ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-            : <TouchableOpacity
-                onPress={this.openImageGallery}
-                style={[styles.cameraButton]}>
-                { this.state.avatarSource
-                  ? <Image source={this.state.avatarSource} style={styles.teamImage} />
-                  : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-                }
-              </TouchableOpacity>
+      <View style={{flex: 1}}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
+            Muokkaa tiimiä
+          </Text>
+        </View>
+        <View style={{flex: 1}} onLayout={(e) => {
+          var {x, y, width, height} = e.nativeEvent.layout;
+          // TODO: any more sane way of passing this View's height down?
+          if (height !== this.state.height) {
+            this.setState({ width, height });
           }
-          <Text style={styles.descriptionText}>Slogan:</Text>
-          <View style={styles.description}>
-            <TextInput
-              style={styles.teamInput}
-              onChangeText={(teamDescription) => this.setState({teamDescription})}
-              value={this.state.teamDescription}
-              onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
-              />
-          </View>
-          <View style={styles.saveButtonContainer}>
-            { this.state.loading || this.state.disableSave &&
-              <ActivityIndicator animating={true} style={{position: 'absolute', height: 70, width: 70}} size="large" />
+        }}>
+        <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
+          minHeight: this.state.height
+        }}>
+          <KeyboardAvoidingView behavior={'padding'} style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <View style={styles.teamName}>
+              <Text style={styles.teamTitle}> {this.state.teamName} </Text>
+            </View>
+            { this.state.loading
+              ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
+              : <TouchableOpacity
+                  onPress={this.openImageGallery}
+                  style={[styles.cameraButton]}>
+                  { this.state.avatarSource
+                    ? <Image source={this.state.avatarSource} style={styles.teamImage} />
+                    : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+                  }
+                </TouchableOpacity>
             }
-            <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-              <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+            <Text style={styles.descriptionText}>Slogan:</Text>
+            <View style={styles.description}>
+              <TextInput
+                style={styles.teamInput}
+                onChangeText={(teamDescription) => this.setState({teamDescription})}
+                value={this.state.teamDescription}
+                onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+                />
+            </View>
+            <View style={styles.saveButtonContainer}>
+              { this.state.loading || this.state.disableSave &&
+                <ActivityIndicator animating={true} style={{position: 'absolute', height: 70, width: 70}} size="large" />
+              }
+              <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+                <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -178,6 +191,18 @@ const circle = {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    alignSelf: 'stretch',
+    backgroundColor: '#fe9593',
+    height: 64,
+    justifyContent: 'center'
+  },
+  headerText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
   teamContainer: {
     flexDirection: 'column',
     flex: 1,

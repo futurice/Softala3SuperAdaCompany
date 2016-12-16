@@ -100,27 +100,31 @@ const CheckPointView = React.createClass({
       );
     } else {
       return (
-        <View style={[styles.container]}>
-        <GridView
-          items={this.state.dataSource}
-          itemsPerRow={COMPANIES_PER_ROW}
-          renderItem={this.renderCompany}
-          style={styles.companyList}
-          enableEmptySections={true}
-          />
-        <TouchableOpacity onPress={this.fetchData} style={styles.GoToMapButton}>
-            <Text style={styles.buttonText}>
-              {'PÄIVITÄ'}
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>
+              Rastit
             </Text>
-        </TouchableOpacity>
+          </View>
+          <GridView
+            items={this.state.dataSource}
+            itemsPerRow={COMPANIES_PER_ROW}
+            renderItem={this.renderCompany}
+            style={styles.companyList}
+            enableEmptySections={true}
+            />
+          <TouchableOpacity onPress={this.fetchData} style={styles.GoToMapButton}>
+              <Text style={styles.buttonText}>
+                {'PÄIVITÄ'}
+              </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.kartta} style={styles.GoToMapButton}>
-            <Text style={styles.buttonText}>
-              {'KARTTA'}
-            </Text>
-        </TouchableOpacity>
-
-      </View>
+          <TouchableOpacity onPress={this.kartta} style={styles.GoToMapButton}>
+              <Text style={styles.buttonText}>
+                {'KARTTA'}
+              </Text>
+          </TouchableOpacity>
+        </View>
       );
     }
   }
@@ -133,6 +137,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#FFF'
+  },
+  header: {
+    alignSelf: 'stretch',
+    backgroundColor: '#fe9593',
+    height: 64,
+    justifyContent: 'center'
+  },
+  headerText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontSize: 32,
+    fontWeight: 'bold',
   },
   GoToMapButton: {
     backgroundColor: '#ff5454',
