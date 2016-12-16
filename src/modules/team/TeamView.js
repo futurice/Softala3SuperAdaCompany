@@ -30,6 +30,7 @@ const TeamView = React.createClass({
       imageChanged: false,
       loading: true,
       disableSave: false,
+      width: 0,
       height: 0
     };
   },
@@ -120,7 +121,7 @@ const TeamView = React.createClass({
         var {x, y, width, height} = e.nativeEvent.layout;
         // TODO: any more sane way of passing this View's height down?
         if (height !== this.state.height) {
-          this.setState({ height });
+          this.setState({ width, height });
         }
       }}>
       <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
@@ -146,21 +147,21 @@ const TeamView = React.createClass({
               </TouchableOpacity>
           }
           <Text style={styles.descriptionText}>Slogan:</Text>
-            <View style={styles.description}>
-              <TextInput
-                style={styles.teamInput}
-                onChangeText={(teamDescription) => this.setState({teamDescription})}
-                value={this.state.teamDescription}
-                onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
-                />
-            </View>
-          <View style={styles.submitButton}>
-            { this.state.loading || this.state.disableSave
-              ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-              : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-                </TouchableOpacity>
+          <View style={styles.description}>
+            <TextInput
+              style={styles.teamInput}
+              onChangeText={(teamDescription) => this.setState({teamDescription})}
+              value={this.state.teamDescription}
+              onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+              />
+          </View>
+          <View style={styles.saveButtonContainer}>
+            { this.state.loading || this.state.disableSave &&
+              <ActivityIndicator animating={true} style={{position: 'absolute', height: 70, width: 70}} size="large" />
             }
+            <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+              <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
@@ -185,6 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   teamName: {
+    paddingTop: 20
   },
   teamNameStyle: {
     alignItems: 'center',
@@ -192,6 +194,7 @@ const styles = StyleSheet.create({
   teamTitle: {
     color: '#FF0036',
     fontSize: 30,
+    minHeight: 30,
     fontWeight: 'bold'
   },
   description: {
@@ -234,13 +237,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 75
   },
-  submitButton: {
-    backgroundColor: '#ff5454',
+  saveButtonContainer: {
+    alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 300,
     height: 70,
     margin: 20,
+  },
+  saveButton: {
+    backgroundColor: '#ff5454',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
   },
   whiteFont: {
     color: '#FFF',
