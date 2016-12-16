@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import {
+  KeyboardAvoidingView,
+  Dimensions,
   Image,
   Text,
   View,
@@ -14,6 +16,7 @@ import ImagePicker from 'react-native-image-picker';
 import {options} from './image-picker-options';
 import {post, get} from '../../utils/api';
 
+const TAB_BAR_HEIGHT = 64;
 const TeamView = React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired
@@ -26,7 +29,8 @@ const TeamView = React.createClass({
       teamName: ' ',
       imageChanged: false,
       loading: true,
-      disableSave: false
+      disableSave: false,
+      height: 0
     };
   },
 
@@ -112,39 +116,55 @@ const TeamView = React.createClass({
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.teamContainer}>
-        <View style={styles.teamName}>
-          <Text style={styles.teamTitle}> {this.state.teamName} </Text>
-        </View>
-        { this.state.loading
-          ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-          : <TouchableOpacity
-              onPress={this.openImageGallery}
-              style={[styles.cameraButton]}>
-              { this.state.avatarSource
-                ? <Image source={this.state.avatarSource} style={styles.teamImage} />
-                : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-              }
-            </TouchableOpacity>
+      <View style={{flex: 1}} onLayout={(e) => {
+        var {x, y, width, height} = e.nativeEvent.layout;
+        // TODO: any more sane way of passing this View's height down?
+        if (height !== this.state.height) {
+          this.setState({ height });
         }
-        <Text style={styles.descriptionText}>Slogan:</Text>
-          <View style={styles.description}>
-            <TextInput
-              style={styles.teamInput}
-              onChangeText={(teamDescription) => this.setState({teamDescription})}
-              value={this.state.teamDescription}
-              onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
-              />
+      }}>
+      <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
+        minHeight: this.state.height
+      }}>
+        <KeyboardAvoidingView behavior={'padding'} style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <View style={styles.teamName}>
+            <Text style={styles.teamTitle}> {this.state.teamName} </Text>
           </View>
-        <View style={styles.submitButton}>
-          { this.state.loading || this.state.disableSave
+          { this.state.loading
             ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
-            : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
-                <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+            : <TouchableOpacity
+                onPress={this.openImageGallery}
+                style={[styles.cameraButton]}>
+                { this.state.avatarSource
+                  ? <Image source={this.state.avatarSource} style={styles.teamImage} />
+                  : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+                }
               </TouchableOpacity>
           }
-        </View>
+          <Text style={styles.descriptionText}>Slogan:</Text>
+            <View style={styles.description}>
+              <TextInput
+                style={styles.teamInput}
+                onChangeText={(teamDescription) => this.setState({teamDescription})}
+                value={this.state.teamDescription}
+                onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+                />
+            </View>
+          <View style={styles.submitButton}>
+            { this.state.loading || this.state.disableSave
+              ? <ActivityIndicator animating={true} style={{height: 150}} size="large" />
+              : <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={styles.saveButton}>
+                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+                </TouchableOpacity>
+            }
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
+      </View>
     );
   }
 });
@@ -158,13 +178,13 @@ const circle = {
 
 const styles = StyleSheet.create({
   teamContainer: {
+    flexDirection: 'column',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fafafa',
   },
   teamName: {
-    marginTop: 100
   },
   teamNameStyle: {
     alignItems: 'center',
@@ -185,7 +205,6 @@ const styles = StyleSheet.create({
   },
   teamInput: {
     width: 300,
-    marginBottom: 30,
     color: 'black',
     ...Platform.select({
       ios: {
@@ -221,8 +240,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 300,
     height: 70,
-    marginBottom: 100,
-    marginTop: 20
+    margin: 20,
   },
   whiteFont: {
     color: '#FFF',
