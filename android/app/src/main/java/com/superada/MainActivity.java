@@ -2,6 +2,7 @@ package com.superada;
 
 import com.facebook.react.ReactActivity;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;
+import android.widget.ImageView;
 
 import android.os.Bundle;
 
@@ -18,7 +19,7 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RCTSplashScreen.openSplashScreen(this);   //open splashscreen
+        RCTSplashScreen.openSplashScreen(this, false, ImageView.ScaleType.CENTER_CROP);   //open splashscreen
         //RCTSplashScreen.openSplashScreen(this, true);   //open splashscreen fullscreen
         super.onCreate(savedInstanceState);
     }
