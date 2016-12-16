@@ -28,11 +28,9 @@ const AppView = React.createClass({
           dispatch(SessionStateActions.initializeSessionState());
         }
 
-        /*
         store.subscribe(() => {
           snapshotUtil.saveSnapshot(store.getState());
         });
-        */
       });
   },
 
