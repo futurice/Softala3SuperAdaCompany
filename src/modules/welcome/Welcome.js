@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
+  StatusBar,
   Image,
   TouchableOpacity,
   ScrollView
@@ -30,6 +31,12 @@ const Welcome = React.createClass({
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor="#ed3a4b"
+          animated={false}
+          barStyle="light-content"
+       />
+
         <ScrollView contentContainerStyle={{
           alignItems: 'center'
         }}>

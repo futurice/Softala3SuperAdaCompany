@@ -41,14 +41,21 @@ const MapView = React.createClass({
 
     return(
       <View style={styles.MapContainer}>
-      <PhotoView
-        minimumZoomScale={1}
-        maximumZoomScale={3}
-        androidScaleType="fitCenter"
-        source={require('../../../images/map.png')}
-        style={styles.MapImage}
-      />
-
+        <View style={styles.header}>
+          <TouchableOpacity onPress={this.popRoute} style={{zIndex: 1000, top: 0, left: 0, position: 'absolute'}}>
+            <Image style={{resizeMode: 'contain', width: 64, height: 64, zIndex: 1000 }} source={require('../../../images/back_arrow.png')}/>
+          </TouchableOpacity>
+          <Text style={styles.headerText}>
+            Kartta
+          </Text>
+        </View>
+        <PhotoView
+          minimumZoomScale={1}
+          maximumZoomScale={3}
+          androidScaleType="fitCenter"
+          source={require('../../../images/map.png')}
+          style={styles.MapImage}
+        />
       </View>
     );
   }
@@ -58,7 +65,18 @@ let styles = {};
 
 if (Platform.OS === 'ios') {
   styles = StyleSheet.create({
-  
+    header: {
+      alignSelf: 'stretch',
+      backgroundColor: '#fe9593',
+      height: 64,
+      justifyContent: 'center'
+    },
+    headerText: {
+      textAlign: 'center',
+      color: '#FFF',
+      fontSize: 32,
+      fontWeight: 'bold',
+    },
     MapContainer: {
       flex: 1,
       backgroundColor: 'rgba(255,0,54,1)',
@@ -71,11 +89,22 @@ if (Platform.OS === 'ios') {
       width: 300,
       backgroundColor: 'rgba(255,0,54,1)',
     },
-  
+
   });
 } else {
   styles = StyleSheet.create({
-  
+    header: {
+      alignSelf: 'stretch',
+      backgroundColor: '#fe9593',
+      height: 64,
+      justifyContent: 'center'
+    },
+    headerText: {
+      textAlign: 'center',
+      color: '#FFF',
+      fontSize: 32,
+      fontWeight: 'bold',
+    },
     MapContainer: {
       flex: 1,
       backgroundColor: 'rgba(255,0,54,1)',
@@ -87,7 +116,7 @@ if (Platform.OS === 'ios') {
       height: 300,
       backgroundColor: 'rgba(255,0,54,1)',
     },
-  
+
   });
 }
 

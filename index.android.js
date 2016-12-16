@@ -51,9 +51,10 @@ const Softala3SuperAda = React.createClass({
       <Provider store={store}>
         <View style={{flex: 1}}>
           <StatusBar
-             backgroundColor="#fe9593"
-             barStyle="light-content"
-           />
+            animated={false}
+            backgroundColor="#fe9593"
+            barStyle="light-content"
+          />
           <AppViewContainer />
         </View>
       </Provider>

@@ -43,12 +43,20 @@ const CheckPointView = React.createClass({
   getInitialState() {
     return {
       teamtoken: '',
-      dataSource: []
+      dataSource: [],
+      refreshInterval: null
     };
   },
 
   componentDidMount() {
     this.fetchData();
+    this.setState({
+      refreshInterval: setInterval(this.fetchData, 60 * 1000)
+    });
+  },
+
+  componentWillUnmount() {
+    clearInterval(this.state.refreshInterval);
   },
 
   async fetchData() {
@@ -113,11 +121,6 @@ const CheckPointView = React.createClass({
             style={styles.companyList}
             enableEmptySections={true}
             />
-          <TouchableOpacity onPress={this.fetchData} style={styles.GoToMapButton}>
-              <Text style={styles.buttonText}>
-                {'PÄIVITÄ'}
-              </Text>
-          </TouchableOpacity>
 
           <TouchableOpacity onPress={this.kartta} style={styles.GoToMapButton}>
               <Text style={styles.buttonText}>
@@ -152,9 +155,8 @@ const styles = StyleSheet.create({
   },
   GoToMapButton: {
     backgroundColor: '#ff5454',
-    padding: 5,
-    margin: 10,
-    width: 350,
+    alignSelf: 'stretch',
+    margin: 20,
     height: 70,
     justifyContent: 'center'
   },
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     width: 100
   },
   companyList: {
-
+    marginTop: 20
   },
   companyText: {
     fontSize: 20
