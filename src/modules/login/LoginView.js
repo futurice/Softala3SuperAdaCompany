@@ -120,6 +120,8 @@ const styles = StyleSheet.create({
     height: 150
   },
   loginButtonContainer: {
+    backgroundColor: '#ed3a4b',
+    elevation: 5,
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',

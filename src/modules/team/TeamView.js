@@ -263,6 +263,8 @@ const styles = StyleSheet.create({
     borderRadius: 75
   },
   saveButtonContainer: {
+    backgroundColor: '#fafafa',
+    elevation: 5,
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',

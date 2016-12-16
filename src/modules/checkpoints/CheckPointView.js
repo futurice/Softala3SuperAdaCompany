@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   GoToMapButton: {
+    elevation: 5,
     backgroundColor: '#ff5454',
     alignSelf: 'stretch',
     margin: 20,

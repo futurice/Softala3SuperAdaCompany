@@ -59,11 +59,12 @@ const Welcome = React.createClass({
           </Text>
         </ScrollView>
 
-        <TouchableOpacity style={styles.button} onPress={this.profile}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={this.profile}>
             <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
-
     );
   }
 });
@@ -97,12 +98,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  buttonContainer: {
+    backgroundColor: '#ed3a4b',
+    elevation: 5,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 70,
+    margin: 20,
+  },
   button: {
     backgroundColor: '#fe9593',
-    padding: 20,
-    margin: 20,
     alignItems: 'center',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
   },
   textContainer: {
   },
