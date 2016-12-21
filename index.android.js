@@ -1,4 +1,3 @@
-import 'es6-symbol/implement';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import AppViewContainer from './src/modules/AppViewContainer';
@@ -17,7 +16,6 @@ const SuperAda = React.createClass({
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', this.navigateBack);
   },
-
 
   navigateBack() {
     const navigationState = store.getState().get('navigationState');

@@ -1,5 +1,5 @@
 import {Map} from 'immutable';
-import {loop, Effects} from 'redux-loop';
+//import {loop, Effects} from 'redux-loop';
 import {generateRandomNumber} from '../../services/randomNumberService';
 
 // Initial state
@@ -46,10 +46,12 @@ export default function CounterStateReducer(state = initialState, action = {}) {
       return initialState;
 
     case RANDOM_REQUEST:
+      /*
       return loop(
         state.set('loading', true),
-        Effects.promise(requestRandomNumber)
+        //Effects.promise(requestRandomNumber)
       );
+      */
 
     case RANDOM_RESPONSE:
       return state
