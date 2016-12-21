@@ -50,7 +50,8 @@
     "redux-loop": "^2.2.2",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1",
-    "standard-http-error": "^2.0.0"
+    "standard-http-error": "^2.0.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
