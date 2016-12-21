@@ -121,7 +121,10 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
+            if(project.hasProperty("SUPERADA_RELEASE_STORE_FILE")
+                && new File(project.property("SUPERADA_RELEASE_STORE_FILE")).exists()) {
+                signingConfig signingConfigs.release
+            }
         }
     }
     // applicationVariants are e.g. debug, release
