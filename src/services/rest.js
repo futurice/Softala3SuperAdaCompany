@@ -7,7 +7,10 @@ const apiRoot = __DEV__ ? 'http://localhost:3000' : 'http://superada.herokuapp.c
 // Endpoint configurations
 const rest = reduxApi({
   auth: {
-    url: `${apiRoot}/teams/authenticate`
+    url: `${apiRoot}/teams/authenticate`,
+    options: {
+      method: 'POST'
+    }
   },
 }).use("fetch", adapterFetch(fetch));
 

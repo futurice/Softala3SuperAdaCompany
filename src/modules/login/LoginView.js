@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {
   Text,
   View,
+  ScrollView,
   StyleSheet,
   TextInput,
   Image,
@@ -16,10 +17,6 @@ import {setAuthenticationToken} from '../../utils/authentication'
 import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const LoginView = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-
   getInitialState() {
     return {
       username: '',
@@ -29,6 +26,10 @@ const LoginView = React.createClass({
       background: 'rgba(255,0,54,1)',
       loading: false
     }
+  },
+
+  login() {
+    this.props.login(this.state.teamname.trim());
   },
 
   async _userLogin() {
@@ -66,38 +67,56 @@ const LoginView = React.createClass({
     }
   },
 
+  errToString(err) {
+    if (!err) {
+      return '';
+    }
+
+    if (err.message) {
+      return err.message;
+    }
+
+    return String(err);
+  },
+
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: '#ed3a4b'}]}>
+      <View style={styles.container}>
         <StatusBar
           backgroundColor="#ed3a4b"
           animated={false}
           barStyle="light-content"
         />
-        <View style={styles.header}>
-            <Image style={styles.mark} source={require('../../../images/superada_transparent.png')}/>
+        <ScrollView style={{flex: 1, alignSelf: 'stretch'}} contentContainerStyle={{
+          alignItems: 'center'
+        }}>
+          <Image style={styles.logo} source={require('../../../images/superada_transparent.png')}/>
+          <View style={styles.inputContainer}>
+            <Text style={styles.whiteFont}>Joukkueen nimi:</Text>
+            <TextInput
+              style={[styles.input, styles.whiteFont]}
+              onChangeText={(teamname) => this.setState({teamname})}
+              value={this.state.teamname}
+              autoCorrect={false}
+              underlineColorAndroid='#000'
+              selectionColor='#000'
+            />
+          </View>
+          <View style={styles.errContainer}>
+            <Text style={styles.whiteFont}>
+              { this.errToString(this.props.auth.error) }
+            </Text>
+          </View>
+        </ScrollView>
+
+        <View style={styles.loginButtonContainer}>
+          <TouchableOpacity disabled={this.props.auth.loading} onPress={this.login} style={this.state.loading ? styles.loginButtonLoading : styles.loginButton}>
+            <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
+          </TouchableOpacity>
+          { this.props.auth.loading &&
+            <ActivityIndicator animating={true} color={'#FFF'} style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
+          }
         </View>
-          <View style={styles.inputs}>
-            <View style={styles.inputContainer}>
-               <Text style={styles.textstyle}>Joukkueen nimi:</Text>
-              <TextInput
-                style={[styles.input, styles.whiteFont]}
-                onChangeText={(teamname) => this.setState({teamname})}
-                value={this.state.teamname}
-                autoCorrect={false}
-                underlineColorAndroid='#000'
-                selectionColor='#000'
-              />
-            </View>
-          </View>
-          <View style={styles.loginButtonContainer}>
-            <TouchableOpacity disabled={this.state.loading} onPress={this._userLogin} style={this.state.loading ? styles.loginButtonLoading : styles.loginButton}>
-              <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
-            </TouchableOpacity>
-            { this.state.loading &&
-              <ActivityIndicator animating={true} color={'#FFF'} style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
-            }
-          </View>
       </View>
     );
   }
@@ -106,8 +125,10 @@ const LoginView = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: '#ed3a4b'
   },
   header: {
     justifyContent: 'flex-start',
@@ -115,9 +136,12 @@ const styles = StyleSheet.create({
     flex: 0,
     backgroundColor: 'transparent'
   },
-  mark: {
+  logo: {
     width: 150,
     height: 150
+  },
+  errContainer: {
+    flexGrow: 1
   },
   loginButtonContainer: {
     backgroundColor: '#ed3a4b',
@@ -142,38 +166,19 @@ const styles = StyleSheet.create({
     height: 70,
     padding: 20
   },
-  inputs: {
-    marginTop: 2,
-    marginBottom: 2,
-    flex: .25
-  },
   inputContainer: {
     padding: 35,
     borderWidth: 1,
+    alignSelf: 'stretch',
     borderColor: 'transparent'
   },
   input: {
-    position: 'absolute',
-    left: 30,
-    top: 60,
-    right: 30,
     height: 45,
     fontSize: 20,
-
-  },
-  inputText: {
-    width: 300,
-    height: 70,
-    borderColor: '#FFF',
-    borderWidth: 1
   },
   whiteFont: {
     fontSize: 18,
     color: '#FFF'
-  },
-  textstyle: {
-    color: '#FFF',
-    fontSize: 20
   },
   debug: {
     color: '#FFF',
