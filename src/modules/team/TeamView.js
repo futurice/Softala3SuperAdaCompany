@@ -122,7 +122,7 @@ const TeamView = React.createClass({
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#fafafa'}}>
         <View style={styles.header}>
           <Text style={styles.headerText}>
             Muokkaa tiimiä
@@ -141,7 +141,7 @@ const TeamView = React.createClass({
           <View style={{
             flex: 1,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}>
             <View style={styles.teamName}>
               <Text style={styles.teamTitle}> {this.state.teamName} </Text>
@@ -166,17 +166,17 @@ const TeamView = React.createClass({
                   onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
                   />
               </View>
-              <View style={styles.saveButtonContainer}>
-                <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={(this.state.loading || this.state.disableSave) ? styles.saveButtonLoading : styles.saveButton}>
-                  <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
-                </TouchableOpacity>
-                { (this.state.disableSave)
-                  ? <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
-                  : null
-                }
-              </View>
             </View>
           </ScrollView>
+        </View>
+        <View style={styles.saveButtonContainer}>
+          <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={(this.state.loading || this.state.disableSave) ? styles.saveButtonLoading : styles.saveButton}>
+            <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
+          </TouchableOpacity>
+          { (this.state.disableSave)
+            ? <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
+            : null
+          }
         </View>
       </View>
     );
@@ -277,14 +277,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
-    padding: 20
+    padding: 20,
+    elevation: 5,
   },
   saveButtonLoading: {
     backgroundColor: '#fe9593',
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
-    padding: 20
+    padding: 20,
+    elevation: 5,
   },
   whiteFont: {
     color: '#FFF',
