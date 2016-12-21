@@ -11,11 +11,6 @@ import {setConfiguration} from '../utils/configuration';
 const apiRoot = __DEV__ ? 'http://localhost:3000' : 'http://superada.herokuapp.com';
 
 const AppView = React.createClass({
-  propTypes: {
-    isReady: PropTypes.bool.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired
-  },
   componentDidMount() {
     setConfiguration('API_ROOT', apiRoot);
     snapshotUtil.resetSnapshot()
@@ -23,6 +18,10 @@ const AppView = React.createClass({
         const {dispatch} = this.props;
 
         if (snapshot) {
+          // Make sure our API call in progress vars are false
+          snapshot.auth.loading = false;
+          snapshot.teamDetails.loading = false;
+
           dispatch(SessionStateActions.resetSessionStateFromSnapshot(snapshot));
         } else {
           dispatch(SessionStateActions.initializeSessionState());

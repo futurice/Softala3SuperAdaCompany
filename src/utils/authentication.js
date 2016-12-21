@@ -9,11 +9,11 @@ export function getAuthenticationToken() {
 }
 
 export async function setAuthenticationToken(token) {
-  store.dispatch(AuthState.onUserLoginSuccess());
   return AsyncStorage.setItem(AUTHENTICATION_STORAGE_KEY, token);
 }
 
 export async function clearAuthenticationToken() {
+  // TODO! on unauthorized errors, clear token
   store.dispatch(AuthState.onUserLoginError());
   return AsyncStorage.removeItem(AUTHENTICATION_STORAGE_KEY);
 }

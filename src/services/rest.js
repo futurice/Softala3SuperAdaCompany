@@ -1,6 +1,5 @@
 import reduxApi, { transformers } from "redux-api";
 import adapterFetch from "redux-api/lib/adapters/fetch";
-import { fromJS, toJS, Iterable } from 'immutable';
 
 const apiRoot = __DEV__ ? 'http://localhost:3000' : 'http://superada.herokuapp.com';
 
@@ -12,10 +11,34 @@ const rest = reduxApi({
       method: 'POST'
     }
   },
-}).use("fetch", adapterFetch(fetch));
+  teamDetails: {
+    url: `${apiRoot}/teamDetails`,
+    transformer: (data, prevData, action) => {
+      console.log('prevData:', prevData);
+      return {...prevData, ...data};
+    },
+    crud: true
+  },
+}).use('options', (url, params, getState) => {
+  const token = getState().auth.data.token;
+
+  // Add token to header request
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    return { headers: {  ...headers, Authorization: `Bearer ${token}` } };
+  }
+
+  return { headers };
+}).use('fetch', adapterFetch(fetch));
+
+// TODO: on unauthorized error, clear token
 
 export default rest;
-
+  /*
 export const restReducer = (state = fromJS({}), action) => {
   // TODO: this has a pretty bad performance penalty
   state = state.toJS();
@@ -28,3 +51,4 @@ export const restReducer = (state = fromJS({}), action) => {
 
   return fromJS(state);
 };
+*/

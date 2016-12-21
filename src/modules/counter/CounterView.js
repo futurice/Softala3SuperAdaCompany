@@ -19,10 +19,6 @@ const CounterView = React.createClass({
   },
 
   propTypes: {
-    counter: PropTypes.number.isRequired,
-    userName: PropTypes.string,
-    userProfilePhoto: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   },
   welcome(){

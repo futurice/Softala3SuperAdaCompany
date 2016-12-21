@@ -6,7 +6,7 @@ import rest from '../../services/rest';
 
 export default connect(
   state => ({
-    auth: state.getIn(['rest', 'auth']).toJS()
+    auth: state.auth
   }),
   dispatch => ({
     login(name) {
@@ -15,9 +15,9 @@ export default connect(
           name
         })
       }, (err, data) => {
+        console.log('got data', data);
         if (!err) {
-          setAuthenticationToken(data.token.token);
-          //this.props.dispatch(NavigationState.switchTab('HomeTab'));
+          setAuthenticationToken(data.token);
         }
       }));
     }

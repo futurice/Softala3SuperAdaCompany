@@ -18,18 +18,12 @@ import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const TAB_BAR_HEIGHT = 64;
 const TeamView = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-
   getInitialState() {
     return {
-      teamDescription: '',
-      avatarSource: null,
-      teamName: ' ',
-      imageChanged: false,
-      loading: true,
+      modifiedTeamDescription: null,
+      modifiedImage: null,
       disableSave: false,
+
       width: 0,
       height: 0
     };
@@ -40,8 +34,7 @@ const TeamView = React.createClass({
   },
 
   async componentDidMount() {
-    await this.getTeamDetails();
-    this.setState({ loading: false });
+    this.props.refresh();
   },
 
   async saveTeamDetails() {
@@ -62,7 +55,7 @@ const TeamView = React.createClass({
 
   async saveSlogan() {
     const response = await post('/saveDescription', {
-      teamDescription: this.state.teamDescription
+      teamDescription: this.state.modifiedTeamDescription
     });
   },
 
@@ -106,21 +99,31 @@ const TeamView = React.createClass({
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        const source = {
-          uri: 'data:image/png;base64,' + response.data,
-          isStatic: true
-        };
-
         this.setState({
-          avatarSource: source, //source,
-          avatarData: response.data,
-          imageChanged: true
+          modifiedImage: response.data
         });
       }
     });
   },
 
   render() {
+    ////console.log('teamId:', this.props.teamDetails.data.teamId);
+    //console.log(this.props.teamDetails.error);
+    const description = this.state.modifiedTeamDescription !== null
+      ? this.state.modifiedTeamDescription
+      : (this.props.teamDetails.data ? this.props.teamDetails.data.description : '');
+    const name = this.props.teamDetails.data
+      ? this.props.teamDetails.data.teamName
+      : '';
+    const image = this.state.modifiedImage !== null
+      ? { uri: 'data:image/png;base64,' + this.state.modifiedImage }
+      : { uri: this.props.image }
+
+    const disabled = this.props.teamDetails.loading
+      || this.state.disableSave
+      || this.state.modifiedTeamDescription === ''
+      || (!this.state.modifiedImage && !this.state.modifiedTeamDescription);
+
     return (
       <View style={{flex: 1, backgroundColor: '#fafafa'}}>
         <View style={styles.header}>
@@ -135,42 +138,52 @@ const TeamView = React.createClass({
             this.setState({ width, height });
           }
         }}>
-        <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
-          minHeight: this.state.height
-        }}>
-          <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
+          <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
+            minHeight: this.state.height
           }}>
-            <View style={styles.teamName}>
-              <Text style={styles.teamTitle}> {this.state.teamName} </Text>
+            <View style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <View style={styles.teamName}>
+                <Text style={styles.teamTitle}> { name } </Text>
               </View>
-              { this.state.loading
-                ? <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150}} size="large" />
-                : <TouchableOpacity
-                    onPress={this.openImageGallery}
-                    style={[styles.cameraButton]}>
-                    { this.state.avatarSource
-                      ? <Image source={this.state.avatarSource} style={styles.teamImage} />
-                      : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
-                    }
-                  </TouchableOpacity>
-              }
+                { !this.props.teamDetails.sync
+                  ? <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150}} size="large" />
+                  : <TouchableOpacity
+                      onPress={this.openImageGallery}
+                      style={[styles.cameraButton]}>
+                      { this.props.image
+                        ? <Image source={image} style={styles.teamImage} />
+                        : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
+                      }
+                    </TouchableOpacity>
+                }
               <Text style={styles.descriptionText}>Slogan:</Text>
               <View style={styles.description}>
                 <TextInput
                   style={styles.teamInput}
-                  onChangeText={(teamDescription) => this.setState({teamDescription})}
-                  value={this.state.teamDescription}
-                  onSubmitEditing={() => {!this.state.loading && !this.state.disableSave && this.saveTeamDetails()}}
+                  onChangeText={(modifiedTeamDescription) => this.setState({modifiedTeamDescription})}
+                  value={description}
+                  onSubmitEditing={() => {!this.props.teamDetails.loading && !this.state.disableSave && this.saveTeamDetails()}}
                   />
               </View>
             </View>
           </ScrollView>
         </View>
         <View style={styles.saveButtonContainer}>
-          <TouchableOpacity disabled={this.state.loading || this.state.disableSave} onPress={this.saveTeamDetails} accessible={true} style={(this.state.loading || this.state.disableSave) ? styles.saveButtonLoading : styles.saveButton}>
+          <TouchableOpacity
+            disabled={disabled}
+            onPress={() => {
+              this.props.save(this.state.modifiedTeamDescription, this.state.modifiedImage);
+            }}
+            accessible={true}
+            style={
+              disabled
+                ? styles.saveButtonLoading
+                : styles.saveButton
+            }>
             <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
           </TouchableOpacity>
           { (this.state.disableSave)
