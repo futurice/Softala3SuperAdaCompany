@@ -30,6 +30,8 @@ React Native Starter Kit is a part of [Pepperoni](http://getpepperoni.com), a fr
 
 Once you have the code downloaded, follow the **[Setup guide](docs/SETUP.md)** to get started.
 
+Also in addition to the dependencies mentioned in the Setup guide, you will need Build Tools version 23.0.3.
+
 ##### Run unit tests
 ```
 $ npm test
