@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
+  StatusBar,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -15,8 +16,13 @@ const TeamPointsView = React.createClass({
   },
 
   render() {
-      return (
-       <View style={styles.container}>
+    return (
+      <View style={styles.container}>
+        <StatusBar
+          backgroundColor={AppStyles.darkRed}
+          animated={false}
+          barStyle="light-content"
+        />
         <ScrollView
           automaticallyAdjustContentInsets={false}
           style={styles.scrollView}>
@@ -27,7 +33,7 @@ const TeamPointsView = React.createClass({
           <View style={styles.pointBox}>
             <Text style={styles.points}>{this.props.companyPoints.data.sum || 0}/40</Text>
           </View>
-            <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
+          <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
           <View style ={styles.buttons}>
             <TouchableOpacity onPress={this.props.feedback}>
               <View style={styles.button}>
