@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   ScrollView
 } from 'react-native';
+
 import AppStyles from '../AppStyles';
-import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const Welcome = React.createClass({
   render() {

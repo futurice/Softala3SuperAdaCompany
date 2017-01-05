@@ -10,6 +10,7 @@ import GridView from 'react-native-grid-view';
 import {get} from '../../utils/api';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
+import AppStyles from '../AppStyles';
 
 const images = {
   Koulu: require('../../../images/companyImages/Koulu.png'),
@@ -122,11 +123,11 @@ const CheckPointView = React.createClass({
             enableEmptySections={true}
             />
 
-          <TouchableOpacity onPress={this.kartta} style={styles.GoToMapButton}>
-              <Text style={styles.buttonText}>
-                {'KARTTA'}
-              </Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => this.kartta()}>
+              <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'KARTTA'}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }
@@ -191,7 +192,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center'
-  }
+  },
+  buttonContainer: {
+    backgroundColor: AppStyles.whiteBackground,
+    elevation: 5,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 70,
+    margin: 20,
+  },
+  button: {
+    backgroundColor: AppStyles.darkRed,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
+  },
+  whiteFont: {
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize
+  },
 });
 
 export default CheckPointView;

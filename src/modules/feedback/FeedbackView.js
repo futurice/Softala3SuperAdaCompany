@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {
+  ActivityIndicator,
   Text,
   View,
   StyleSheet,
@@ -15,6 +16,7 @@ import RadioForm, {
   RadioButtonLabel
 } from 'react-native-simple-radio-button';
 
+import AppStyles from '../AppStyles';
 import _ from 'lodash';
 
 const FeedbackView = React.createClass({
@@ -42,6 +44,14 @@ const FeedbackView = React.createClass({
   },
 
   render() {
+    if (this.props.feedback.loading) {
+      return (
+        <View style={{flex: 1}} >
+          <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150, alignSelf: 'center', flex: 1}} size="large" />
+        </View>
+      );
+    }
+
     let feedbackItems = [];
 
     this.props.feedback.data.forEach((question, i) => {
@@ -91,7 +101,7 @@ const FeedbackView = React.createClass({
               { question.questionText }
             </Text>
             <RadioForm
-              style={styles.button}
+              style={styles.radioButton}
               radio_props={radioProps}
               initial={initial}
               onPress={(value) => this.setState({
@@ -121,11 +131,11 @@ const FeedbackView = React.createClass({
 
         { feedbackItems }
 
-        <TouchableOpacity onPress={() => this.saveFeedback()}>
-          <View style={styles.send}>
-            <Text style={styles.whiteFont}>LÄHETÄ</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => this.saveFeedback()}>
+            <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'LÄHETÄ'}</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
     );
@@ -138,10 +148,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
-    backgroundColor: 'rgba(245,245,245,1)',
+    backgroundColor: AppStyles.whiteBackground,
     flex: 1
   },
-  button: {
+  radioButton: {
     paddingLeft: 10,
     paddingTop: 10
   },
@@ -149,7 +159,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     marginRight: 10,
-    fontSize: 16,
+    fontSize: AppStyles.fontSize,
     marginBottom: 20,
     color: 'black'
   },
@@ -157,13 +167,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     marginRight: 10,
-    fontSize: 16,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
     color: 'black'
   },
   input: {
-    height: 64,
-    fontSize: 16,
+    height: 48,
+    fontSize: AppStyles.fontSize,
   },
   inputContainer: {
     paddingLeft: 10,
@@ -179,9 +189,25 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   whiteFont: {
-    color: '#FFF',
-    fontSize: 18
-  }
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize
+  },
+  buttonContainer: {
+    backgroundColor: AppStyles.whiteBackground,
+    elevation: 5,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 70,
+    margin: 20,
+  },
+  button: {
+    backgroundColor: AppStyles.darkRed,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 70,
+    padding: 20
+  },
 });
 
 export default FeedbackView;
