@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 30,
     marginRight: 10,
-    fontSize: AppStyles.headerFontSize,
+    fontSize: AppStyles.titleFontSize,
     marginBottom: 20,
     color: AppStyles.white,
     textAlign: 'center',

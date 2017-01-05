@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: 'center',
     color: AppStyles.white,
-    fontSize: AppStyles.subHeaderFontSize,
+    fontSize: AppStyles.headerFontSize,
     fontWeight: 'bold',
   },
   teamContainer: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   teamTitle: {
     color: AppStyles.darkRed,
-    fontSize: AppStyles.subHeaderFontSize,
+    fontSize: AppStyles.headerFontSize,
     minHeight: 30,
     fontWeight: 'bold'
   },

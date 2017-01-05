@@ -1,5 +1,4 @@
-import React, {PropTypes, Dimensions, Component} from 'react';
-
+import React, {Component} from 'react';
 import PhotoView from 'react-native-photo-view';
 
 import{
@@ -7,42 +6,19 @@ import{
   Text,
   View,
   StyleSheet,
-  AppRegistry,
-  ScrollView,
   TouchableOpacity,
-  zoomEnabled,
-  maximumZoomScale,
-  minimumZoomScale,
   Platform,
-
-}from 'react-native';
+} from 'react-native';
 
 import * as NavigationState from '../../modules/navigation/NavigationState';
-
+import AppStyles from '../AppStyles';
 
 const MapView = React.createClass({
-  PropTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-  popRoute(){
-    this.props.dispatch(NavigationState.popRoute({
-      key:'CounterView',
-    }));
-  },
-
-  getInitialState(){
-    return{
-      background: 'rgba(255,0,54,1)'
-    };
-  },
-
-  render(){
-    const text = 'kartta';
-
-    return(
+  render() {
+    return (
       <View style={styles.MapContainer}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={this.popRoute} style={{zIndex: 1000, top: 0, left: 0, position: 'absolute'}}>
+          <TouchableOpacity onPress={this.props.back} style={{zIndex: 1000, top: 0, left: 0, position: 'absolute'}}>
             <Image style={{resizeMode: 'contain', width: 64, height: 64, zIndex: 1000 }} source={require('../../../images/back_arrow.png')}/>
           </TouchableOpacity>
           <Text style={styles.headerText}>
@@ -61,62 +37,31 @@ const MapView = React.createClass({
   }
 });
 
-let styles = {};
-
-if (Platform.OS === 'ios') {
-  styles = StyleSheet.create({
-    header: {
-      alignSelf: 'stretch',
-      backgroundColor: '#fe9593',
-      height: 64,
-      justifyContent: 'center'
-    },
-    headerText: {
-      textAlign: 'center',
-      color: '#FFF',
-      fontSize: 32,
-      fontWeight: 'bold',
-    },
-    MapContainer: {
-      flex: 1,
-      backgroundColor: '#fafafa',
-      //alignItems: 'stretch',
-    },
-
-    MapImage: {
-      flex: 1,
-      height: 300,
-      width: 300,
-    },
-
-  });
-} else {
-  styles = StyleSheet.create({
-    header: {
-      alignSelf: 'stretch',
-      backgroundColor: '#fe9593',
-      elevation: 5,
-      height: 64,
-      justifyContent: 'center'
-    },
-    headerText: {
-      textAlign: 'center',
-      color: '#FFF',
-      fontSize: 32,
-      fontWeight: 'bold',
-    },
-    MapContainer: {
-      flex: 1,
-      backgroundColor: '#fafafa',
-      //alignItems: 'stretch',
-    },
-
-    MapImage: {
-      flex: 1,
-      height: 300,
-    },
-
-  });
-}
+let styles = StyleSheet.create({
+  header: {
+    alignSelf: 'stretch',
+    backgroundColor: AppStyles.lightRed,
+    elevation: AppStyles.headerElevation,
+    height: AppStyles.headerHeight,
+    justifyContent: 'center'
+  },
+  headerText: {
+    textAlign: 'center',
+    color: AppStyles.white,
+    fontSize: AppStyles.headerFontSize,
+    fontWeight: 'bold',
+  },
+  MapContainer: {
+    flex: 1,
+    backgroundColor: AppStyles.whiteBackground,
+  },
+  MapImage: {
+    flex: 1,
+    height: 300,
+    // welp, for some reason iOS breaks if we don't specify a width,
+    // and Android breaks if we do
+    width: Platform.OS === 'ios' ? 300 : undefined
+  }
+});
 
 export default MapView;

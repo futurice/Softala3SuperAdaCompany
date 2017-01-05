@@ -5,8 +5,9 @@ export default {
   grey: '#eeeeee',
   white: '#ffffff',
   fontSize: 18,
-  headerFontSize: 42,
-  subHeaderFontSize: 32,
+  titleFontSize: 42,
+  headerFontSize: 32,
   tabBarHeight: 64,
-  headerHeight: 64
+  headerHeight: 64,
+  headerElevation: 5
 };

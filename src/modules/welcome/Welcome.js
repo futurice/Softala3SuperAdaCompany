@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     paddingTop: 20,
-    fontSize: AppStyles.headerFontSize,
+    fontSize: AppStyles.titleFontSize,
     fontWeight: 'bold',
     color: AppStyles.white,
     textAlign: 'center'
