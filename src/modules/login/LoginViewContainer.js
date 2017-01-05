@@ -12,10 +12,9 @@ export default connect(
     login(name) {
       dispatch(rest.actions.auth({}, {
         body: JSON.stringify({
-          name
+          name: name.trim()
         })
       }, (err, data) => {
-        console.log('got data', data);
         if (!err) {
           setAuthenticationToken(data.token);
         }

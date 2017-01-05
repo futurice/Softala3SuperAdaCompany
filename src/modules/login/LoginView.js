@@ -15,55 +15,12 @@ import {
 import {post} from '../../utils/api';
 import {setAuthenticationToken} from '../../utils/authentication'
 import * as NavigationState from '../../modules/navigation/NavigationState';
+import AppStyles from '../AppStyles';
 
 const LoginView = React.createClass({
   getInitialState() {
     return {
-      username: '',
-      teamid: '',
-      token: '',
-      teamname: '',
-      background: 'rgba(255,0,54,1)',
-      loading: false
-    }
-  },
-
-  login() {
-    this.props.login(this.state.teamname.trim());
-  },
-
-  async _userLogin() {
-    try {
-      this.setState({ loading: true });
-      const response = await post('/teams/authenticate', {
-          name: this.state.teamname.trim()
-      });
-
-      await setAuthenticationToken(response.token.token);
-
-      this.setState({ loading: false }, () => {
-        this.validate();
-      });
-    } catch (e) {
-      this.setState({ loading: false });
-      Alert.alert(
-        'Virhe kirjautumisessa',
-        e.status === 401 || e.status === 400 ? 'Tarkista joukkueen nimi' : e.toString(),
-        [
-          {text: 'OK'}
-        ]
-      );
-    }
-  },
-
-  async validate() {
-    try {
-      //taken elsewhere
-      //await AsyncStorage.setItem('token', this.state.token);
-      await AsyncStorage.setItem('teamname', this.state.teamname);
-      this.props.dispatch(NavigationState.switchTab('HomeTab'));
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
+      teamname: ''
     }
   },
 
@@ -83,7 +40,7 @@ const LoginView = React.createClass({
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="#ed3a4b"
+          backgroundColor={AppStyles.darkRed}
           animated={false}
           barStyle="light-content"
         />
@@ -110,11 +67,11 @@ const LoginView = React.createClass({
         </ScrollView>
 
         <View style={styles.loginButtonContainer}>
-          <TouchableOpacity disabled={this.props.auth.loading} onPress={this.login} style={this.state.loading ? styles.loginButtonLoading : styles.loginButton}>
+          <TouchableOpacity disabled={this.props.auth.loading} onPress={() => this.props.login(this.state.teamname)} style={this.props.auth.loading ? styles.loginButtonLoading : styles.loginButton}>
             <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
           </TouchableOpacity>
           { this.props.auth.loading &&
-            <ActivityIndicator animating={true} color={'#FFF'} style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
+            <ActivityIndicator animating={true} color={ AppStyles.white } style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
           }
         </View>
       </View>
@@ -128,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#ed3a4b'
+    backgroundColor: AppStyles.darkRed
   },
   header: {
     justifyContent: 'flex-start',
@@ -144,7 +101,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   loginButtonContainer: {
-    backgroundColor: '#ed3a4b',
+    backgroundColor: AppStyles.darkRed,
     elevation: 5,
     alignSelf: 'stretch',
     alignItems: 'center',
@@ -153,14 +110,14 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   loginButton: {
-    backgroundColor: '#fe9593',
+    backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
     padding: 20
   },
   loginButtonLoading: {
-    backgroundColor: '#f14c59',
+    backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
@@ -174,14 +131,14 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 45,
-    fontSize: 20,
+    fontSize: AppStyles.fontSize,
   },
   whiteFont: {
-    fontSize: 18,
-    color: '#FFF'
+    fontSize: AppStyles.fontSize,
+    color: AppStyles.white
   },
   debug: {
-    color: '#FFF',
+    color: AppStyles.white,
     marginBottom: 15,
     marginLeft: 20
   }

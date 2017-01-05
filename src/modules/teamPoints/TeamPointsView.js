@@ -3,37 +3,21 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   Image,
   TouchableOpacity,
   ScrollView,
-  AsyncStorage
 } from 'react-native';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from 'react-native-simple-radio-button';
-
-import {get} from '../../utils/api';
+import AppStyles from '../AppStyles';
 
 const TeamPointsView = React.createClass({
-  getInitialState() {
-    return {
-      value: 0,
-      background: 'rgba(255,0,54,1)'
-    }
-  },
-
   async componentDidMount() {
     this.props.refresh();
   },
 
   render() {
-    var _scrollView: ScrollView;
       return (
-       <View style= {[styles.container, {backgroundColor: this.state.background}]}>
-        <ScrollView ref={(scrollView) => { _scrollView = scrollView; }}
+       <View style={styles.container}>
+        <ScrollView
           automaticallyAdjustContentInsets={false}
           style={styles.scrollView}>
           <Text style={styles.headerText}>Tiimisi pisteet!</Text>
@@ -66,11 +50,11 @@ const TeamPointsView = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: AppStyles.darkRed,
     flexDirection: 'column',
     flex: 1
   },
   scrollView: {
-    backgroundColor: 'rgba(255,0,54,1)',
     flex: 1,
   },
   mark: {
@@ -82,11 +66,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 30,
     marginRight: 10,
-    fontSize: 30,
+    fontSize: AppStyles.headerFontSize,
     marginBottom: 20,
-    color: '#FFF',
+    color: AppStyles.white,
     textAlign: 'center',
-    //fontFamily: 'monospace',
     fontWeight: 'bold'
   },
   pointBox: {
@@ -95,19 +78,19 @@ const styles = StyleSheet.create({
     margin: 30
   },
   points: {
-    color: '#FFF',
-    fontSize: 40,
+    color: AppStyles.white,
+    fontSize: AppStyles.headerFontSize,
     fontWeight: 'bold'
   },
   baseText: {
     marginTop: 10,
-    fontSize: 18,
-    color: '#FFF',
+    fontSize: AppStyles.fontSize,
+    color: AppStyles.white,
     textAlign: 'center',
     fontWeight: 'bold'
   },
   button: {
-    backgroundColor: '#FF8A8C',
+    backgroundColor: AppStyles.lightRed,
     padding: 15,
     marginTop: 40,
     marginRight: 10,
@@ -118,8 +101,8 @@ const styles = StyleSheet.create({
     height: 70,
   },
   whiteFont: {
-    color: '#FFF',
-    fontSize: 18,
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold'
   },
   header: {

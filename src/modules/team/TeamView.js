@@ -13,10 +13,9 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {options} from './image-picker-options';
-import {post, get} from '../../utils/api';
 import * as NavigationState from '../../modules/navigation/NavigationState';
+import AppStyles from '../AppStyles';
 
-const TAB_BAR_HEIGHT = 64;
 const TeamView = React.createClass({
   getInitialState() {
     return {
@@ -141,7 +140,7 @@ const TeamView = React.createClass({
             <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
           </TouchableOpacity>
           { (this.state.disableSave)
-            ? <ActivityIndicator animating={true} color={'#FFF'} style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
+            ? <ActivityIndicator animating={true} color={ AppStyles.white } style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
             : null
           }
         </View>
@@ -160,15 +159,15 @@ const circle = {
 const styles = StyleSheet.create({
   header: {
     alignSelf: 'stretch',
-    backgroundColor: '#fe9593',
+    backgroundColor: AppStyles.lightRed,
     elevation: 5,
-    height: 64,
+    height: AppStyles.headerHeight,
     justifyContent: 'center'
   },
   headerText: {
     textAlign: 'center',
-    color: '#FFF',
-    fontSize: 32,
+    color: AppStyles.white,
+    fontSize: AppStyles.subHeaderFontSize,
     fontWeight: 'bold',
   },
   teamContainer: {
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fafafa',
+    backgroundColor: AppStyles.whiteBackground,
   },
   teamName: {
     paddingTop: 20
@@ -185,8 +184,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   teamTitle: {
-    color: '#FF0036',
-    fontSize: 30,
+    color: AppStyles.darkRed,
+    fontSize: AppStyles.subHeaderFontSize,
     minHeight: 30,
     fontWeight: 'bold'
   },
@@ -195,7 +194,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
     margin: 10,
   },
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     ...circle,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: AppStyles.grey,
     margin: 20
   },
   cameraImage: {
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
     borderRadius: 75
   },
   saveButtonContainer: {
-    backgroundColor: '#fafafa',
+    backgroundColor: AppStyles.whiteBackground,
     elevation: 5,
     alignSelf: 'stretch',
     alignItems: 'center',
@@ -240,7 +239,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   saveButton: {
-    backgroundColor: '#ff5454',
+    backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   saveButtonLoading: {
-    backgroundColor: '#fe9593',
+    backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
@@ -256,8 +255,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   whiteFont: {
-    color: '#FFF',
-    fontSize: 18
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize
   }
 });
 export default TeamView;

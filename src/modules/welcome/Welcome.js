@@ -8,31 +8,15 @@ import {
   TouchableOpacity,
   ScrollView
 } from 'react-native';
-
+import AppStyles from '../AppStyles';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const Welcome = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-
-  getInitialState() {
-    return {
-      username: '',
-      password: '',
-      background: 'rgba(255,0,54,1)'
-    };
-  },
-
-  profile() {
-    this.props.dispatch(NavigationState.switchTab('ProfileTab'));
-  },
-
   render() {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="#ed3a4b"
+          backgroundColor={AppStyles.darkRed}
           animated={false}
           barStyle="light-content"
         />
@@ -60,7 +44,7 @@ const Welcome = React.createClass({
         </ScrollView>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={this.profile}>
+          <TouchableOpacity style={styles.button} onPress={this.props.profile}>
             <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
           </TouchableOpacity>
         </View>
@@ -75,31 +59,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#ed3a4b',
-  },
-  header: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: AppStyles.darkRed,
   },
   titleText: {
     paddingTop: 20,
-    fontSize: 42,
+    fontSize: AppStyles.headerFontSize,
     fontWeight: 'bold',
-    color: '#FFF',
+    color: AppStyles.white,
     textAlign: 'center'
   },
   image: {
     resizeMode: 'contain',
     height: 200,
   },
-  infoContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   buttonContainer: {
-    backgroundColor: '#ed3a4b',
+    backgroundColor: AppStyles.darkRed,
     elevation: 5,
     alignSelf: 'stretch',
     alignItems: 'center',
@@ -108,22 +82,20 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   button: {
-    backgroundColor: '#fe9593',
+    backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
     padding: 20
   },
-  textContainer: {
-  },
   whiteFont: {
-    color: '#FFF',
-    fontSize: 18,
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold'
   },
   textStyle: {
-    color: '#FFF',
-    fontSize: 18,
+    color: AppStyles.white,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
     marginLeft: 20,
     marginRight: 20,
