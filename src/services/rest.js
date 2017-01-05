@@ -26,6 +26,12 @@ const rest = reduxApi({
     transformer: transformers.array,
     crud: true
   },
+  companies: {
+    url: `${apiRoot}/companies`,
+    transformer: transformers.array
+  }
+  // NOTE: when adding new API endpoints, remember to clear .loading property
+  // in AppView.js resetSnapshot() function
 }).use('options', (url, params, getState) => {
   const token = getState().auth.data.token;
 

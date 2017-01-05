@@ -12,8 +12,7 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from 'react-native';
-import {post} from '../../utils/api';
-import {setAuthenticationToken} from '../../utils/authentication'
+
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 

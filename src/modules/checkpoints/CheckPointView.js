@@ -7,7 +7,6 @@ TouchableOpacity,
 Image
 } from 'react-native';
 import GridView from 'react-native-grid-view';
-import {get} from '../../utils/api';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
 import AppStyles from '../AppStyles';
@@ -36,15 +35,8 @@ const images = {
 var COMPANIES_PER_ROW = 3;
 
 const CheckPointView = React.createClass({
-
-  propTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-
   getInitialState() {
     return {
-      teamtoken: '',
-      dataSource: [],
       refreshInterval: null
     };
   },
@@ -60,11 +52,8 @@ const CheckPointView = React.createClass({
     clearInterval(this.state.refreshInterval);
   },
 
-  async fetchData() {
-    const responseData = await get('/companies');
-    this.setState({
-      dataSource: responseData
-    });
+  fetchData() {
+    this.props.refresh();
   },
 
   renderCompany(company) {
@@ -85,25 +74,17 @@ const CheckPointView = React.createClass({
     );
   },
 
-  kartta() {
-    this.props.dispatch(NavigationState.pushRoute({
-      key: 'MapView',
-      title: 'Kartta'
-    }));
-  },
-
-
 
   render() {
     let visitedCompanies = 0;
 
-    this.state.dataSource.forEach((company) => {
+    this.props.companies.data.forEach((company) => {
       if (company.visited) {
         visitedCompanies += 1;
       }
     });
 
-    if(visitedCompanies >= this.state.dataSource.length && this.state.dataSource.length != 0){
+    if(visitedCompanies >= this.props.companies.data.length && this.props.companies.data.length != 0){
       return (
         <TeamPointsView />
       );
@@ -116,7 +97,7 @@ const CheckPointView = React.createClass({
             </Text>
           </View>
           <GridView
-            items={this.state.dataSource}
+            items={this.props.companies.data}
             itemsPerRow={COMPANIES_PER_ROW}
             renderItem={this.renderCompany}
             style={styles.companyList}
@@ -124,7 +105,7 @@ const CheckPointView = React.createClass({
             />
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => this.kartta()}>
+            <TouchableOpacity style={styles.button} onPress={() => this.props.map()}>
               <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'KARTTA'}</Text>
             </TouchableOpacity>
           </View>
@@ -154,14 +135,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 32,
     fontWeight: 'bold',
-  },
-  GoToMapButton: {
-    elevation: 5,
-    backgroundColor: '#ff5454',
-    alignSelf: 'stretch',
-    margin: 20,
-    height: 70,
-    justifyContent: 'center'
   },
   companyRow: {
     flex: 1,
