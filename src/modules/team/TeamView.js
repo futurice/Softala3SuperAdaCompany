@@ -32,7 +32,7 @@ const TeamView = React.createClass({
     this.props.dispatch(NavigationState.switchTab('CheckPointsTab'));
   },
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.refresh();
   },
 

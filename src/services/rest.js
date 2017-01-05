@@ -20,7 +20,12 @@ const rest = reduxApi({
   },
   companyPoints: {
     url: `${apiRoot}/companypoints`
-  }
+  },
+  feedback: {
+    url: `${apiRoot}/feedback`,
+    transformer: transformers.array,
+    crud: true
+  },
 }).use('options', (url, params, getState) => {
   const token = getState().auth.data.token;
 
