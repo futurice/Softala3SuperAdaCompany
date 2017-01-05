@@ -15,14 +15,9 @@ import RadioForm, {
   RadioButtonLabel
 } from 'react-native-simple-radio-button';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import {get} from '../../utils/api';
 
 const TeamPointsView = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired
-  },
-
   getInitialState() {
     return {
       value: 0,
@@ -30,54 +25,32 @@ const TeamPointsView = React.createClass({
     }
   },
 
-  feedback(){
-    this.props.dispatch(NavigationState.pushRoute({
-      key: 'FeedbackView',
-      title: 'Anna palautetta'
-     }));
-  },
-
-  goodbye(){
-      this.props.dispatch(NavigationState.pushRoute({
-        key: 'Goodbye',
-        title: 'Kiitos osallistumisesta!'
-      }));
-  },
-
   async componentDidMount() {
-    const responseData = await get('/companypoints');
-    this.setState({
-      value: responseData.result[0].sum
-    });
-},
+    this.props.refresh();
+  },
 
   render() {
-
-
-
     var _scrollView: ScrollView;
       return (
        <View style= {[styles.container, {backgroundColor: this.state.background}]}>
         <ScrollView ref={(scrollView) => { _scrollView = scrollView; }}
           automaticallyAdjustContentInsets={false}
-          onScroll={() => { console.log('onScroll!'); }}
-          scrollEventThrottle={200}
           style={styles.scrollView}>
           <Text style={styles.headerText}>Tiimisi pisteet!</Text>
           <View style={styles.header}>
             <Image style={styles.mark} source={require('../../../images/pisteet.png')}/>
           </View>
           <View style={styles.pointBox}>
-            <Text style={styles.points}>{this.state.value}/40</Text>
+            <Text style={styles.points}>{this.props.companyPoints.data.sum || 0}/40</Text>
           </View>
             <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
           <View style ={styles.buttons}>
-            <TouchableOpacity onPress={this.feedback}>
+            <TouchableOpacity onPress={this.props.feedback}>
               <View style={styles.button}>
                 <Text style={styles.whiteFont}>KYLLÄ</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.goodbye}>
+            <TouchableOpacity onPress={this.props.goodbye}>
               <View style={styles.button}>
                 <Text style={styles.whiteFont}>EI</Text>
               </View>

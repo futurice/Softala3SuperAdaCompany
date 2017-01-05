@@ -37,53 +37,6 @@ const TeamView = React.createClass({
     this.props.refresh();
   },
 
-  async saveTeamDetails() {
-    this.setState({ disableSave: true });
-    try {
-      await this.saveSlogan();
-
-      if (this.state.imageChanged) {
-        await this.savePicture();
-      }
-      this.setState({ disableSave: false });
-      this.checkpoints();
-    } catch (e) {
-      console.log(e);
-      this.setState({ disableSave: false });
-    }
-  },
-
-  async saveSlogan() {
-    const response = await post('/saveDescription', {
-      teamDescription: this.state.modifiedTeamDescription
-    });
-  },
-
-  async savePicture() {
-    await post('/savePicture', this.state.avatarData);
-    this.setState({ imageChanged: false });
-  },
-
-  async getTeamDetails() {
-    // get name, picture and slogan from db
-
-    const response = await get('/teamDetails');
-
-    this.setState({
-      teamName: response.teamName,
-      teamDescription: response.description
-    });
-
-    var teamPicture = response.file;
-    if (teamPicture !== null) {
-      this.setState({
-        avatarSource: {
-          uri: 'data:image/png;base64,' + teamPicture
-        }
-      });
-    }
-  },
-
   openImageGallery() {
     this.setState({ disableSave: true });
     ImagePicker.showImagePicker(options, (response) => {
@@ -135,7 +88,7 @@ const TeamView = React.createClass({
           var {x, y, width, height} = e.nativeEvent.layout;
           // TODO: any more sane way of passing this View's height down?
           if (height !== this.state.height) {
-            this.setState({ width, height });
+            //this.setState({ width, height });
           }
         }}>
           <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
@@ -166,8 +119,9 @@ const TeamView = React.createClass({
                   style={styles.teamInput}
                   onChangeText={(modifiedTeamDescription) => this.setState({modifiedTeamDescription})}
                   value={description}
-                  onSubmitEditing={() => {!this.props.teamDetails.loading && !this.state.disableSave && this.saveTeamDetails()}}
-                  />
+                  onSubmitEditing={() => { !disabled
+                    && this.props.save(this.state.modifiedTeamDescription, this.state.modifiedImage);
+                  }} />
               </View>
             </View>
           </ScrollView>

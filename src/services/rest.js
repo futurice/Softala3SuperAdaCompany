@@ -12,13 +12,15 @@ const rest = reduxApi({
     }
   },
   teamDetails: {
-    url: `${apiRoot}/teamDetails`,
+    url: `${apiRoot}/teamdetails`,
     transformer: (data, prevData, action) => {
-      console.log('prevData:', prevData);
       return {...prevData, ...data};
     },
     crud: true
   },
+  companyPoints: {
+    url: `${apiRoot}/companypoints`
+  }
 }).use('options', (url, params, getState) => {
   const token = getState().auth.data.token;
 
@@ -38,17 +40,3 @@ const rest = reduxApi({
 // TODO: on unauthorized error, clear token
 
 export default rest;
-  /*
-export const restReducer = (state = fromJS({}), action) => {
-  // TODO: this has a pretty bad performance penalty
-  state = state.toJS();
-
-  Object.keys(rest.reducers).forEach((key) => {
-    const oldState = state[key];
-    const newState = rest.reducers[key](oldState, action);
-    state[key] = newState;
-  });
-
-  return fromJS(state);
-};
-*/

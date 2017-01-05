@@ -17,6 +17,10 @@ export default connect(
     save(description, image) {
       dispatch(rest.actions.teamDetails.post({}, {
         body: JSON.stringify({ description, image })
+      }, (err, data) => {
+        if (!err) {
+          dispatch(NavigationState.switchTab('CheckPointsTab'));
+        }
       }));
     }
   })
