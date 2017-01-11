@@ -13,6 +13,8 @@ import{
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 
+import {getConfiguration} from '../../utils/configuration';
+
 const MapView = React.createClass({
   render() {
     return (
@@ -29,7 +31,7 @@ const MapView = React.createClass({
           minimumZoomScale={1}
           maximumZoomScale={3}
           androidScaleType="fitCenter"
-          source={require('../../../images/map.png')}
+          source={{uri: `${getConfiguration('API_ROOT')}/map.png`}}
           style={styles.MapImage}
         />
       </View>
