@@ -59,8 +59,6 @@ const TeamView = React.createClass({
   },
 
   render() {
-    ////console.log('teamId:', this.props.teamDetails.data.teamId);
-    //console.log(this.props.teamDetails.error);
     const description = this.state.modifiedTeamDescription !== null
       ? this.state.modifiedTeamDescription
       : (this.props.teamDetails.data ? this.props.teamDetails.data.description : '');
@@ -106,7 +104,7 @@ const TeamView = React.createClass({
                   : <TouchableOpacity
                       onPress={this.openImageGallery}
                       style={[styles.cameraButton]}>
-                      { this.props.image
+                      { image.uri
                         ? <Image source={image} style={styles.teamImage} />
                         : <Image style={styles.cameraImage} source={require('../../../images/kamera.png')}/>
                       }
