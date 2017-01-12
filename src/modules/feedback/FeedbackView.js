@@ -176,8 +176,9 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.fontSize,
   },
   inputContainer: {
-    paddingLeft: 10,
-    paddingRight: 10
+    marginLeft: 10,
+    marginRight: 10,
+    borderBottomWidth: 1
   },
   send: {
     backgroundColor: '#ff5454',

@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   logo: {
+    marginVertical: 40,
     width: 150,
     height: 150
   },
@@ -123,10 +124,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   inputContainer: {
-    padding: 35,
-    borderWidth: 1,
+    marginHorizontal: 35,
     alignSelf: 'stretch',
-    borderColor: 'transparent'
+    borderBottomWidth: 1
   },
   input: {
     height: 45,
