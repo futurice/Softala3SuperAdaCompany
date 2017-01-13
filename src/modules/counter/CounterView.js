@@ -108,6 +108,16 @@ const CounterView = React.createClass({
       ? {backgroundColor: '#eee'}
       : null;
 
+    if (!__DEV__) {
+      return (
+        <View style={styles.container}>
+          <Text style={{fontSize: 24, color: '#FFF', paddingHorizontal: 40}}>
+            Quiz will be available once event begins.
+          </Text>
+        </View>
+      );
+    }
+
     return (
       <View style={styles.container}>
       <Text style={{fontSize: 24, color: '#FFF', padding: 40}}>
