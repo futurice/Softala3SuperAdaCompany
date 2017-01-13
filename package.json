@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "bundle:android": "./bundle_android.sh",
-    "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.ios.js --bundle-output ios/SuperAda/main.jsbundle --dev=false --minify --verbose",
+    "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.ios.js --bundle-output ios/SuperAda/main.jsbundle --dev=false --verbose",
     "test": "mocha src/**/*.spec.js",
     "test:watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm test'",
     "lint": "eslint src test",
