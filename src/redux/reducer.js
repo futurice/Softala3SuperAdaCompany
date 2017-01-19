@@ -3,8 +3,7 @@ import {
   combineReducers
 } from 'redux';
 import NavigationStateReducer from '../modules/navigation/NavigationState';
-import AuthStateReducer from '../modules/auth/AuthState';
-import CounterStateReducer from '../modules/counter/CounterState';
+import GameStateReducer from '../modules/game/GameState';
 import SessionStateReducer, {RESET_STATE} from '../modules/session/SessionState';
 import rest from '../services/rest';
 
@@ -14,6 +13,8 @@ const reducers = {
   navigationState: NavigationStateReducer,
 
   session: SessionStateReducer,
+
+  gameState: GameStateReducer,
 
   ...rest.reducers
 };

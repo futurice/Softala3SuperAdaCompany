@@ -1,7 +1,8 @@
 /*eslint-disable react/prop-types*/
 
 import React from 'react';
-import CounterViewContainer from './counter/CounterViewContainer';
+import Wordfind from './puzzle/wordfind';
+import GameViewContainer from './game/GameViewContainer';
 import ColorViewContainer from './colors/ColorViewContainer';
 import ExampleViewContainer from './exampleView/ExampleViewContainer';
 import LoginViewContainer from './login/LoginViewContainer';
@@ -14,14 +15,44 @@ import GoodbyeViewContainer from './goodbye/GoodbyeViewContainer';
 import GoodbyeFeedbackViewContainer from './goodbyeFeedback/GoodbyeFeedbackViewContainer';
 import TeamPointsViewContainer from './teamPoints/TeamPointsViewContainer';
 
+const randomWords = (words, quantity = 21) => {
+  let hit = { };
+  let i = quantity;
+  const rands = quantity;
+
+  while (i > 0 || Object.keys(hit).length < rands) {
+    hit[Math.ceil(Math.random() * words.length)] = i--;
+  }
+
+  return Object.keys(hit).map((key) => words[key - 1]);
+};
+
 /**
  * AppRouter is responsible for mapping a navigator scene to a view
  */
 export default function AppRouter(props) {
   const key = props.scene.route.key;
 
-  if (key === 'Counter') {
-    return <CounterViewContainer />;
+  if (key === 'Puzzle') {
+    const words = ['ada', 'lovelace', 'mobile', 'data', 'robot', 'infrastructure', 'testing', 'teamwork',
+      'code', 'binary', 'api', 'agile', 'software', 'project', 'design', 'creativity', 'opensource',
+      'motherboard', 'bug', 'feature', 'internet', 'online', 'interface', 'hypertext',
+      'javascript', 'automation', 'programming', 'computer',
+      'gaming', 'platform', 'meetings'];
+    const puzzleWords = randomWords(words);
+    const puzzle = Wordfind.newPuzzle(puzzleWords, {
+      height: 14,
+      width: 14,
+      preferOverlap: true,
+      maxAttempts: 5,
+      fillBlanks: true
+    });
+
+    const solution = Wordfind.solve(puzzle, words);
+    return <GameViewContainer
+      puzzle={puzzle}
+      solution={solution}
+      />;
   }
 
   if (key.indexOf('Color') === 0) {

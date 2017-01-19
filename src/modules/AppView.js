@@ -8,7 +8,7 @@ import store from '../redux/store';
 import DeveloperMenu from '../components/DeveloperMenu';
 import {setConfiguration} from '../utils/configuration';
 
-const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
+const apiRoot = 'https://superada.herokuapp.com';
 
 const AppView = React.createClass({
   componentDidMount() {

@@ -58,7 +58,7 @@ const initialState = {
   },
   LinkTab: {
     index: 0,
-    routes: [{key: 'Counter', title: 'Linkit'}]
+    routes: [{key: 'Puzzle', title: 'Puzzle'}]
   }
 };
 
