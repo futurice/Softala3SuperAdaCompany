@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Alert,
   StatusBar,
+  Platform,
   AsyncStorage,
   ActivityIndicator
 } from 'react-native';
@@ -126,7 +127,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginHorizontal: 35,
     alignSelf: 'stretch',
-    borderBottomWidth: 1
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: 1
+      }
+    })
   },
   input: {
     height: 45,

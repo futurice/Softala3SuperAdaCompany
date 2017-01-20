@@ -18,9 +18,6 @@ const rest = reduxApi({
     },
     crud: true
   },
-  companyPoints: {
-    url: `${apiRoot}/companypoints`
-  },
   feedback: {
     url: `${apiRoot}/feedback`,
     transformer: transformers.array,

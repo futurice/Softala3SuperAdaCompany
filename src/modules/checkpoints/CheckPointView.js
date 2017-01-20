@@ -1,38 +1,16 @@
 import React, {PropTypes} from 'react';
 import {
-Text,
-View,
-StyleSheet,
-TouchableOpacity,
-Image
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Image
 } from 'react-native';
-import GridView from 'react-native-grid-view';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
 import AppStyles from '../AppStyles';
-
-const images = {
-  Koulu: require('../../../images/companyImages/Koulu.png'),
-  Futurice: require('../../../images/companyImages/Futurice.png'),
-  Oracle: require('../../../images/companyImages/Oracle.png'),
-  Reaktor: require('../../../images/companyImages/Reaktor.png'),
-  Rovio: require('../../../images/companyImages/Rovio.png'),
-  Sigmatic: require('../../../images/companyImages/Sigmatic.png'),
-  Supercell: require('../../../images/companyImages/Supercell.png'),
-  Appelsiini: require('../../../images/companyImages/Appelsiini.png'),
-  Zalando: require('../../../images/companyImages/Zalando.png'),
-  Koulu_visited: require('../../../images/companyImages/Koulu_visited.png'),
-  Futurice_visited: require('../../../images/companyImages/Futurice_visited.png'),
-  Oracle_visited: require('../../../images/companyImages/Oracle_visited.png'),
-  Reaktor_visited: require('../../../images/companyImages/Reaktor_visited.png'),
-  Rovio_visited: require('../../../images/companyImages/Rovio_visited.png'),
-  Sigmatic_visited: require('../../../images/companyImages/Sigmatic_visited.png'),
-  Supercell_visited: require('../../../images/companyImages/Supercell_visited.png'),
-  Appelsiini_visited: require('../../../images/companyImages/Appelsiini_visited.png'),
-  Zalando_visited: require('../../../images/companyImages/Zalando_visited.png')
-};
-
-var COMPANIES_PER_ROW = 3;
+import { getConfiguration } from '../../utils/configuration';
 
 const CheckPointView = React.createClass({
   getInitialState() {
@@ -57,20 +35,32 @@ const CheckPointView = React.createClass({
   },
 
   renderCompany(company) {
-    const visited = company.visited ? '_visited' : '';
-    const image = images[`${company.companyName}${visited}`];
+    const apiRoot = getConfiguration('API_ROOT');
+    const uri = `${apiRoot}/public/company${company.companyId}.png`;
 
-    if (!image) {
-      return null;
-    }
     return (
-      <TouchableOpacity
-        key={company.companyId}>
-        <View style={styles.companyRow}>
-          <Image style={styles.thumb} source={image} />
-          <Text style={styles.companyText}>{company.companyName}</Text>
+      <View key={company.companyId} style={styles.company}>
+        <Image style={
+          [styles.thumb, company.points ? styles.companyVisited : null]
+        } source={{uri}} />
+
+        {
+          company.points
+            ? <Image style={styles.checkmark} source={require('../../../images/checkmark.png')} />
+            : null
+        }
+
+        <Text style={styles.companyText}>{company.companyName}</Text>
+        <View style={styles.starsContainer}>
+          {
+            new Array(5).fill(null).map((element, index) => (
+              index < company.points
+                ? <Image key={index} style={styles.star} source={require('../../../images/star.png')}/>
+                : <Image key={index} style={styles.star} source={require('../../../images/star_grey.png')}/>
+            ))
+          }
         </View>
-      </TouchableOpacity>
+      </View>
     );
   },
 
@@ -96,13 +86,17 @@ const CheckPointView = React.createClass({
               Rastit
             </Text>
           </View>
-          <GridView
-            items={this.props.companies.data}
-            itemsPerRow={COMPANIES_PER_ROW}
-            renderItem={this.renderCompany}
-            style={styles.companyList}
-            enableEmptySections={true}
-            />
+          <ScrollView
+            style={styles.companyListContainer}
+          >
+            <View style={styles.companyList}>
+            {
+              this.props.companies.data.map((company) => (
+                this.renderCompany(company)
+              ))
+            }
+            </View>
+          </ScrollView>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => this.props.map()}>
@@ -136,19 +130,39 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
   },
-  companyRow: {
-    flex: 1,
-    flexDirection: 'column',
+  company: {
     alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
-    width: 100
+    padding: 10,
+    width: 150,
+  },
+  companyVisited: {
+    opacity: 0.5
+  },
+  companyListContainer: {
+    alignSelf: 'stretch',
   },
   companyList: {
-    marginTop: 20
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
   },
   companyText: {
     fontSize: 20
+  },
+  starsContainer: {
+    flexDirection: 'row'
+  },
+  star: {
+    width: 20,
+    height: 20
+  },
+  checkmark: {
+    width: 32,
+    height: 32,
+    position: 'absolute',
+    right: 20,
+    top: 20
   },
   thumb: {
     width: 100,
@@ -157,7 +171,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     padding: 5,
-    justifyContent: 'flex-start'
   },
   buttonText: {
     margin: 10,
