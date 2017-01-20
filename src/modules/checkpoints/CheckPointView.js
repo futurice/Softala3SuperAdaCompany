@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {
   Text,
   View,
+  ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -67,14 +68,23 @@ const CheckPointView = React.createClass({
 
   render() {
     let visitedCompanies = 0;
+    let numCompanies = 0;
 
     this.props.companies.data.forEach((company) => {
-      if (company.visited) {
-        visitedCompanies += 1;
+      if (company.points) {
+        visitedCompanies++;
       }
+
+      numCompanies++;
     });
 
-    if(visitedCompanies >= this.props.companies.data.length && this.props.companies.data.length != 0){
+    if (this.props.companies.loading) {
+      return (
+        <View style={{flex: 1}}>
+          <ActivityIndicator color={"#ed3a4b"} size={'large'} style={styles.centered}/>
+        </View>
+      );
+    } else if(numCompanies && visitedCompanies >= numCompanies) {
       return (
         <TeamPointsView />
       );
@@ -199,6 +209,10 @@ const styles = StyleSheet.create({
     color: AppStyles.white,
     fontSize: AppStyles.fontSize
   },
+  centered: {
+    flex: 1,
+    alignSelf: 'center'
+  }
 });
 
 export default CheckPointView;

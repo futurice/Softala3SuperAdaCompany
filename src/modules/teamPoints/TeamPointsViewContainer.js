@@ -5,11 +5,11 @@ import * as NavigationState from '../../modules/navigation/NavigationState';
 
 export default connect(
   state => ({
-    companyPoints: state.companyPoints
+    companies: state.companies
   }),
   dispatch => ({
     refresh() {
-      dispatch(rest.actions.companyPoints());
+      dispatch(rest.actions.companies());
     },
     feedback() {
       dispatch(NavigationState.pushRoute({
