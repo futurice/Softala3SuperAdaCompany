@@ -1,5 +1,5 @@
-import reduxApi, { transformers } from "redux-api";
-import adapterFetch from "redux-api/lib/adapters/fetch";
+import reduxApi, {transformers} from 'redux-api';
+import adapterFetch from 'redux-api/lib/adapters/fetch';
 
 const apiRoot = 'https://superada.herokuapp.com';
 
@@ -37,15 +37,22 @@ const rest = reduxApi({
 
   // Add token to header request
   const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
   };
 
   if (token) {
-    return { headers: {  ...headers, Authorization: `Bearer ${token}` } };
+    return {
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${token}`
+      }
+    };
   }
 
-  return { headers };
+  return {
+    headers
+  };
 }).use('fetch', adapterFetch(fetch));
 
 // TODO: on unauthorized error, clear token
