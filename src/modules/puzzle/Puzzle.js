@@ -29,12 +29,14 @@ const wordFound = (component, currentWord) => {
   discoveredSoFar.words.push(word);
   discoveredSoFar.cells = cells;
 
-  const {wordsToFind, gameCompleted} = component.props;
+  const {
+    wordsToFind,
+    gameCompleted
+  } = component.props;
   const wordsStillToFind = solution.found.length - discoveredSoFar.words.length;
-  if (wordsStillToFind > 0) {
-    wordsToFind(wordsStillToFind);
-  } else {
-    wordsToFind(0);
+  wordsToFind(wordsStillToFind);
+
+  if (wordsStillToFind === 0) {
     gameCompleted();
   }
 
@@ -159,13 +161,11 @@ class Puzzle extends Component {
       cells
     } = discoveredSoFar;
 
-    const onCellPressHandler = onCellPress(this);
-
     const rows = puzzle.map((row,idx) => {
       return (
         <Row
           key={idx}
-          onCellPress={onCellPressHandler}
+          onCellPress={onCellPress(this)}
           pressedCells={pressedCells}
           discoveredCells={cells}
           cellY={idx}
