@@ -29,6 +29,24 @@ const rest = reduxApi({
   companies: {
     url: `${apiRoot}/companies`,
     transformer: transformers.array
+  },
+  quizStatus: {
+    url: `${apiRoot}/quiz`,
+    options: {
+      method: 'GET'
+    }
+  },
+  setQuizPoints: {
+    url: `${apiRoot}/quiz`,
+    options: {
+      method: 'POST'
+    }
+  },
+  deleteGame: {
+    url: `${apiRoot}/quiz`,
+    options: {
+      method: 'DELETE'
+    }
   }
   // NOTE: when adding new API endpoints, remember to clear .loading property
   // in AppView.js resetSnapshot() function

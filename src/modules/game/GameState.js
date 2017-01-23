@@ -44,7 +44,7 @@ export function pressedCell(cell) {
   };
 }
 
-const randomWords = (words, quantity = 21) => {
+const randomWords = (words, quantity = __DEV__ ? 5 : 21) => {
   let hit = { };
   let i = quantity;
   const rands = quantity;
@@ -81,7 +81,7 @@ export default function GameStateReducer(state = initialState, action) {
         width: 14,
         preferOverlap: true,
         maxAttempts: 5,
-        fillBlanks: true
+        fillBlanks: !__DEV__
       });
 
       const solution = Wordfind.solve(puzzle, words);
