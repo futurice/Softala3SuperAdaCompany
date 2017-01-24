@@ -54,8 +54,7 @@ export function wordFound(word) {
 
 export function tickTimer() {
   return {
-    type: TIMER,
-    payload: Date.now()
+    type: TIMER
   };
 }
 
@@ -78,7 +77,7 @@ const initialState = {
   wordsToFind: null,
   puzzle: null,
   solution: null,
-  timer: null,
+  timer: 0,
   discoveredSoFar: {
     cells: [],
     words: []
@@ -154,9 +153,13 @@ export default function GameStateReducer(state = initialState, action) {
       };
     }
     case TIMER: {
+      const {
+        timer
+      } = state;
+
       return {
         ...state,
-        timer: action.payload
+        timer: timer + 1
       };
     }
     case WORD_FOUND: {

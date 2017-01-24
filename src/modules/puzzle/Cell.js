@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Text
 } from 'react-native';
+import * as GameState from '../game/GameState';
 
 const screenWidth = Dimensions.get('window').width;
 const cellsNumber = 14;
@@ -22,7 +23,8 @@ class Cell extends Component {
       cellY,
       status,
       text,
-      onCellPress
+      onCellPress,
+      gameStatus
     } = this.props;
 
     const style = styles[status];
@@ -33,7 +35,7 @@ class Cell extends Component {
         onPressOut={onCellPress(cellX, cellY)}
         >
         <Text style={styles.cellText}>
-          {text}
+          {gameStatus === GameState.GAME_RUNNING ? text : ' ' }
         </Text>
       </TouchableOpacity>
     );

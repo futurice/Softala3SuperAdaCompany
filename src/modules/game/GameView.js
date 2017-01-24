@@ -70,10 +70,6 @@ const tick = (component) => {
 class GameView extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      timer: Date.now()
-    };
   }
 
   componentWillMount() {
@@ -118,12 +114,13 @@ class GameView extends Component {
     } = gameState;
 
     let contentView;
-    const timePassed = `${Math.round(Math.max(0, (timer - timeStarted) / 1000 / 60))}m`;
+    const timePassed = `${timer}m`;
     let footerText = `Time: ${timePassed} ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
     if (gameStatus === GameState.GAME_COMPLETED) {
       footerText = `Game ended in ${timePassed}`;
     }
 
+    console.log ('gameStatus: ', gameStatus);
     switch (gameStatus) {
       case GameState.GAME_CREATED:
       case GameState.GAME_PAUSE:

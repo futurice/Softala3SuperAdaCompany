@@ -24,21 +24,23 @@ class Row extends Component {
       cellY,
       onCellPress,
       pressedCells,
-      discoveredCells
+      discoveredCells,
+      gameStatus
     } = this.props;
 
     const cells = row.map((cell,cellX) => {
-      let status = 'normal';
+      let cellStatus = 'normal';
       if (isCellIn(pressedCells, {x: cellX, y: cellY})) {
-        status = 'pressed';
+        cellStatus = 'pressed';
       } else if (isCellIn(discoveredCells, {x: cellX, y: cellY})) {
-        status = 'discovered';
+        cellStatus = 'discovered';
       }
 
       return (
         <Cell
           key={cellX + cellY}
-          status={status}
+          status={cellStatus}
+          gameStatus={gameStatus}
           text={cell}
           onCellPress={onCellPress}
           cellX={cellX}

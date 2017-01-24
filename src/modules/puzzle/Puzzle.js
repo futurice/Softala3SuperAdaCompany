@@ -152,6 +152,7 @@ class Puzzle extends Component {
 
   render() {
     const {
+      gameStatus,
       puzzle,
       discoveredSoFar
     } = this.props;
@@ -168,6 +169,7 @@ class Puzzle extends Component {
       return (
         <Row
           key={idx}
+          gameStatus={gameStatus}
           onCellPress={onCellPress(this)}
           pressedCells={pressedCells}
           discoveredCells={cells}
