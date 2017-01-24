@@ -20,11 +20,11 @@ class Row extends Component {
 
   render = () => {
     const {
-        row,
-        cellY,
-        onCellPress,
-        pressedCells,
-        discoveredCells
+      row,
+      cellY,
+      onCellPress,
+      pressedCells,
+      discoveredCells
     } = this.props;
 
     const cells = row.map((cell,cellX) => {
