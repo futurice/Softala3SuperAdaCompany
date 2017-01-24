@@ -7,7 +7,7 @@ export const GAME_CREATED = 'Game/GAME_CREATED';
 export const GAME_STARTED = 'Game/GAME_STARTED';
 export const GAME_RUNNING = 'Game/GAME_RUNNING';
 export const GAME_COMPLETED = 'Game/GAME_COMPLETED';
-export const NUM_WORDS_TO_FIND = 'Game/NUM_WORDS_TO_FIND';
+export const WORD_FOUND = 'Game/WORD_FOUND';
 export const PRESSED_CELL = 'Puzzle/PRESSED_CELL';
 
 export function initGame() {
@@ -30,17 +30,10 @@ export function gameCompleted(time) {
   };
 }
 
-export function wordsToFind(numOfWordsToFind) {
+export function wordFound(word) {
   return {
-    type: NUM_WORDS_TO_FIND,
-    payload: numOfWordsToFind
-  };
-}
-
-export function pressedCell(cell) {
-  return {
-    type: PRESSED_CELL,
-    payload: cell
+    type: WORD_FOUND,
+    payload: word
   };
 }
 
@@ -63,8 +56,20 @@ const initialState = {
   wordsToFind: null,
   puzzle: null,
   solution: null,
-  pressedCells: [],
-  discoveredSoFar: null
+  discoveredSoFar: {
+    cells: [],
+    words: []
+  }
+};
+
+const getCellsFromWord = ({x, y, orientation, word}) => {
+  const next = Wordfind.orientations[orientation];
+
+  const cells = word.split('').map((_, idx) => {
+    return next(x,y,idx);
+  });
+
+  return cells;
 };
 
 export default function GameStateReducer(state = initialState, action) {
@@ -86,10 +91,11 @@ export default function GameStateReducer(state = initialState, action) {
 
       const solution = Wordfind.solve(puzzle, words);
       return {
-        ...state,
+        ...initialState,
         gameStatus: GAME_CREATED,
-        puzzle: puzzle,
-        solution: solution
+        wordsToFind: puzzleWords.length,
+        puzzle,
+        solution
       };
     }
     case GAME_CREATED: {
@@ -112,18 +118,23 @@ export default function GameStateReducer(state = initialState, action) {
         timeEnded: action.payload
       };
     }
-    case NUM_WORDS_TO_FIND: {
-      return {
-        ...state,
-        wordsToFind: action.payload
-      };
-    }
-    case PRESSED_CELL: {
-      const {pressedCells} = state;
+    case WORD_FOUND: {
+      const {
+        discoveredSoFar,
+        solution
+      } = state;
+
+      const wordHit = action.payload;
+      const cells = discoveredSoFar.cells.concat(getCellsFromWord(wordHit));
+      discoveredSoFar.cells = cells;
+      discoveredSoFar.words.push(wordHit.word);
+
+      const wordsToFind = solution.found.length - discoveredSoFar.words.length;
 
       return {
         ...state,
-        pressedCells: pressedCells.push(action.payload)
+        discoveredSoFar,
+        wordsToFind
       };
     }
     default:

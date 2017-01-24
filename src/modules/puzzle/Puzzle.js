@@ -5,52 +5,27 @@ import {
   View
 } from 'react-native';
 import Row from './Row';
-import wordfind from './wordfind';
 
 const screenWidth = Dimensions.get('window').width;
 const puzzleWidth = screenWidth - 10;
 
-const getCellsFromWord = ({x, y, orientation, word}) => {
-  const next = wordfind.orientations[orientation];
-
-  const cells = word.split('').map((_, idx) => {
-    return next(x,y,idx);
-  });
-
-  return cells;
-};
-
-const wordFound = (component, currentWord) => {
-  const {solution} = component.props;
-  const {discoveredSoFar} = component.state;
-  const {word} = currentWord.wordHit;
-
-  const cells = discoveredSoFar.cells.concat(getCellsFromWord(currentWord.wordHit));
-  discoveredSoFar.words.push(word);
-  discoveredSoFar.cells = cells;
-
-  const {
-    wordsToFind
-  } = component.props;
-  const wordsStillToFind = solution.found.length - discoveredSoFar.words.length;
-  wordsToFind(wordsStillToFind);
-
-  component.setState({
-    currentWord: {
-      currentWordPressed: [],
-      wordHit: null
-    },
-    discoveredSoFar,
-    pressedCells: []
-  });
-};
-
 const onCellPress = (component) => (cellX, cellY) => (event) => {
   event.preventDefault();
 
-  const {puzzle, solution} = component.props;
-  const {found} = solution;
-  const {currentWord, discoveredSoFar} = component.state;
+  const {
+    puzzle,
+    solution,
+    discoveredSoFar,
+    wordFound
+  } = component.props;
+
+  const {
+    found
+  } = solution;
+
+  const {
+    currentWord
+  } = component.state;
 
   const wordHit = found.filter((foundWordObj) => {
     return (
@@ -73,7 +48,15 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
     const tmpWord = currentWordPressed.join('') + puzzle[cellY][cellX];
     if (tmpWord === word) {
       // Yeah, found a word!
-      wordFound(component, currentWord);
+      wordFound(currentWord.wordHit);
+
+      component.setState({
+        currentWord: {
+          currentWordPressed: [],
+          wordHit: null
+        },
+        pressedCells: []
+      });
 
       return;
     }
@@ -81,19 +64,25 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
     if (word.search(tmpWord) > -1) {
       // Got another letter of the word
       if (tmpWord.length > word.length / 2) {
-        wordFound(component, currentWord);
+        wordFound(currentWord.wordHit);
+
+        component.setState({
+          currentWord: {
+            currentWordPressed: [],
+            wordHit: null
+          },
+          pressedCells: []
+        });
 
         return;
       }
 
       currentWordPressed.push(puzzle[cellY][cellX]);
-
       component.setState({
         currentWord: {
           currentWordPressed,
           wordHit: currentWord.wordHit
         },
-        discoveredSoFar,
         pressedCells
       });
     } else {
@@ -103,7 +92,6 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
           currentWordPressed: [],
           wordHit: null
         },
-        discoveredSoFar,
         pressedCells: []
       });
 
@@ -130,10 +118,6 @@ class Puzzle extends Component {
         currentWordPressed: [],
         wordHit: null
       },
-      discoveredSoFar: {
-        words: [],
-        cells: []
-      },
       pressedCells: []
     };
   }
@@ -142,18 +126,13 @@ class Puzzle extends Component {
     this.props.gameStarted();
   }
 
-  componentWillUpdate(newProps, newState) {
+  componentWillUpdate(newProps) {
     const {
       gameCompleted,
-      solution
+      wordsToFind
     } = newProps;
 
-    const {
-      discoveredSoFar
-    } = newState;
-
-    const wordsStillToFind = solution.found.length - discoveredSoFar.words.length;
-    if (wordsStillToFind === 0) {
+    if (wordsToFind === 0) {
       setTimeout(() => {
         gameCompleted();
       }, 500);
@@ -162,12 +141,12 @@ class Puzzle extends Component {
 
   render() {
     const {
-      puzzle
+      puzzle,
+      discoveredSoFar
     } = this.props;
 
     const {
-      pressedCells,
-      discoveredSoFar
+      pressedCells
     } = this.state;
 
     const {
@@ -197,7 +176,10 @@ class Puzzle extends Component {
 
 Puzzle.propTypes = {
   puzzle: PropTypes.array.isRequired,
-  solution: PropTypes.object.isRequired
+  solution: PropTypes.object.isRequired,
+  discoveredSoFar: PropTypes.object.isRequired,
+  gameStarted: PropTypes.func.isRequired,
+  wordsToFind: PropTypes.number.isRequired
 };
 
 const styles = StyleSheet.create({

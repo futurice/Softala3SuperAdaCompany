@@ -33,11 +33,18 @@ const GameView = React.createClass({
     refresh: PropTypes.func.isRequired
   },
 
+  componentWillMount() {
+    const {
+      refresh
+    } = this.props;
+
+    refresh();
+  },
+
   componentDidMount() {
     const {
       initialiseGame,
-      gameState,
-      refresh
+      gameState
     } = this.props;
 
     const {
@@ -47,8 +54,6 @@ const GameView = React.createClass({
     if (gameStatus === GameState.NO_GAME) {
       initialiseGame();
     }
-
-    refresh();
   },
 
   render() {
@@ -73,8 +78,6 @@ const GameView = React.createClass({
     if (gameStatus === GameState.GAME_COMPLETED) {
       footerText = `Game ended in ${timePassed}s`;
     }
-
-    console.log('quizStatus: ', quizStatus);
 
     switch (gameStatus) {
       case GameState.GAME_CREATED: {

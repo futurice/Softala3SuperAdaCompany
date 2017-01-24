@@ -3,7 +3,10 @@ import * as GameState from '../game/GameState';
 import Puzzle from './Puzzle';
 
 export default connect(
-  () => ({}),
+  (state) => ({
+    discoveredSoFar: state.gameState.discoveredSoFar,
+    wordsToFind: state.gameState.wordsToFind
+  }),
   dispatch => ({
     gameStarted() {
       dispatch(GameState.gameStarted(Date.now()));
@@ -11,8 +14,8 @@ export default connect(
     gameCompleted() {
       dispatch(GameState.gameCompleted(Date.now()));
     },
-    wordsToFind(numberOfWordsLeftInPuzzle) {
-      dispatch(GameState.wordsToFind(numberOfWordsLeftInPuzzle));
+    wordFound(word) {
+      dispatch(GameState.wordFound(word));
     }
   })
 )(Puzzle);
