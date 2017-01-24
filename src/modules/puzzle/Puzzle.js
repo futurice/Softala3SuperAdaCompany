@@ -30,15 +30,10 @@ const wordFound = (component, currentWord) => {
   discoveredSoFar.cells = cells;
 
   const {
-    wordsToFind,
-    gameCompleted
+    wordsToFind
   } = component.props;
   const wordsStillToFind = solution.found.length - discoveredSoFar.words.length;
   wordsToFind(wordsStillToFind);
-
-  if (wordsStillToFind === 0) {
-    gameCompleted();
-  }
 
   component.setState({
     currentWord: {
@@ -85,7 +80,7 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
 
     if (word.search(tmpWord) > -1) {
       // Got another letter of the word
-      if (tmpWord.length + 1 > word.length / 2) {
+      if (tmpWord.length > word.length / 2) {
         wordFound(component, currentWord);
 
         return;
@@ -145,6 +140,24 @@ class Puzzle extends Component {
 
   componentDidMount() {
     this.props.gameStarted();
+  }
+
+  componentWillUpdate(newProps, newState) {
+    const {
+      gameCompleted,
+      solution
+    } = newProps;
+
+    const {
+      discoveredSoFar
+    } = newState;
+
+    const wordsStillToFind = solution.found.length - discoveredSoFar.words.length;
+    if (wordsStillToFind === 0) {
+      setTimeout(() => {
+        gameCompleted();
+      }, 500);
+    }
   }
 
   render() {
