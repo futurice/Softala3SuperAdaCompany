@@ -6,8 +6,11 @@ export const GAME_INIT = 'Game/GAME_INIT';
 export const GAME_CREATED = 'Game/GAME_CREATED';
 export const GAME_STARTED = 'Game/GAME_STARTED';
 export const GAME_RUNNING = 'Game/GAME_RUNNING';
+export const GAME_PAUSE = 'Game/GAME_PAUSE';
+export const GAME_RESTART = 'Game/GAME_RESTART';
 export const GAME_COMPLETED = 'Game/GAME_COMPLETED';
 export const WORD_FOUND = 'Game/WORD_FOUND';
+export const TIMER = 'Game/TIMER';
 export const PRESSED_CELL = 'Puzzle/PRESSED_CELL';
 
 export function initGame() {
@@ -23,6 +26,18 @@ export function gameStarted(time) {
   };
 }
 
+export function gamePause() {
+  return {
+    type: GAME_PAUSE
+  };
+}
+
+export function gameRestart() {
+  return {
+    type: GAME_RESTART
+  };
+}
+
 export function gameCompleted(time) {
   return {
     type: GAME_COMPLETED,
@@ -34,6 +49,13 @@ export function wordFound(word) {
   return {
     type: WORD_FOUND,
     payload: word
+  };
+}
+
+export function tickTimer() {
+  return {
+    type: TIMER,
+    payload: Date.now()
   };
 }
 
@@ -56,6 +78,7 @@ const initialState = {
   wordsToFind: null,
   puzzle: null,
   solution: null,
+  timer: null,
   discoveredSoFar: {
     cells: [],
     words: []
@@ -111,11 +134,29 @@ export default function GameStateReducer(state = initialState, action) {
         timeStarted: action.payload
       };
     }
+    case GAME_PAUSE: {
+      return {
+        ...state,
+        gameStatus: GAME_PAUSE
+      };
+    }
+    case GAME_RESTART: {
+      return {
+        ...state,
+        gameStatus: GAME_RUNNING
+      };
+    }
     case GAME_COMPLETED: {
       return {
         ...state,
         gameStatus: GAME_COMPLETED,
         timeEnded: action.payload
+      };
+    }
+    case TIMER: {
+      return {
+        ...state,
+        timer: action.payload
       };
     }
     case WORD_FOUND: {

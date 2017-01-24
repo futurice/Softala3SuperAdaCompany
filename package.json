@@ -72,6 +72,7 @@
     "jest": "18.0.0",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "15.0.2",
+    "react-mixin": "^2.0.2",
     "react-native-mock": "~0.2.5",
     "react-test-renderer": "15.4.1",
     "rimraf": "^2.5.2",

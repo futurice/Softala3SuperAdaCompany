@@ -28,6 +28,15 @@ export default connect(
     },
     deleteGame() {
       dispatch(rest.actions.deleteGame());
+    },
+    tickTimer() {
+      dispatch(GameState.tickTimer());
+    },
+    pauseGame() {
+      dispatch(GameState.gamePause());
+    },
+    restartGame() {
+      dispatch(GameState.gameRestart());
     }
   })
 )(GameView);

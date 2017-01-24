@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
+import * as GameState from '../game/GameState';
 import Row from './Row';
 
 const screenWidth = Dimensions.get('window').width;
@@ -123,7 +124,17 @@ class Puzzle extends Component {
   }
 
   componentDidMount() {
-    this.props.gameStarted();
+    const {
+      gameStarted,
+      gameStatus
+    } = this.props;
+
+    if (gameStatus === GameState.GAME_RUNNING ||
+      gameStatus === GameState.GAME_PAUSE) {
+      return;
+    }
+
+    gameStarted();
   }
 
   componentWillUpdate(newProps) {
@@ -179,14 +190,15 @@ Puzzle.propTypes = {
   solution: PropTypes.object.isRequired,
   discoveredSoFar: PropTypes.object.isRequired,
   gameStarted: PropTypes.func.isRequired,
-  wordsToFind: PropTypes.number.isRequired
+  wordsToFind: PropTypes.number.isRequired,
+  gameStatus: PropTypes.string.isRequired
 };
 
 const styles = StyleSheet.create({
   puzzle: {
     flex: 1,
     width: puzzleWidth,
-    alignSelf: 'center',
+    justifyContent: 'center',
     alignItems: 'center'
   }
 });
