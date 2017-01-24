@@ -1,7 +1,7 @@
 import reduxApi, {transformers} from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
-const apiRoot = 'https://superada.herokuapp.com';
+const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
 
 // Endpoint configurations
 const rest = reduxApi({
