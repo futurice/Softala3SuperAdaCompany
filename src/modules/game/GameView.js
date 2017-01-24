@@ -108,8 +108,6 @@ class GameView extends Component {
       solution,
       gameStatus,
       wordsToFind,
-      timeStarted,
-      timeEnded,
       timer
     } = gameState;
 
@@ -120,7 +118,6 @@ class GameView extends Component {
       footerText = `Game ended in ${timePassed}`;
     }
 
-    console.log ('gameStatus: ', gameStatus);
     switch (gameStatus) {
       case GameState.GAME_CREATED:
       case GameState.GAME_PAUSE:
@@ -158,9 +155,7 @@ class GameView extends Component {
         const maxMinutes = 15;
 
         // Points per minutes
-        const timeToComplete = Math.round((timeEnded - timeStarted) / 1000);
-        const minutes = Math.round(timeToComplete / 60);
-        const minutesPoints = Math.max((maxMinutes - minutes) * pointsPerMinute, 0);
+        const minutesPoints = Math.max((maxMinutes - timer) * pointsPerMinute, 0);
 
         const wordsFound = solution.found.length - wordsToFind;
         const wordsPoints = wordsFound * pointsPerWord;
@@ -177,7 +172,7 @@ class GameView extends Component {
               Congratulations!
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Puzzle completed in ${minutes} mins: ${minutesPoints} points`}
+              {`Puzzle completed in ${timer} mins: ${minutesPoints} points`}
             </Text>
             <Text style={styles.congratsBodyText}>
               {`${wordsFound} words (${pointsPerWord} points per word): ${wordsPoints} points`}
@@ -194,7 +189,7 @@ class GameView extends Component {
             {
               __DEV__
               ? <TouchableOpacity
-                  style={styles.button}
+                  style={[{marginTop: 10}, styles.button]}
                   onPress={resetGame(this)}>
                     <Text style={styles.buttonText}>New Game</Text>
                 </TouchableOpacity> : <div/>

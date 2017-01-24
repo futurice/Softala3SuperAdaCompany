@@ -72,8 +72,6 @@ const randomWords = (words, quantity = __DEV__ ? 5 : 21) => {
 
 const initialState = {
   gameStatus: NO_GAME,
-  timeStarted: null,
-  timeEnded: null,
   wordsToFind: null,
   puzzle: null,
   solution: null,
@@ -129,8 +127,7 @@ export default function GameStateReducer(state = initialState, action) {
     case GAME_STARTED: {
       return {
         ...state,
-        gameStatus: GAME_RUNNING,
-        timeStarted: action.payload
+        gameStatus: GAME_RUNNING
       };
     }
     case GAME_PAUSE: {
@@ -148,8 +145,7 @@ export default function GameStateReducer(state = initialState, action) {
     case GAME_COMPLETED: {
       return {
         ...state,
-        gameStatus: GAME_COMPLETED,
-        timeEnded: action.payload
+        gameStatus: GAME_COMPLETED
       };
     }
     case TIMER: {
