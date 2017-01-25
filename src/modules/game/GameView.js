@@ -121,7 +121,7 @@ class GameView extends Component {
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
-    let footerText = `Time remaining: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
+    let footerText = `Time: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
     if (gameStatus === GameState.GAME_COMPLETED) {
       footerText = `Game ended in ${timer}s`;
     }
