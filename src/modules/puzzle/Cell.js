@@ -37,7 +37,7 @@ class Cell extends Component {
         onPressOut={gameStatus === GameState.GAME_RUNNING ? onCellPress(cellX, cellY) : noop}
         >
         <Text style={styles.cellText}>
-          {gameStatus === GameState.GAME_RUNNING ? text : ' ' }
+          {gameStatus === GameState.GAME_RUNNING ? text.toUpperCase() : ' ' }
         </Text>
       </TouchableOpacity>
     );
