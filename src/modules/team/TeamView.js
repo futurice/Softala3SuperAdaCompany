@@ -76,6 +76,7 @@ const TeamView = React.createClass({
 
     return (
       <View style={{flex: 1, backgroundColor: '#fafafa'}}>
+        <View style={styles.statusBar}/>
         <View style={styles.header}>
           <Text style={styles.headerText}>
             Muokkaa tiimiä
@@ -160,6 +161,12 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.lightRed,
     elevation: 5,
     height: AppStyles.headerHeight,
+    justifyContent: 'center'
+  },
+  statusBar: {
+    alignSelf: 'stretch',
+    backgroundColor: AppStyles.lightRed,
+    height: AppStyles.statusbarHeight,
     justifyContent: 'center'
   },
   headerText: {

@@ -92,6 +92,7 @@ const CheckPointView = React.createClass({
     } else {
       return (
         <View style={styles.container}>
+          <View style={styles.statusBar} />
           <View style={styles.header}>
             <Text style={styles.headerText}>
               Rastit
@@ -135,6 +136,12 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: '#fe9593',
     height: 64,
+    justifyContent: 'center'
+  },
+  statusBar: {
+    alignSelf: 'stretch',
+    backgroundColor: AppStyles.lightRed,
+    height: AppStyles.statusbarHeight,
     justifyContent: 'center'
   },
   headerText: {

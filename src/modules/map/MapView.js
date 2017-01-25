@@ -47,6 +47,7 @@ const MapView = React.createClass({
 
     return (
       <View style={styles.MapContainer}>
+        <View style={styles.statusBar} />
         <View style={styles.header}>
           <TouchableOpacity onPress={this.props.back} style={{zIndex: 1000, top: 0, left: 0, position: 'absolute'}}>
             <Image style={{resizeMode: 'contain', width: 64, height: 64, zIndex: 1000 }} source={require('../../../images/back_arrow.png')}/>
@@ -64,6 +65,12 @@ const MapView = React.createClass({
 });
 
 let styles = StyleSheet.create({
+  statusBar: {
+    alignSelf: 'stretch',
+    backgroundColor: AppStyles.lightRed,
+    height: AppStyles.statusbarHeight,
+    justifyContent: 'center'
+  },
   header: {
     alignSelf: 'stretch',
     backgroundColor: AppStyles.lightRed,

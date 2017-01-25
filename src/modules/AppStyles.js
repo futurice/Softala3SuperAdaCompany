@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export default {
   lightRed: '#fe9593',
   darkRed: '#ed3a4b',
@@ -9,5 +11,9 @@ export default {
   headerFontSize: 32,
   tabBarHeight: 64,
   headerHeight: 64,
-  headerElevation: 5
+  headerElevation: 5,
+  statusbarHeight: Platform.select({
+    ios: 18,
+    android: 0
+  })
 };
