@@ -129,7 +129,7 @@ class GameView extends Component {
 
     // If server thinks we're done, but redux store state says we're not,
     // show total points from server and offer to restart
-    if (quizStatus.data.done) {
+    if (!quizStatus.loading && quizStatus.data.done && gameStatus !== GameState.GAME_COMPLETED) {
       return (
         <View style={styles.gameContainer}>
           <Text style={styles.congratsText}>

@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import * as GameState from '../game/GameState';
 import { noop } from 'lodash';
+import AppStyles from '../AppStyles';
 
 const screenWidth = Dimensions.get('window').width;
 const cellsNumber = 14;
@@ -48,7 +49,8 @@ const columnBase = {
   height: cellSize,
   marginLeft: 1,
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  borderRadius: 1
 };
 
 const styles = StyleSheet.create({
@@ -57,15 +59,15 @@ const styles = StyleSheet.create({
   },
   column: {
     ...columnBase,
-    backgroundColor: 'powderblue'
+    backgroundColor: AppStyles.white
   },
   pressed: {
     ...columnBase,
-    backgroundColor: 'yellow'
+    backgroundColor: AppStyles.darkRed
   },
   discovered: {
     ...columnBase,
-    backgroundColor: 'lightyellow'
+    backgroundColor: AppStyles.lightRed
   }
 });
 
