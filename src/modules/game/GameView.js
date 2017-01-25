@@ -225,7 +225,6 @@ class GameView extends Component {
         break;
       }
       case GameState.GAME_COMPLETED: {
-        const minutes = Math.floor(timer / 60);
         // TODO: move this into a config
         const pointsPerMinute = 10;
         const pointsPerWord = 5;
@@ -329,7 +328,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed
   },
   welcomeContainer: {
-    flex: 1
+    marginBottom: 50
   },
   activityIndicator: {
     ...centered
@@ -338,9 +337,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'stretch',
     justifyContent: 'space-between',
-    paddingTop: 5,
-    paddingLeft: 5,
-    paddingRight: 5
+    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   wordsToFind: {
     color: AppStyles.white,
@@ -402,7 +401,7 @@ const styles = StyleSheet.create({
     width: 150,
     elevation: 5,
     height: 70,
-    marginBottom: 30,
+    marginTop: 13,
     marginHorizontal: 20
   },
   buttonDisabled: {
@@ -412,7 +411,7 @@ const styles = StyleSheet.create({
     width: 150,
     elevation: 5,
     height: 70,
-    marginBottom: 30,
+    marginTop: 13,
     marginHorizontal: 20
   },
   buttonContainer: {
