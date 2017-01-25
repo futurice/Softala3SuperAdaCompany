@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  StatusBar,
   TouchableOpacity
 } from 'react-native';
 import reactMixin from 'react-mixin';
@@ -132,6 +133,11 @@ class GameView extends Component {
     if (!quizStatus.loading && quizStatus.data.done && gameStatus !== GameState.GAME_COMPLETED) {
       return (
         <View style={styles.gameContainer}>
+          <StatusBar
+            backgroundColor={AppStyles.darkRed}
+            animated={false}
+            barStyle="light-content"
+          />
           <Text style={styles.congratsText}>
             Congratulations!
           </Text>
@@ -154,7 +160,37 @@ class GameView extends Component {
     }
 
     switch (gameStatus) {
-      case GameState.GAME_CREATED:
+      case GameState.GAME_CREATED: {
+        contentView = (
+          <View style={styles.gameContainer}>
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.titleText}>
+                Super-Ada quiz!
+              </Text>
+              <Text style={styles.welcomeText}>
+                Welcome to the Super-Ada quiz!
+              </Text>
+              <Text style={styles.welcomeText}>
+                Score points by finding IT-related words, you get points by finding
+                as many words as possible and by being quick!
+              </Text>
+              <Text style={styles.welcomeText}>
+                Time limit: 10 minutes.
+              </Text>
+              <Text style={styles.welcomeText}>
+                You can retry the quiz, but doing so will reset your points!
+              </Text>
+            </View>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={startGame(this)}>
+              <Text style={styles.buttonText}>Start!</Text>
+            </TouchableOpacity>
+          </View>
+        );
+
+        break;
+      }
       case GameState.GAME_PAUSE:
       case GameState.GAME_RUNNING: {
         contentView = (
@@ -172,27 +208,19 @@ class GameView extends Component {
               solution={solution}
               gameStatus={gameStatus}
             />
-            {
-              gameStatus === GameState.GAME_CREATED
-                ? <TouchableOpacity
-                      style={styles.button}
-                      onPress={startGame(this)}>
-                    <Text style={styles.buttonText}>Start!</Text>
-                  </TouchableOpacity>
-                : <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={togglePause(this)}>
-                      <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={gameStatus === GameState.GAME_RUNNING ? styles.buttonDisabled : styles.button}
-                      disabled={gameStatus === GameState.GAME_RUNNING}
-                      onPress={resetGame(this)}>
-                      <Text style={styles.buttonText}>Restart</Text>
-                    </TouchableOpacity>
-                  </View>
-            }
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                  style={styles.button}
+                  onPress={togglePause(this)}>
+                <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={gameStatus === GameState.GAME_RUNNING ? styles.buttonDisabled : styles.button}
+                disabled={gameStatus === GameState.GAME_RUNNING}
+                onPress={resetGame(this)}>
+                <Text style={styles.buttonText}>Restart</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         );
 
@@ -265,6 +293,11 @@ class GameView extends Component {
 
     return (
       <View style={styles.gameContainer}>
+        <StatusBar
+          backgroundColor={AppStyles.darkRed}
+          animated={false}
+          barStyle="light-content"
+        />
         {contentView}
       </View>
     );
@@ -294,6 +327,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: AppStyles.darkRed
+  },
+  welcomeContainer: {
+    flex: 1
   },
   activityIndicator: {
     ...centered
@@ -339,6 +375,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: 'center',
     fontWeight: 'bold',
+    fontSize: AppStyles.fontSize
+  },
+  titleText: {
+    ...centered,
+    color: AppStyles.white,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    marginTop: 40,
+    marginBottom: 40,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: AppStyles.headerFontSize
+  },
+  welcomeText: {
+    ...centered,
+    color: AppStyles.white,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    textAlign: 'center',
     fontSize: AppStyles.fontSize
   },
   button: {
