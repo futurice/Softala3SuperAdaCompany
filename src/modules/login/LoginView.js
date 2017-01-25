@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginVertical: 40,
-    width: 150,
-    height: 150
+    width: 200,
+    height: 200
   },
   errContainer: {
     flexGrow: 1

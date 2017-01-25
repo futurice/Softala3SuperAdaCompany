@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PhotoView from 'react-native-photo-view';
 
 import{
   Image,
@@ -8,6 +7,7 @@ import{
   StyleSheet,
   TouchableOpacity,
   Platform,
+  WebView
 } from 'react-native';
 
 import * as NavigationState from '../../modules/navigation/NavigationState';
@@ -17,6 +17,32 @@ import {getConfiguration} from '../../utils/configuration';
 
 const MapView = React.createClass({
   render() {
+    const HTML = `
+    <!DOCTYPE html>\n
+    <html>
+      <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <style type="text/css">
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          img {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
+        </style>
+      </head>
+      <body>
+        <img width="100%" src="${getConfiguration('API_ROOT')}/map.png" />
+      </body>
+    </html>
+    `;
+
     return (
       <View style={styles.MapContainer}>
         <View style={styles.header}>
@@ -27,12 +53,8 @@ const MapView = React.createClass({
             Kartta
           </Text>
         </View>
-        <PhotoView
-          minimumZoomScale={1}
-          maximumZoomScale={3}
-          androidScaleType="fitCenter"
-          source={{uri: `${getConfiguration('API_ROOT')}/map.png`}}
-          style={styles.MapImage}
+        <WebView style={styles.MapImage}
+          source={{html: HTML}}
         />
       </View>
     );
@@ -59,10 +81,6 @@ let styles = StyleSheet.create({
   },
   MapImage: {
     flex: 1,
-    height: 300,
-    // welp, for some reason iOS breaks if we don't specify a width,
-    // and Android breaks if we do
-    width: Platform.OS === 'ios' ? 300 : undefined
   }
 });
 

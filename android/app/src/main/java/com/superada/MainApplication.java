@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
-import com.reactnative.photoview.PhotoViewPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -29,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RCTSplashScreenPackage(),
-            new PhotoViewPackage(),
             new ImagePickerPackage()
       );
     }
