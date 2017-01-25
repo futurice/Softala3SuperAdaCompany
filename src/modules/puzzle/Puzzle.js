@@ -198,9 +198,9 @@ Puzzle.propTypes = {
 
 const styles = StyleSheet.create({
   puzzle: {
-    flex: 1,
     width: puzzleWidth,
-    justifyContent: 'center',
+    marginTop: 30,
+    marginBottom: 20,
     alignItems: 'center'
   }
 });
