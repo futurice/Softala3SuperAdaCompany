@@ -12,6 +12,7 @@ import * as NavigationState from '../../modules/navigation/NavigationState';
 import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
 import AppStyles from '../AppStyles';
 import { getConfiguration } from '../../utils/configuration';
+import Dimensions from 'Dimensions';
 
 const CheckPointView = React.createClass({
   getInitialState() {
@@ -51,7 +52,7 @@ const CheckPointView = React.createClass({
             : null
         }
 
-        <Text style={styles.companyText}>{company.companyName}</Text>
+        <Text numberOfLines={1} style={styles.companyText}>{company.companyName}</Text>
         <View style={styles.starsContainer}>
           {
             new Array(5).fill(null).map((element, index) => (
@@ -120,6 +121,8 @@ const CheckPointView = React.createClass({
 }
 );
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
   company: {
     alignItems: 'center',
     padding: 10,
-    width: 150,
+    width: Math.floor(screenWidth / 3),
   },
   companyVisited: {
     opacity: 0.5
@@ -158,14 +161,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   companyText: {
-    fontSize: 20
+    fontSize: Math.floor(screenWidth / 24),
   },
   starsContainer: {
     flexDirection: 'row'
   },
   star: {
-    width: 20,
-    height: 20
+    width: Math.floor(screenWidth / 20),
+    height: Math.floor(screenWidth / 20),
   },
   checkmark: {
     width: 32,
@@ -175,8 +178,8 @@ const styles = StyleSheet.create({
     top: 20
   },
   thumb: {
-    width: 100,
-    height: 100
+    width: Math.floor(screenWidth / 5),
+    height: Math.floor(screenWidth / 5),
   },
   text: {
     fontSize: 24,
