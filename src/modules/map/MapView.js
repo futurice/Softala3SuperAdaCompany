@@ -34,11 +34,13 @@ const MapView = React.createClass({
             left: 0;
             right: 0;
             bottom: 0;
+            max-height: 100%;
+            max-width: 100%;
           }
         </style>
       </head>
       <body>
-        <img width="100%" src="${getConfiguration('API_ROOT')}/map.png" />
+        <img src="${getConfiguration('API_ROOT')}/map.png" />
       </body>
     </html>
     `;
