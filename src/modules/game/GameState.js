@@ -165,13 +165,13 @@ export default function GameStateReducer(state = initialState, action) {
       } = state;
 
       const wordHit = action.payload;
-
       const cells = discoveredSoFar.cells.concat(getCellsFromWord(wordHit));
-      discoveredSoFar.cells = cells;
-
       const words = discoveredSoFar.words.slice();
       words.push(wordHit.word);
-      discoveredSoFar.words = words;
+
+      discoveredSoFar = {
+        cells, words
+      };
 
       const wordsToFind = solution.found.length - discoveredSoFar.words.length;
 

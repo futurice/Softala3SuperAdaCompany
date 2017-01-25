@@ -18,11 +18,21 @@ const resetGame = (component) => (event) => {
   const {
     deleteGame,
     initialiseGame,
-    refresh
+    resumeGame
   } = component.props;
 
   deleteGame();
   initialiseGame();
+};
+
+const startGame = (component) => (event) => {
+  event.preventDefault();
+
+  const {
+    resumeGame
+  } = component.props;
+
+  resumeGame();
 };
 
 const togglePause = (component) => (event) => {
@@ -162,11 +172,27 @@ class GameView extends Component {
               solution={solution}
               gameStatus={gameStatus}
             />
-            <TouchableOpacity
-                style={styles.button}
-                onPress={togglePause(this)}>
-              <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
-            </TouchableOpacity>
+            {
+              gameStatus === GameState.GAME_CREATED
+                ? <TouchableOpacity
+                      style={styles.button}
+                      onPress={startGame(this)}>
+                    <Text style={styles.buttonText}>Start!</Text>
+                  </TouchableOpacity>
+                : <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={togglePause(this)}>
+                      <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={gameStatus === GameState.GAME_RUNNING ? styles.buttonDisabled : styles.button}
+                      disabled={gameStatus === GameState.GAME_RUNNING}
+                      onPress={resetGame(this)}>
+                      <Text style={styles.buttonText}>Restart</Text>
+                    </TouchableOpacity>
+                  </View>
+            }
           </View>
         );
 
@@ -290,15 +316,6 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.fontSize,
     textAlign: 'center'
   },
-  button: {
-    backgroundColor: AppStyles.lightRed,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 200,
-    elevation: 5,
-    height: 70,
-    marginBottom: 30
-  },
   congratsText: {
     paddingTop: 20,
     marginBottom: 40,
@@ -323,6 +340,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: AppStyles.fontSize
+  },
+  button: {
+    backgroundColor: AppStyles.lightRed,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    elevation: 5,
+    height: 70,
+    marginBottom: 30,
+    marginHorizontal: 20
+  },
+  buttonDisabled: {
+    backgroundColor: AppStyles.darkRed,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    elevation: 5,
+    height: 70,
+    marginBottom: 30,
+    marginHorizontal: 20
+  },
+  buttonContainer: {
+    flexDirection: 'row'
   },
   buttonText: {
     color: AppStyles.white,
