@@ -24,9 +24,7 @@ const AppView = React.createClass({
           snapshot.companyPoints && (snapshot.companyPoints.loading = false);
           snapshot.feedback && (snapshot.feedback.loading = false);
           snapshot.companies && (snapshot.companies.loading = false);
-          snapshot.quizStatus && (snapshot.quizStatus.loading = false);
-          snapshot.setQuizPoints && (snapshot.setQuizPoints.loading = false);
-          snapshot.deleteGame && (snapshot.deleteGame.loading = false);
+          snapshot.quiz && (snapshot.quiz.loading = false);
 
           dispatch(SessionStateActions.resetSessionStateFromSnapshot(snapshot));
         } else {

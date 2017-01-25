@@ -7,7 +7,7 @@ export const GAME_CREATED = 'Game/GAME_CREATED';
 export const GAME_STARTED = 'Game/GAME_STARTED';
 export const GAME_RUNNING = 'Game/GAME_RUNNING';
 export const GAME_PAUSE = 'Game/GAME_PAUSE';
-export const GAME_RESTART = 'Game/GAME_RESTART';
+export const GAME_RESUME = 'Game/GAME_RESUME';
 export const GAME_COMPLETED = 'Game/GAME_COMPLETED';
 export const WORD_FOUND = 'Game/WORD_FOUND';
 export const TIMER = 'Game/TIMER';
@@ -32,9 +32,9 @@ export function gamePause() {
   };
 }
 
-export function gameRestart() {
+export function gameResume() {
   return {
-    type: GAME_RESTART
+    type: GAME_RESUME
   };
 }
 
@@ -136,7 +136,7 @@ export default function GameStateReducer(state = initialState, action) {
         gameStatus: GAME_PAUSE
       };
     }
-    case GAME_RESTART: {
+    case GAME_RESUME: {
       return {
         ...state,
         gameStatus: GAME_RUNNING

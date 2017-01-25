@@ -23,7 +23,6 @@ const resetGame = (component) => (event) => {
 
   deleteGame();
   initialiseGame();
-  refresh();
 };
 
 const togglePause = (component) => (event) => {
@@ -31,7 +30,7 @@ const togglePause = (component) => (event) => {
 
   const {
     pauseGame,
-    restartGame,
+    resumeGame,
     gameState
   } = component.props;
 
@@ -40,7 +39,7 @@ const togglePause = (component) => (event) => {
   } = gameState;
 
   if (gameStatus === GameState.GAME_PAUSE) {
-    restartGame();
+    resumeGame();
   } else {
     pauseGame();
   }
@@ -118,6 +117,32 @@ class GameView extends Component {
       footerText = `Game ended in ${timePassed}`;
     }
 
+    // If server thinks we're done, but redux store state says we're not,
+    // show total points from server and offer to restart
+    if (quizStatus.data.done) {
+      return (
+        <View style={styles.gameContainer}>
+          <Text style={styles.congratsText}>
+            Congratulations!
+          </Text>
+          <Text style={styles.congratsBodyText}>
+            {`Puzzle has been completed.`}
+          </Text>
+          <Text style={styles.congratsBodyText}>
+            {`Total points: ${quizStatus.data.points}`}
+          </Text>
+          <Text style={styles.retryText}>
+            {`You can try again, but this will reset your score to zero until you complete the quiz again!`}
+          </Text>
+          <TouchableOpacity
+            style={[{marginTop: 10}, styles.button]}
+            onPress={resetGame(this)}>
+              <Text style={styles.buttonText}>New Game</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
     switch (gameStatus) {
       case GameState.GAME_CREATED:
       case GameState.GAME_PAUSE:
@@ -140,7 +165,7 @@ class GameView extends Component {
             <TouchableOpacity
                 style={styles.button}
                 onPress={togglePause(this)}>
-              <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Restart'}</Text>
+              <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
             </TouchableOpacity>
           </View>
         );
@@ -186,14 +211,14 @@ class GameView extends Component {
             <Text style={styles.congratsBodyText}>
               {`Total points: ${totalPoints}`}
             </Text>
-            {
-              __DEV__
-              ? <TouchableOpacity
-                  style={[{marginTop: 10}, styles.button]}
-                  onPress={resetGame(this)}>
-                    <Text style={styles.buttonText}>New Game</Text>
-                </TouchableOpacity> : <div/>
-            }
+            <Text style={styles.retryText}>
+              {`You can try again, but this will reset your score to zero until you complete the quiz again!`}
+            </Text>
+            <TouchableOpacity
+              style={[{marginTop: 10}, styles.button]}
+              onPress={resetGame(this)}>
+                <Text style={styles.buttonText}>New Game</Text>
+            </TouchableOpacity>
           </View>
         );
 
@@ -286,6 +311,17 @@ const styles = StyleSheet.create({
     ...centered,
     color: AppStyles.white,
     marginTop: 10,
+    paddingHorizontal: 20,
+    textAlign: 'center',
+    fontSize: AppStyles.fontSize
+  },
+  retryText: {
+    ...centered,
+    color: AppStyles.white,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: AppStyles.fontSize
   },
   buttonText: {

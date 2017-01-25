@@ -6,14 +6,14 @@ import GameView from './GameView';
 export default connect(
   state => ({
     gameState: state.gameState,
-    quizStatus: state.quizStatus
+    quizStatus: state.quiz
   }),
   dispatch => ({
     initialiseGame() {
       dispatch(GameState.initGame());
     },
     setQuizPoints(points) {
-      dispatch(rest.actions.setQuizPoints({}, {
+      dispatch(rest.actions.quiz.post({}, {
         body: JSON.stringify({points: points})
       }, (err, data) => {
         if (!err) {
@@ -24,10 +24,10 @@ export default connect(
       }));
     },
     refresh() {
-      dispatch(rest.actions.quizStatus());
+      dispatch(rest.actions.quiz.sync());
     },
     deleteGame() {
-      dispatch(rest.actions.deleteGame());
+      dispatch(rest.actions.quiz.delete());
     },
     tickTimer() {
       dispatch(GameState.tickTimer());
@@ -35,8 +35,8 @@ export default connect(
     pauseGame() {
       dispatch(GameState.gamePause());
     },
-    restartGame() {
-      dispatch(GameState.gameRestart());
+    resumeGame() {
+      dispatch(GameState.gameResume());
     }
   })
 )(GameView);
