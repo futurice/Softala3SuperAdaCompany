@@ -65,15 +65,9 @@ const tick = (component) => {
     gameStatus
   } = gameState;
 
-  if (gameStatus === GameState.GAME_CREATED ||
-    gameStatus === GameState.GAME_RUNNING) {
+  if (gameStatus === GameState.GAME_RUNNING) {
     tickTimer();
   }
-
-  component.setTimeout(
-    () => tick(component),
-    1000 * 60 // 1 minute
-  );
 };
 
 class GameView extends Component {
@@ -101,7 +95,9 @@ class GameView extends Component {
 
   componentDidMount() {
     // Start the timer
-    tick(this);
+    this.setInterval(() => {
+      tick(this);
+    }, 1000);
   }
 
   // TODO: render grew too big
@@ -121,10 +117,13 @@ class GameView extends Component {
     } = gameState;
 
     let contentView;
-    const timePassed = `${timer}m`;
-    let footerText = `Time: ${timePassed} ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
+    const remaining = 10 * 60 - timer;
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining - minutes * 60;
+
+    let footerText = `Time remaining: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
     if (gameStatus === GameState.GAME_COMPLETED) {
-      footerText = `Game ended in ${timePassed}`;
+      footerText = `Game ended in ${timer}s`;
     }
 
     // If server thinks we're done, but redux store state says we're not,
@@ -226,6 +225,7 @@ class GameView extends Component {
         break;
       }
       case GameState.GAME_COMPLETED: {
+        const minutes = Math.floor(timer / 60);
         // TODO: move this into a config
         const pointsPerMinute = 10;
         const pointsPerWord = 5;
@@ -234,7 +234,7 @@ class GameView extends Component {
         const puzzleCompleted = wordsToFind === 0;
 
         // Points per minutes
-        const minutesPoints = Math.max((maxMinutes - timer) * pointsPerMinute, 0);
+        const minutesPoints = Math.max((maxMinutes - minutes) * pointsPerMinute, 0);
         const wordsFound = solution.found.length - wordsToFind;
         const wordsPoints = wordsFound * pointsPerWord;
         const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
@@ -250,7 +250,7 @@ class GameView extends Component {
               {`${puzzleCompleted ? 'Congratulations!' : 'Time is over!'}`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Puzzle completed with ${maxMinutes - timer} mins left: ${minutesPoints} points`}
+              {`Puzzle completed with ${maxMinutes - minutes} mins left: ${minutesPoints} points`}
             </Text>
             <Text style={styles.congratsBodyText}>
               {`${wordsFound} words (${pointsPerWord} points per word): ${wordsPoints} points`}

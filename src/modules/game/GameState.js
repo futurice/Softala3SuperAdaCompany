@@ -156,8 +156,8 @@ export default function GameStateReducer(state = initialState, action) {
 
       return {
         ...state,
-        timer: timer + 1,
-        gameStatus: (timer + 1) === 10 ? GAME_COMPLETED : gameStatus
+        timer: Math.min(timer + 1, 10 * 60),
+        gameStatus: (timer + 1) >= 10 * 60 ? GAME_COMPLETED : gameStatus
       };
     }
     case WORD_FOUND: {
