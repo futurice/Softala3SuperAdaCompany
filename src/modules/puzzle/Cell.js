@@ -6,6 +6,7 @@ import {
     Text
 } from 'react-native';
 import * as GameState from '../game/GameState';
+import { noop } from 'lodash';
 
 const screenWidth = Dimensions.get('window').width;
 const cellsNumber = 14;
@@ -32,7 +33,7 @@ class Cell extends Component {
     return (
       <TouchableOpacity
         style={[styles.column, style]}
-        onPressOut={onCellPress(cellX, cellY)}
+        onPressOut={gameStatus === GameState.GAME_PAUSE ? noop : onCellPress(cellX, cellY)}
         >
         <Text style={styles.cellText}>
           {gameStatus === GameState.GAME_RUNNING ? text : ' ' }
