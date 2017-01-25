@@ -150,12 +150,14 @@ export default function GameStateReducer(state = initialState, action) {
     }
     case TIMER: {
       const {
-        timer
+        timer,
+        gameStatus
       } = state;
 
       return {
         ...state,
-        timer: timer + 1
+        timer: timer + 1,
+        gameStatus: (timer + 1) === 10 ? GAME_COMPLETED : gameStatus
       };
     }
     case WORD_FOUND: {
@@ -169,15 +171,14 @@ export default function GameStateReducer(state = initialState, action) {
       const words = discoveredSoFar.words.slice();
       words.push(wordHit.word);
 
-      discoveredSoFar = {
-        cells, words
-      };
-
-      const wordsToFind = solution.found.length - discoveredSoFar.words.length;
+      const wordsToFind = solution.found.length - words.length;
 
       return {
         ...state,
-        discoveredSoFar,
+        discoveredSoFar: {
+          cells,
+          words
+        },
         wordsToFind
       };
     }
