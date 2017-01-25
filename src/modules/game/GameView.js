@@ -18,8 +18,7 @@ const resetGame = (component) => (event) => {
 
   const {
     deleteGame,
-    initialiseGame,
-    resumeGame
+    initialiseGame
   } = component.props;
 
   deleteGame();
@@ -136,19 +135,19 @@ class GameView extends Component {
           <StatusBar
             backgroundColor={AppStyles.darkRed}
             animated={false}
-            barStyle="light-content"
+            barStyle='light-content'
           />
           <Text style={styles.congratsText}>
             Congratulations!
           </Text>
           <Text style={styles.congratsBodyText}>
-            {`Puzzle has been completed.`}
+            {'Puzzle has been completed.'}
           </Text>
           <Text style={styles.congratsBodyText}>
             {`Total points: ${quizStatus.data.points}`}
           </Text>
           <Text style={styles.retryText}>
-            {`You can try again, but this will reset your score to zero until you complete the quiz again!`}
+            {'You can try again, but this will reset your score to zero until you complete the quiz again!'}
           </Text>
           <TouchableOpacity
             style={[{marginTop: 10}, styles.button]}
@@ -231,15 +230,15 @@ class GameView extends Component {
         const pointsPerMinute = 10;
         const pointsPerWord = 5;
         const pointsCompleted = 100;
-        const maxMinutes = 15;
+        const maxMinutes = 10;
+        const puzzleCompleted = wordsToFind === 0;
 
         // Points per minutes
         const minutesPoints = Math.max((maxMinutes - timer) * pointsPerMinute, 0);
-
         const wordsFound = solution.found.length - wordsToFind;
         const wordsPoints = wordsFound * pointsPerWord;
-
-        const totalPoints = Math.round(pointsCompleted + wordsPoints + minutesPoints);
+        const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
+        const totalPoints = Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
 
         if (!quizStatus.data.done) {
           setQuizPoints(totalPoints);
@@ -248,16 +247,17 @@ class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <Text style={styles.congratsText}>
-              Congratulations!
+              {`${puzzleCompleted ? 'Congratulations!' : 'Time is over!'}`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Puzzle completed in ${timer} mins: ${minutesPoints} points`}
+              {`Puzzle completed with ${maxMinutes - timer} mins left: ${minutesPoints} points`}
             </Text>
             <Text style={styles.congratsBodyText}>
               {`${wordsFound} words (${pointsPerWord} points per word): ${wordsPoints} points`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {wordsFound === solution.found.length
+              {
+                puzzleCompleted
                 ? `You have found all the words: ${pointsCompleted} points`
                 : 'You have not completed the puzzle: 0 points'
               }
@@ -266,7 +266,7 @@ class GameView extends Component {
               {`Total points: ${totalPoints}`}
             </Text>
             <Text style={styles.retryText}>
-              {`You can try again, but this will reset your score to zero until you complete the quiz again!`}
+              {'You can try again, but this will reset your score to zero until you complete the quiz again!'}
             </Text>
             <TouchableOpacity
               style={[{marginTop: 10}, styles.button]}
@@ -296,7 +296,7 @@ class GameView extends Component {
         <StatusBar
           backgroundColor={AppStyles.darkRed}
           animated={false}
-          barStyle="light-content"
+          barStyle='light-content'
         />
         {contentView}
       </View>
@@ -380,7 +380,6 @@ const styles = StyleSheet.create({
   titleText: {
     ...centered,
     color: AppStyles.white,
-    marginTop: 10,
     paddingHorizontal: 20,
     marginTop: 40,
     marginBottom: 40,
