@@ -34,7 +34,7 @@ class Cell extends Component {
     return (
       <TouchableOpacity
         style={[styles.column, style]}
-        onPressOut={gameStatus === GameState.GAME_PAUSE ? noop : onCellPress(cellX, cellY)}
+        onPressOut={gameStatus === GameState.GAME_RUNNING ? onCellPress(cellX, cellY) : noop}
         >
         <Text style={styles.cellText}>
           {gameStatus === GameState.GAME_RUNNING ? text : ' ' }
