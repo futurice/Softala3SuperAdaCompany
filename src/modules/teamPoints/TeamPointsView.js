@@ -16,6 +16,17 @@ const TeamPointsView = React.createClass({
   },
 
   render() {
+    let sum = 0;
+    let maxPoints = 0;
+
+    this.props.companies.data.forEach((company) => {
+      if (company.points) {
+        sum += company.points;
+      }
+
+      maxPoints += 5;
+    });
+
     return (
       <View style={styles.container}>
         <StatusBar
@@ -31,7 +42,7 @@ const TeamPointsView = React.createClass({
             <Image style={styles.mark} source={require('../../../images/pisteet.png')}/>
           </View>
           <View style={styles.pointBox}>
-            <Text style={styles.points}>{this.props.companyPoints.data.sum || 0}/40</Text>
+            <Text style={styles.points}>{sum}/{maxPoints}</Text>
           </View>
           <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
           <View style ={styles.buttons}>

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   Image,
+  Platform,
   TouchableOpacity,
   ScrollView
 } from 'react-native';
@@ -178,7 +179,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginLeft: 10,
     marginRight: 10,
-    borderBottomWidth: 1
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: 1
+      }
+    })
   },
   send: {
     backgroundColor: '#ff5454',
