@@ -121,7 +121,7 @@ class GameView extends Component {
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
-    let footerText = `Time: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
+    let footerText = `Aika: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
     if (gameStatus === GameState.GAME_COMPLETED) {
       footerText = `Game ended in ${timer}s`;
     }
@@ -166,23 +166,24 @@ class GameView extends Component {
                 Super-Ada quiz!
               </Text>
               <Text style={styles.welcomeText}>
-                Welcome to the Super-Ada quiz!
+                Tervetuloa ratkomaan Super-Ada quiz-tehtävää!
               </Text>
               <Text style={styles.welcomeText}>
-                Score points by finding IT-related words, you get points by finding
-                as many words as possible and by being quick!
+                Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa.
+                Saat lisäpisteitä löytämällä kaikki sanat nopeasti!
               </Text>
               <Text style={styles.welcomeText}>
-                Time limit: 10 minutes.
+                Aikarajoitus: 10 minuuttia.
               </Text>
               <Text style={styles.welcomeText}>
-                You can retry the quiz, but doing so will reset your points!
+                Voit yrittää ratkoa quiz-tehtävän monta kertaa.
+                Pisteet huomioidaan ainoastaan viimeisestä yrityksestä!
               </Text>
             </View>
             <TouchableOpacity
                 style={styles.button}
                 onPress={startGame(this)}>
-              <Text style={styles.buttonText}>Start!</Text>
+              <Text style={styles.buttonText}>ALOITA</Text>
             </TouchableOpacity>
           </View>
         );
@@ -195,7 +196,7 @@ class GameView extends Component {
           <View style={styles.gameContainer}>
             <View style={styles.headerContainer}>
               <Text style={styles.wordsToFind}>
-                Words to find: {wordsToFind || solution.found.length}
+                Sanaa jäljellä: {wordsToFind || solution.found.length}
               </Text>
               <Text style={styles.timer}>
                 {footerText}
@@ -210,13 +211,13 @@ class GameView extends Component {
               <TouchableOpacity
                   style={styles.button}
                   onPress={togglePause(this)}>
-                <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'Pause' : 'Resume'}</Text>
+                <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'TAUKO' : 'JATKA'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={gameStatus === GameState.GAME_RUNNING ? styles.buttonDisabled : styles.button}
                 disabled={gameStatus === GameState.GAME_RUNNING}
                 onPress={resetGame(this)}>
-                <Text style={styles.buttonText}>Restart</Text>
+                <Text style={styles.buttonText}>UUSI YRITYS</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -246,31 +247,31 @@ class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <Text style={styles.congratsText}>
-              {`${puzzleCompleted ? 'Congratulations!' : 'Time is over!'}`}
+              {`${puzzleCompleted ? 'Onneksi olkoon!' : 'Aika loppui!'}`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Puzzle completed with ${maxMinutes - minutes} mins left: ${minutesPoints} points`}
+              {`Tehtävä ratkottu ${maxMinutes - minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`${wordsFound} words (${pointsPerWord} points per word): ${wordsPoints} points`}
+              {`${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä`}
             </Text>
             <Text style={styles.congratsBodyText}>
               {
                 puzzleCompleted
-                ? `You have found all the words: ${pointsCompleted} points`
-                : 'You have not completed the puzzle: 0 points'
+                ? `Löysitte kaikki sanat: ${pointsCompleted} pistettä`
+                : 'Ette löytäneet kaikkia sanoja: 0 pistettä'
               }
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Total points: ${totalPoints}`}
+              {`Pisteitä yhteensä: ${totalPoints}`}
             </Text>
             <Text style={styles.retryText}>
-              {'You can try again, but this will reset your score to zero until you complete the quiz again!'}
+              {'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'}
             </Text>
             <TouchableOpacity
               style={[{marginTop: 10}, styles.button]}
               onPress={resetGame(this)}>
-                <Text style={styles.buttonText}>New Game</Text>
+                <Text style={styles.buttonText}>UUSI YRITYS</Text>
             </TouchableOpacity>
           </View>
         );
