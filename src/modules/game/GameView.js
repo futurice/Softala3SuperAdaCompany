@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import PuzzleContainer from '../puzzle/PuzzleContainer';
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed
   },
   welcomeContainer: {
-    marginBottom: 50
+    marginBottom: 20
   },
   activityIndicator: {
     ...centered
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
     color: AppStyles.white,
     paddingHorizontal: 20,
     marginTop: 40,
-    marginBottom: 40,
+    marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: AppStyles.headerFontSize
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 150,
+    width: Dimensions.get('window').width / 2 - 40,
     elevation: 5,
     height: 70,
     marginTop: 13,
@@ -409,7 +410,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 150,
+    width: Dimensions.get('window').width / 2 - 40,
     elevation: 5,
     height: 70,
     marginTop: 13,

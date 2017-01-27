@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   description: {
-    margin: 20
+    margin: 20,
+    flexDirection: 'row',
   },
   descriptionText: {
     color: 'black',
@@ -204,7 +205,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   teamInput: {
-    width: 300,
+    flex: 1,
+    alignSelf: 'stretch',
     color: 'black',
     ...Platform.select({
       ios: {
@@ -247,16 +249,16 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
-    height: 70,
-    padding: 20,
+    flex: 1,
+    justifyContent: 'center',
     elevation: 5,
   },
   saveButtonLoading: {
     backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',
-    height: 70,
-    padding: 20,
+    flex: 1,
+    justifyContent: 'center',
     elevation: 5,
   },
   whiteFont: {

@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
-    height: 70,
-    padding: 20
+    flex: 1,
+    justifyContent: 'center',
   },
   whiteFont: {
     color: AppStyles.white,
