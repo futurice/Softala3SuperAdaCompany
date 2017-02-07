@@ -11,7 +11,7 @@ import {
 import * as NavigationStateActions from './src/modules/navigation/NavigationState';
 import SplashScreen from 'react-native-smart-splash-screen';
 
-const SuperAda = React.createClass({
+const SuperAdaCompanyApp = React.createClass({
 
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', this.navigateBack);
@@ -60,4 +60,4 @@ const SuperAda = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('SuperAda', () => SuperAda);
+AppRegistry.registerComponent('SuperAdaCompanyApp', () => SuperAdaCompanyApp);

@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-smart-splash-screen'
 import React from 'react';
 import {AppRegistry} from 'react-native';
 
-const SuperAda = React.createClass({
+const SuperAdaCompanyApp = React.createClass({
 
   componentDidMount () {
     SplashScreen.close(SplashScreen.animationType.scale, 800, 500)
@@ -21,4 +21,4 @@ const SuperAda = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('SuperAda', () => SuperAda);
+AppRegistry.registerComponent('SuperAdaCompanyApp', () => SuperAdaCompanyApp);

@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native';
-const STATE_STORAGE_KEY = 'SuperAdaAppState:Latest';
+const STATE_STORAGE_KEY = 'SuperAdaCompanyAppAppState:Latest';
 
 export async function resetSnapshot() {
   const state = await rehydrate();
