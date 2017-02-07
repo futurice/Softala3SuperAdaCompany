@@ -11,13 +11,11 @@ export default connect(
       dispatch(rest.actions.teamList());
     },
     savePoints(teamId, points) {
-      console.log(`would save ${points} for ${teamId}`);
       dispatch(rest.actions.teamPoints.post({ teamId }, {
         body: JSON.stringify({ points })
       }));
     },
     clearPoints(teamId) {
-      console.log(`would clear points for ${teamId}`);
       dispatch(rest.actions.teamPoints.delete({ teamId }));
     },
   })
