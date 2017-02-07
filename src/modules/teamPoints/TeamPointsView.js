@@ -88,7 +88,7 @@ class TeamPointsView extends React.Component {
     return (
       <View style={styles.teamRow}>
         <Image style={styles.thumb} source={fallbackSource}>
-          <Image style={styles.thumb} source={imgSource} />
+          <Image style={styles.nestedThumb} source={imgSource} />
         </Image>
         <View style={styles.teamContent}>
           <View style={styles.teamText}>
@@ -239,6 +239,12 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 35,
     margin: 20,
+  },
+  nestedThumb: {
+    height: 70,
+    width: 70,
+    borderWidth: 0,
+    borderRadius: 35,
   },
   teamName: {
     fontSize: 20,
