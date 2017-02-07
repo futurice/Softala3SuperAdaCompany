@@ -16,6 +16,13 @@ const rest = reduxApi({
     transformer: transformers.array,
     crud: true
   },
+  teamPoints: {
+    url: `${apiRoot}/company/companypoint/:teamId`,
+    crud: true,
+    postfetch: [
+      ({ actions, dispatch }) => dispatch(actions.teamList())
+    ]
+  },
   // NOTE: when adding new API endpoints, remember to clear .loading property
   // in AppView.js resetSnapshot() function
 }).use('options', (url, params, getState) => {

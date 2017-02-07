@@ -4081,7 +4081,7 @@ react-native-mock@~0.2.5:
     react-timer-mixin "^0.13.3"
     warning "^2.1.0"
 
-react-native-simple-radio-button@^2.4.0:
+react-native-simple-radio-button:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-simple-radio-button/-/react-native-simple-radio-button-2.4.0.tgz#179a00c60e1a7c231782a78442add2c12c9d5a00"
 
