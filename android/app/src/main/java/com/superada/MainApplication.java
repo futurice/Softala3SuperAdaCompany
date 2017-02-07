@@ -1,4 +1,4 @@
-package com.superada;
+package com.superada.companyapp;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.superada;
+package com.superada.companyapp;
 
 import com.facebook.react.ReactActivity;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;
