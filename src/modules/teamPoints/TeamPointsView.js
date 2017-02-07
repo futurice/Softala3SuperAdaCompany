@@ -29,6 +29,8 @@ const radio_props = [
   { label: '5', value: 5 },
 ];
 
+const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
+
 class TeamPointsView extends React.Component {
   constructor() {
     super();
@@ -78,18 +80,16 @@ class TeamPointsView extends React.Component {
   }
 
   renderTeamRow(team, clearPoints, savePoints) {
-    var imgSource = require('../../../images/defImg.png');
-      /*
-    if(team.img !== null) {
-      imgSource = {uri: 'data:image/png;base64,' + team.img, isStatic: true}
-    }
-    */
+    const fallbackSource = require('../../../images/defImg.png');
+    const imgSource = { uri: `${apiRoot}/public/team${team.teamId}.png` }
 
     const { confirmSavePoints, confirmClearPoints } = this;
 
     return (
       <View style={styles.teamRow}>
-        <Image style={styles.thumb} source={imgSource} />
+        <Image style={styles.thumb} source={fallbackSource}>
+          <Image style={styles.thumb} source={imgSource} />
+        </Image>
         <View style={styles.teamContent}>
           <View style={styles.teamText}>
             <Text style={styles.teamName}>{team.teamName}</Text>
