@@ -7,7 +7,6 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  TouchableHighlight,
   ScrollView,
   TextInput,
   ListView,
@@ -20,6 +19,9 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 
 import AppStyles from '../AppStyles';
+
+import reactMixin from 'react-mixin';
+import TimerMixin from 'react-timer-mixin';
 
 const radio_props = [
   { label: '1', value: 1 },
@@ -39,14 +41,27 @@ class TeamPointsView extends React.Component {
 
     this.state = {
       searchString: '',
+      data: [],
       dataSource: ds.cloneWithRows([])
     };
   }
 
+  filterTeams(data, searchString) {
+    const filtered = data.filter(
+      (team) => team.teamName.toLowerCase().includes(searchString.toLowerCase())
+    );
+
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(filtered)
+    });
+  }
+
   updateList(data) {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data)
+      data
     });
+
+    this.filterTeams(data, this.state.searchString);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,6 +92,11 @@ class TeamPointsView extends React.Component {
 
   componentDidMount() {
     this.props.refresh();
+
+    // Refresh with 1 min intervals
+    this.setInterval(() => {
+      this.props.refresh();
+    }, 60 * 1000);
   }
 
   renderTeamRow(team, clearPoints, savePoints) {
@@ -123,14 +143,14 @@ class TeamPointsView extends React.Component {
             ))}
               </RadioForm>
               </View>
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={(value) => { confirmClearPoints(team.teamId, team.teamName, clearPoints) }}
                 style={ styles.clearPoints } >
                 <Image
                   style={styles.numButton}
                   source={require('../../../images/buttonImages/x_white.png')}
                 />
-              </TouchableHighlight>
+              </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -153,8 +173,9 @@ class TeamPointsView extends React.Component {
           <TextInput
             style={styles.searchBar}
             onChangeText={(searchString) => {
-              this.setState({searchString});
-              this.filterTeams(searchString.trim());
+              searchString = searchString.trim();
+              this.setState({ searchString });
+              this.filterTeams(this.state.data, searchString);
             }}
             value={this.state.searchString}
             placeholder='Search...'
@@ -171,7 +192,7 @@ class TeamPointsView extends React.Component {
   }
 };
 
-
+reactMixin(TeamPointsView.prototype, TimerMixin);
 
 const styles = StyleSheet.create({
   teamContainer: {
@@ -212,7 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     height: 110,
-    backgroundColor: '#FF0036',
+    backgroundColor: '#ed3a4b',
     marginBottom: 10,
     borderRadius: 10,
   },
