@@ -1,27 +1,14 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import TeamPointsView from './TeamPointsView';
 import rest from '../../services/rest';
-import * as NavigationState from '../../modules/navigation/NavigationState';
 
 export default connect(
   state => ({
-    companies: state.companies
+    teamPoints: state.teamPoints
   }),
   dispatch => ({
     refresh() {
-      dispatch(rest.actions.companies());
-    },
-    feedback() {
-      dispatch(NavigationState.pushRoute({
-        key: 'FeedbackView',
-        title: 'Anna palautetta'
-      }));
-    },
-    goodbye() {
-      dispatch(NavigationState.pushRoute({
-        key: 'Goodbye',
-        title: 'Kiitos osallistumisesta!'
-      }));
+      dispatch(rest.actions.teamPoints());
     }
   })
 )(TeamPointsView);

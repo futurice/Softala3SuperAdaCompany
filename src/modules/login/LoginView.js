@@ -20,7 +20,7 @@ import AppStyles from '../AppStyles';
 const LoginView = React.createClass({
   getInitialState() {
     return {
-      teamname: ''
+      companyName: ''
     }
   },
 
@@ -49,11 +49,11 @@ const LoginView = React.createClass({
         }}>
           <Image style={styles.logo} source={require('../../../images/superada_transparent.png')}/>
           <View style={styles.inputContainer}>
-            <Text style={styles.whiteFont}>Joukkueen nimi:</Text>
+            <Text style={styles.whiteFont}>Yrityksen nimi:</Text>
             <TextInput
               style={[styles.input, styles.whiteFont]}
-              onChangeText={(teamname) => this.setState({teamname})}
-              value={this.state.teamname}
+              onChangeText={(companyName) => this.setState({companyName})}
+              value={this.state.companyName}
               autoCorrect={false}
               underlineColorAndroid='#000'
               selectionColor='#000'
@@ -67,7 +67,7 @@ const LoginView = React.createClass({
         </ScrollView>
 
         <View style={styles.loginButtonContainer}>
-          <TouchableOpacity disabled={this.props.auth.loading} onPress={() => this.props.login(this.state.teamname)} style={this.props.auth.loading ? styles.loginButtonLoading : styles.loginButton}>
+          <TouchableOpacity disabled={this.props.auth.loading} onPress={() => this.props.login(this.state.companyName)} style={this.props.auth.loading ? styles.loginButtonLoading : styles.loginButton}>
             <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
           </TouchableOpacity>
           { this.props.auth.loading &&

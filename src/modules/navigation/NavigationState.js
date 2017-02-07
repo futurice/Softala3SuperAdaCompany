@@ -26,40 +26,20 @@ export function popRoute() {
   return {type: POP_ROUTE};
 }
 
-//var derp1 = 'testi';
-
-//('../../images/pepperoni.png');
 // reducers for tabs and scenes are separate
 const initialState = {
   tabs: {
     index: 0,
     routes: [
-      {key: 'HomeTab', title: 'HOME'},
-      {key: 'ProfileTab', title: 'TIIMI'},
-      {key: 'CheckPointsTab', title: 'RASTIT'},
-      {key: 'LinkTab', title: 'LINKIT'}
+      {key: 'TeamPointsTab', title: 'POINTS'}
     ]
   },
 
-  // Scenes for the `HomeTab` tab.
-  HomeTab: {
+  // Scenes for the `TeamPoints` tab.
+  TeamPointsTab: {
     index: 0,
-    routes: [{key: 'Welcome', title: 'Etusivu'}]
+    routes: [{key: 'TeamPointsTab', title: 'Team Points'}]
   },
-
-  // Scenes for the `ProfileTab` tab.
-  ProfileTab: {
-    index: 0,
-    routes: [{key: 'TeamView', title: 'Joukkue'}]
-  },
-  CheckPointsTab: {
-    index: 0,
-    routes: [{key: 'CheckPoints', title: 'Rastit'}]
-  },
-  LinkTab: {
-    index: 0,
-    routes: [{key: 'Puzzle', title: 'Puzzle'}]
-  }
 };
 
 export default function NavigationReducer(state = initialState, action) {

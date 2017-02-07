@@ -6,29 +6,14 @@ const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.
 // Endpoint configurations
 const rest = reduxApi({
   auth: {
-    url: `${apiRoot}/teams/authenticate`,
+    url: `${apiRoot}/company/authenticate`,
     options: {
       method: 'POST'
     }
   },
-  teamDetails: {
-    url: `${apiRoot}/teamdetails`,
-    transformer: (data, prevData, action) => {
-      return {...prevData, ...data};
-    },
-    crud: true
-  },
-  feedback: {
-    url: `${apiRoot}/feedback`,
+  teamList: {
+    url: `${apiRoot}/company/teamlist`,
     transformer: transformers.array,
-    crud: true
-  },
-  companies: {
-    url: `${apiRoot}/companies`,
-    transformer: transformers.array
-  },
-  quiz: {
-    url: `${apiRoot}/quiz`,
     crud: true
   },
   // NOTE: when adding new API endpoints, remember to clear .loading property

@@ -20,11 +20,7 @@ const AppView = React.createClass({
         if (snapshot) {
           // Make sure our API call in progress vars are false
           snapshot.auth && (snapshot.auth.loading = false);
-          snapshot.teamDetails && (snapshot.teamDetails.loading = false);
-          snapshot.companyPoints && (snapshot.companyPoints.loading = false);
-          snapshot.feedback && (snapshot.feedback.loading = false);
-          snapshot.companies && (snapshot.companies.loading = false);
-          snapshot.quiz && (snapshot.quiz.loading = false);
+          snapshot.teamList && (snapshot.teamList.loading = false);
 
           dispatch(SessionStateActions.resetSessionStateFromSnapshot(snapshot));
         } else {
