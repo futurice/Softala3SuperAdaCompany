@@ -112,7 +112,7 @@ class TeamPointsView extends React.Component {
         </Image>
         <View style={styles.teamContent}>
           <View style={styles.teamText}>
-            <Text style={styles.teamName}>{team.teamName}</Text>
+            <Text numberOfLines={2} style={styles.teamName}>{team.teamName}</Text>
           </View>
           <View style={styles.allButtons}>
             <View>
