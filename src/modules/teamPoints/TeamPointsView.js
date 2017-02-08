@@ -46,7 +46,7 @@ class TeamPointsView extends React.Component {
     };
   }
 
-  filterTeams(data, searchString) {
+  filterTeams(data, searchString, resetPosition) {
     const filtered = data.filter(
       (team) => team.teamName.toLowerCase().includes(searchString.toLowerCase())
     );
@@ -54,6 +54,10 @@ class TeamPointsView extends React.Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(filtered)
     });
+
+    if (resetPosition) {
+      this.ListView && this.ListView.scrollTo({x: 0, y: 0, animated: true});
+    }
   }
 
   updateList(data) {
@@ -181,7 +185,7 @@ class TeamPointsView extends React.Component {
             onChangeText={(searchString) => {
               searchString = searchString.trim();
               this.setState({ searchString });
-              this.filterTeams(this.state.data, searchString);
+              this.filterTeams(this.state.data, searchString, true);
             }}
             value={this.state.searchString}
             placeholder='Etsi joukkueen nimellä...'
@@ -191,6 +195,7 @@ class TeamPointsView extends React.Component {
           enableEmptySections={true}
           keyboardShouldPersistTaps={true}
           dataSource={dataSource}
+          ref={component => this.ListView = component}
           renderRow={(team) => { return this.renderTeamRow(team, clearPoints, savePoints)}}
         />
       </View>
