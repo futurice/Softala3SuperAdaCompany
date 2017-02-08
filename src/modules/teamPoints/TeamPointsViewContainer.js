@@ -4,7 +4,8 @@ import rest from '../../services/rest';
 
 export default connect(
   state => ({
-    teamList: state.teamList
+    teamList: state.teamList,
+    company: state.auth.data,
   }),
   dispatch => ({
     refresh() {

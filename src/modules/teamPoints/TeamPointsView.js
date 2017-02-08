@@ -160,7 +160,10 @@ class TeamPointsView extends React.Component {
   render() {
     const { dataSource } = this.state;
 
-    const { clearPoints, savePoints } = this.props;
+    const { clearPoints, savePoints, company } = this.props;
+
+    const fallbackSource = require('../../../images/defCompanyImg.png');
+    const imgSource = { uri: `${apiRoot}/public/company${company.companyId}.png` }
 
     return (
       <View style={styles.teamContainer}>
@@ -170,6 +173,9 @@ class TeamPointsView extends React.Component {
           </Text>
         </View>
         <View style={styles.search}>
+          <Image style={styles.companyImage} source={fallbackSource}>
+            <Image style={styles.nestedCompanyImage} source={imgSource} />
+          </Image>
           <TextInput
             style={styles.searchBar}
             onChangeText={(searchString) => {
@@ -178,7 +184,7 @@ class TeamPointsView extends React.Component {
               this.filterTeams(this.state.data, searchString);
             }}
             value={this.state.searchString}
-            placeholder='Search...'
+            placeholder='Etsi joukkueen nimellä...'
             />
         </View>
         <ListView
@@ -197,22 +203,19 @@ reactMixin(TeamPointsView.prototype, TimerMixin);
 const styles = StyleSheet.create({
   teamContainer: {
     flex: 1,
-    paddingTop: 40,
     paddingHorizontal: 20,
     backgroundColor: "#FAFAFA"
   },
   headerStyle: {
-    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
+    marginBottom: 10,
     backgroundColor: '#FAFAFA'
   },
   titleStyle: {
     fontSize: 30,
     fontWeight: "bold",
     color: '#FF0036',
-    marginTop: 10,
   },
   search: {
     flexDirection: 'row',
@@ -221,8 +224,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   searchBar: {
-    width: 300,
+    flex: 1,
     height: 50,
+    marginLeft: 10,
     color: '#000',
     padding: 10,
     backgroundColor: '#EEEEEE',
@@ -253,6 +257,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
+  },
+  companyImage: {
+    height: 48,
+    width: 48,
+    borderWidth: 0,
+    borderRadius: 24,
+  },
+  nestedCompanyImage: {
+    height: 48,
+    width: 48,
+    borderWidth: 0,
+    borderRadius: 24,
   },
   thumb: {
     height: 70,
