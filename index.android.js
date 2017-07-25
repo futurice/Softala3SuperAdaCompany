@@ -1,6 +1,11 @@
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+import React, { Component } from 'react';
+import { AppRegistry, BackHandler } from 'react-native';
+
+import persistStore from './src/utils/persist';
 import store from './src/redux/store';
-import AppViewContainer from './src/modules/AppViewContainer';
+import AppView from './src/modules/AppView';
 import React from 'react';
 import {
   AppRegistry,
@@ -13,8 +18,11 @@ import SplashScreen from 'react-native-smart-splash-screen';
 
 const SuperAdaCompanyApp = React.createClass({
 
+  state: { rehydrated: false },
+
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.navigateBack);
+    BackHandler.addEventListener('hardwareBackPress', this.navigateBack);
+    persistStore(store, () => this.setState({ rehydrated: true }));
   },
 
   navigateBack() {
@@ -45,6 +53,8 @@ const SuperAdaCompanyApp = React.createClass({
   },
 
   render() {
+    const { rehydrated } = this.state;
+
     return (
       <Provider store={store}>
         <View style={{flex: 1}}>
@@ -53,7 +63,7 @@ const SuperAdaCompanyApp = React.createClass({
             backgroundColor="#fe9593"
             barStyle="light-content"
           />
-          <AppViewContainer />
+          <AppView isReady={rehydrated}/>
         </View>
       </Provider>
     );

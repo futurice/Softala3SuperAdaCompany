@@ -51,3 +51,4 @@ const rest = reduxApi({
 // TODO: on unauthorized error, clear token
 
 export default rest;
+export const reducers = rest.reducers;
