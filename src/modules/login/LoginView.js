@@ -14,7 +14,8 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
+
+
 import AppStyles from '../AppStyles';
 
 const LoginView = React.createClass({
@@ -34,6 +35,13 @@ const LoginView = React.createClass({
     }
 
     return String(err);
+  },
+
+  componentDidUpdate() {
+    if (this.props.token) {
+      console.log('navigating to');
+      this.props.navigateTo('MainScreen');
+    }
   },
 
   render() {
