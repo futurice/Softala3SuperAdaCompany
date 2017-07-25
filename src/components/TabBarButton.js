@@ -8,7 +8,7 @@ import {
 
 } from 'react-native';
 
-import * as NavigationState from '../modules/navigation/NavigationState';
+import * as NavigationState from '../states/NavigationState';
 
 const icons = {HOME: require('../../images/homeiso_transparent.png'),
               TIIMI: require('../../images/ryhmaiso_transparent.png'),

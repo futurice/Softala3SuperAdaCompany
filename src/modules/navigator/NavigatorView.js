@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import AppNavigator from './Navigator';
 
 const mapStateToProps = state => ({
-  navigationState: state.navigationState
+  navigatorState: state.navigatorState
 });
 
 export class NavigatorView extends Component {
-  static displayName = 'NavigationView';
+  static displayName = 'NavigatorView';
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    navigationState: PropTypes.shape({
+    navigatorState: PropTypes.shape({
       index: PropTypes.number.isRequired,
       routes: PropTypes.arrayOf(
         PropTypes.shape({
@@ -29,7 +29,7 @@ export class NavigatorView extends Component {
       <AppNavigator
         navigation={addNavigationHelpers({
           dispatch: this.props.dispatch,
-          state: this.props.navigationState
+          state: this.props.navigatorState
         })}
       />
     );

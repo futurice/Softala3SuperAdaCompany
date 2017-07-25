@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import LoginView from './LoginView';
 import {setAuthenticationToken} from '../../utils/authentication';
-import * as NavigationState from '../../modules/navigation/NavigationState';
+import * as NavigatorState from '../../states/NavigatorState';
 import rest from '../../services/rest';
 import { NavigationActions } from 'react-navigation';
 

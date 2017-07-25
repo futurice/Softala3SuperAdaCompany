@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import NavigationView from './navigation/NavigationView';
+import NavigatorView from './navigator/NavigatorView';
 import LoginViewContainer from './login/LoginViewContainer';
 import * as snapshotUtil from '../utils/snapshot';
-import * as SessionStateActions from '../modules/session/SessionState';
+import * as SessionStateActions from '../states/SessionState';
 import store from '../redux/store';
 import DeveloperMenu from '../components/DeveloperMenu';
 import {setConfiguration} from '../utils/configuration';
@@ -52,7 +52,7 @@ const AppView = React.createClass({
 
     return (
       <View style={{flex: 1}}>
-        <NavigationView />
+        <NavigatorView />
         {__DEV__ && <DeveloperMenu />}
       </View>
     );

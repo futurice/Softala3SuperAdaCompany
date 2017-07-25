@@ -39,7 +39,6 @@ const LoginView = React.createClass({
 
   componentDidUpdate() {
     if (this.props.token) {
-      console.log('navigating to');
       this.props.navigateTo('MainScreen');
     }
   },
