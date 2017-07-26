@@ -114,9 +114,7 @@ class TeamPointsView extends React.Component {
 
     return (
       <View style={styles.teamRow}>
-        <Image style={styles.thumb} source={fallbackSource}>
-          <Image style={styles.nestedThumb} source={imgSource} />
-        </Image>
+        <Image style={styles.thumb} source={imgSource} defaultSource={fallbackSource} /> 
         <View style={styles.teamContent}>
           <View style={styles.teamText}>
             <Text numberOfLines={2} style={styles.teamName}>{team.teamName}</Text>
@@ -153,10 +151,10 @@ class TeamPointsView extends React.Component {
               <TouchableOpacity
                 onPress={(value) => { confirmClearPoints(team.teamId, team.teamName, clearPoints) }}
                 style={ styles.clearPoints } >
-                <Image
+                 <Image
                   style={styles.numButton}
                   source={require('../../../images/buttonImages/x_white.png')}
-                />
+                /> 
               </TouchableOpacity>
           </View>
         </View>
@@ -180,9 +178,7 @@ class TeamPointsView extends React.Component {
           </Text>
         </View>
         <View style={styles.search}>
-          <Image style={styles.companyImage} source={fallbackSource}>
-            <Image style={styles.nestedCompanyImage} source={imgSource} />
-          </Image>
+           <Image style={styles.companyImage} source={imgSource} defaultSource={fallbackSource}/>   
           <TextInput
             style={styles.searchBar}
             onChangeText={(searchString) => {
@@ -272,24 +268,12 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 24,
   },
-  nestedCompanyImage: {
-    height: 48,
-    width: 48,
-    borderWidth: 0,
-    borderRadius: 24,
-  },
   thumb: {
     height: 70,
     width: 70,
     borderWidth: 0,
     borderRadius: 35,
     margin: 20,
-  },
-  nestedThumb: {
-    height: 70,
-    width: 70,
-    borderWidth: 0,
-    borderRadius: 35,
   },
   teamName: {
     fontSize: 20,
