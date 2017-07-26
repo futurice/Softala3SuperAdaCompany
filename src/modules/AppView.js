@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import NavigatorView from './views/NavigatorView';
 import * as SessionStateActions from '../states/SessionState';
