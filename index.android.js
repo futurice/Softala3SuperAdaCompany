@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import React, { Component } from 'react';
 import { AppRegistry, BackHandler } from 'react-native';
 
 import persistStore from './src/utils/persist';
@@ -8,16 +7,14 @@ import store from './src/redux/store';
 import AppView from './src/modules/AppView';
 import React from 'react';
 import {
-  AppRegistry,
   BackAndroid,
   StatusBar,
   View
 } from 'react-native';
-import * as NavigationStateActions from './src/modules/navigation/NavigationState';
-import SplashScreen from 'react-native-smart-splash-screen';
+import { NavigationStateActions } from 'react-navigation';
+// import SplashScreen from 'react-native-smart-splash-screen';
 
 export default class SuperAdaCompanyApp extends React.Component {
-
   state = { rehydrated: false }
 
   componentWillMount() {
@@ -26,17 +23,17 @@ export default class SuperAdaCompanyApp extends React.Component {
   }
 
   navigateBack() {
-    const navigationState = store.getState().navigationState;
-    const tabs = navigationState.tabs;
+    const navigatorState = store.getState().navigationState;
+    const tabs = navigatorState.tabs;
     const tabKey = tabs.routes[tabs.index].key;
-    const currentTab = navigationState[tabKey];
+    const currentTab = navigatorState[tabKey];
 
     // If we are in the beginning of our tab stack :3
     if (currentTab.index === 0) {
 
       // if we are not in the first tab, switch tab to the leftmost one
       if (tabs.index !== 0) {
-        store.dispatch(NavigationStateActions.switchTab('HomeTab'));
+        store.dispatch(NavigationActions.back());
         return true;
       }
 
@@ -44,12 +41,12 @@ export default class SuperAdaCompanyApp extends React.Component {
       return false;
     }
 
-    store.dispatch(NavigationStateActions.popRoute());
+    store.dispatch(NavigationActions.back());
     return true;
   }
 
   componentDidMount () {
-    SplashScreen.close(SplashScreen.animationType.scale, 850, 500);
+    // SplashScreen.close(SplashScreen.animationType.scale, 850, 500);
   }
 
   render() {

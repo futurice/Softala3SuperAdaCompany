@@ -16,8 +16,9 @@ import {
 class DeveloperMenu extends React.Component {
   displayName = 'DeveloperMenu';
 
-  getInitialState() {
-    return {visible: false};
+  constructor(props) {
+    super(props);
+    this.state = { visible: false };
   }
 
   showDeveloperMenu() {

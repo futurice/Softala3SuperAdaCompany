@@ -20,11 +20,10 @@ import {setAuthenticationToken} from '../../utils/authentication';
 import rest from '../../services/rest';
 import { NavigationActions } from 'react-navigation';
 
-export class LoginView extends React.Component {
-  getInitialState() {
-    return {
-      companyName: ''
-    }
+class LoginView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { companyName: ''};
   }
 
   errToString(err) {
