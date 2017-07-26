@@ -23,6 +23,9 @@ import AppStyles from '../AppStyles';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 
+import { connect } from 'react-redux';
+import rest from '../../services/rest';
+
 const radio_props = [
   { label: '1', value: 1 },
   { label: '2', value: 2 },
@@ -312,4 +315,23 @@ const styles = StyleSheet.create({
     marginLeft: 10
   }
 });
-export default TeamPointsView;
+
+export default connect(
+  state => ({
+    teamList: state.teamList,
+    company: state.auth.data,
+  }),
+  dispatch => ({
+    refresh() {
+      dispatch(rest.actions.teamList());
+    },
+    savePoints(teamId, points) {
+      dispatch(rest.actions.teamPoints.post({ teamId }, {
+        body: JSON.stringify({ points })
+      }));
+    },
+    clearPoints(teamId) {
+      dispatch(rest.actions.teamPoints.delete({ teamId }));
+    },
+  })
+)(TeamPointsView);

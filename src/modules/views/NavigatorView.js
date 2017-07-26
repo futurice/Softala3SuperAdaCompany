@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import {addNavigationHelpers} from 'react-navigation';
 import {connect} from 'react-redux';
 
-import AppNavigator from './Navigator';
+import AppNavigator from '../navigator/Navigator';
 
 const mapStateToProps = state => ({
   navigatorState: state.navigatorState

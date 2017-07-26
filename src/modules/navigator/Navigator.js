@@ -1,7 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 
-import LoginView from '../login/LoginView';
-import TeamPointsView from '../teamPoints/TeamPointsViewContainer';
+import LoginView from '../views/LoginView';
+import TeamPointsView from '../views/TeamPointsView';
 
 const AppNavigator = StackNavigator({
   Login: { screen: LoginView },

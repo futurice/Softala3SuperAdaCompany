@@ -1,11 +1,8 @@
 import React, {PropTypes} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import NavigatorView from './navigator/NavigatorView';
+import NavigatorView from './views/NavigatorView';
 import * as SessionStateActions from '../states/SessionState';
-import store from '../redux/store';
 import DeveloperMenu from '../components/DeveloperMenu';
-import {setConfiguration} from '../utils/configuration';
-
 const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
 
 export class AppView extends React.Component {
