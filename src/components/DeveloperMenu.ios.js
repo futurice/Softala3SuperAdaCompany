@@ -12,8 +12,8 @@ import {
  * It can be accessed through a tiny button in the bottom right corner of the screen.
  * ONLY FOR DEVELOPMENT MODE!
  */
-const DeveloperMenu = React.createClass({
-  displayName: 'DeveloperMenu',
+class DeveloperMenu extends React.Component {
+  displayName = 'DeveloperMenu';
 
   showDeveloperMenu() {
     const options = {
@@ -35,7 +35,7 @@ const DeveloperMenu = React.createClass({
       ],
       cancelButtonIndex: options.cancel
     }, callback);
-  },
+  }
 
   render() {
     if (!__DEV__) {
@@ -49,7 +49,7 @@ const DeveloperMenu = React.createClass({
         />
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   circle: {

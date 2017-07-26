@@ -10,14 +10,14 @@ import {
 
 const {PropTypes: NavigationPropTypes} = NavigationExperimental;
 
-const TabBar = React.createClass({
-  displayName: 'TabBar',
-  propTypes: {
+class TabBar extends React.Component {
+  displayName = 'TabBar';
+  propTypes = {
     tabs: NavigationPropTypes.navigationState.isRequired,
     height: PropTypes.number.isRequired,
     currentTabIndex: PropTypes.number.isRequired,
     switchTab: PropTypes.func.isRequired
-  },
+  }
 
   render() {
     this.props.tabs.routes.forEach((route, index) => {
@@ -39,7 +39,7 @@ const TabBar = React.createClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   navigationBar: {

@@ -16,14 +16,14 @@ import {
 import * as NavigationStateActions from './src/modules/navigation/NavigationState';
 import SplashScreen from 'react-native-smart-splash-screen';
 
-const SuperAdaCompanyApp = React.createClass({
+export default class SuperAdaCompanyApp extends React.Component {
 
-  state: { rehydrated: false },
+  state = { rehydrated: false }
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.navigateBack);
     persistStore(store, () => this.setState({ rehydrated: true }));
-  },
+  }
 
   navigateBack() {
     const navigationState = store.getState().navigationState;
@@ -46,11 +46,11 @@ const SuperAdaCompanyApp = React.createClass({
 
     store.dispatch(NavigationStateActions.popRoute());
     return true;
-  },
+  }
 
   componentDidMount () {
     SplashScreen.close(SplashScreen.animationType.scale, 850, 500);
-  },
+  }
 
   render() {
     const { rehydrated } = this.state;
@@ -68,6 +68,6 @@ const SuperAdaCompanyApp = React.createClass({
       </Provider>
     );
   }
-});
+}
 
 AppRegistry.registerComponent('SuperAdaCompanyApp', () => SuperAdaCompanyApp);

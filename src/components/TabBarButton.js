@@ -15,13 +15,13 @@ const icons = {HOME: require('../../images/homeiso_transparent.png'),
               RASTIT: require('../../images/karttaiso_transparent.png'),
               LINKIT: require('../../images/muutiso_transparent.png')};
 
-export default React.createClass({
-  displayName: 'TabBarButton',
-  propTypes: {
+export default class TabBarButton extends React.Component {
+  displayName = 'TabBarButton';
+  propTypes = {
     text: PropTypes.string.isRequired,
     action: PropTypes.func.isRequired,
     isSelected: PropTypes.bool.isRequired
-  },
+  }
 
   render() {
     return (
@@ -39,7 +39,7 @@ export default React.createClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   button: {

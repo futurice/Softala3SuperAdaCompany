@@ -20,12 +20,12 @@ import {setAuthenticationToken} from '../../utils/authentication';
 import rest from '../../services/rest';
 import { NavigationActions } from 'react-navigation';
 
-const LoginView = React.createClass({
+export class LoginView extends React.Component {
   getInitialState() {
     return {
       companyName: ''
     }
-  },
+  }
 
   errToString(err) {
     if (!err) {
@@ -37,13 +37,13 @@ const LoginView = React.createClass({
     }
 
     return String(err);
-  },
+  }
 
   componentDidUpdate() {
     if (this.props.token) {
       this.props.navigateTo('MainScreen');
     }
-  },
+  }
 
   render() {
     return (
@@ -86,7 +86,7 @@ const LoginView = React.createClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   container: {
