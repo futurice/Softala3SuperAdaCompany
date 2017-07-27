@@ -10,6 +10,7 @@ import {
   ScrollView,
   TextInput,
   ListView,
+  RefreshControl,
 } from 'react-native';
 
 import RadioForm, {
@@ -37,15 +38,16 @@ const radio_props = [
 const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
 
 class TeamPointsView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
       searchString: '',
       data: [],
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds.cloneWithRows([]),
+      refreshing: false,
     };
   }
 
@@ -64,10 +66,11 @@ class TeamPointsView extends React.Component {
   }
 
   updateList(data) {
+    console.log('updating list, setting refreshing to false');
     this.setState({
-      data
+      data,
+      refreshing: false
     });
-
     this.filterTeams(data, this.state.searchString);
   }
 
@@ -162,6 +165,11 @@ class TeamPointsView extends React.Component {
     )
   }
 
+  onPullRefresh() {
+    this.props.refresh();
+    this.setState({refreshing: true});
+  }
+
   render() {
     const { dataSource } = this.state;
 
@@ -196,6 +204,12 @@ class TeamPointsView extends React.Component {
           dataSource={dataSource}
           ref={component => this.ListView = component}
           renderRow={(team) => { return this.renderTeamRow(team, clearPoints, savePoints)}}
+          refreshControl = {
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onPullRefresh.bind(this)}
+            />
+          }
         />
       </View>
     );
