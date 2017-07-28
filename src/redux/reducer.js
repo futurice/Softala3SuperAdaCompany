@@ -1,7 +1,4 @@
-//import {combineReducers} from 'redux-loop';
-import {
-  combineReducers
-} from 'redux';
+import { combineReducers } from 'redux';
 import NavigatorStateReducer from '../states/NavigatorState';
 import SessionStateReducer, {RESET_STATE} from '../states/SessionState';
 import rest from '../services/rest';

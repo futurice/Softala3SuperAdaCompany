@@ -27,6 +27,7 @@ import TimerMixin from 'react-timer-mixin';
 import { connect } from 'react-redux';
 import rest from '../../services/rest';
 
+
 const radio_props = [
   { label: '1', value: 1 },
   { label: '2', value: 2 },
@@ -72,6 +73,7 @@ class TeamPointsView extends React.Component {
       refreshing: false
     });
     this.filterTeams(data, this.state.searchString);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -168,6 +170,7 @@ class TeamPointsView extends React.Component {
   onPullRefresh() {
     this.props.refresh();
     this.setState({refreshing: true});
+
   }
 
   render() {

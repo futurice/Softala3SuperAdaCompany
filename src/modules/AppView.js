@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import NavigatorView from './views/NavigatorView';
+import ErrorMessageView from './views/ErrorMessageView';
 import * as SessionStateActions from '../states/SessionState';
 import DeveloperMenu from '../components/DeveloperMenu';
 const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
+
 
 export class AppView extends React.Component {
   static displayName = 'AppView';
@@ -21,11 +23,11 @@ export class AppView extends React.Component {
         </View>
       );
     }
-
     return (
       <View style={{flex: 1}}>
         <NavigatorView />
         {__DEV__ && <DeveloperMenu />}
+        <ErrorMessageView />
       </View>
     );
   }
