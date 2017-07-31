@@ -11,7 +11,7 @@ import { reducers as restReducers } from '../services/rest';
  * to the endpoint
  */
 const apiLoadingFilters = Object.keys(restReducers).map(reducer =>
-  createBlacklistFilter(reducer, ['loading'], ['loading']),
+  createBlacklistFilter(reducer, ['loading', 'error'], ['loading', 'error']),
 );
 
 const persistConfig = {
