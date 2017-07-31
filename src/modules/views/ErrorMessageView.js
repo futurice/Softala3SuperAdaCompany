@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { MessageBar, MessageBarManager} from 'react-native-message-bar';
+import { CLEAR_AUTH_ERROR, CLEAR_TEAMLIST_ERROR, CLEAR_TEAMPOINTS_ERROR } from '../../services/rest';
 
 class ErrorMessageView extends React.Component {
   componentWillUnmount() {
@@ -14,6 +15,7 @@ class ErrorMessageView extends React.Component {
         title: 'Error happened',
         message: 'Could not authenticate: ' +nextProps.authError.message
       })
+      this.props.clearAuthError();
     }
     if(nextProps.teamListError) {
       MessageBarManager.showAlert({
@@ -21,6 +23,7 @@ class ErrorMessageView extends React.Component {
         title: 'Error happened',
         message: 'Could not fetch team list: ' +nextProps.teamListError.message
       })
+      this.props.clearTeamListError();
     }
     if(nextProps.teamPointsError) {
       MessageBarManager.showAlert({
@@ -28,6 +31,7 @@ class ErrorMessageView extends React.Component {
         title: 'Error happened',
         message: 'Could update the team points: ' +nextProps.teamPointsError.message
       })
+      this.props.clearTeamPointsError();
     }
   }
 
@@ -46,5 +50,14 @@ export default connect(
     teamPointsError: state.teamPoints.error
   }),
   dispatch => ({
+    clearAuthError(){
+      dispatch({type: CLEAR_AUTH_ERROR});
+    },
+    clearTeamListError() {
+      dispatch({type: CLEAR_TEAMLIST_ERROR});
+    },
+    clearTeamPointsError(){
+      dispatch({type: CLEAR_TEAMPOINTS_ERROR});
+    }
   })
 )(ErrorMessageView)
