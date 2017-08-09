@@ -21,7 +21,7 @@ class ErrorMessageView extends React.Component {
       MessageBarManager.showAlert({
         alertType: 'error',
         title: 'Error happened',
-        message: 'Could not fetch team list: ' +nextProps.teamListError.message
+        message: 'Error with team list request: ' +nextProps.teamListError.message
       })
       this.props.clearTeamListError();
     }
@@ -29,7 +29,7 @@ class ErrorMessageView extends React.Component {
       MessageBarManager.showAlert({
         alertType: 'error',
         title: 'Error happened',
-        message: 'Could update the team points: ' +nextProps.teamPointsError.message
+        message: 'Error with team points request: ' +nextProps.teamPointsError.message
       })
       this.props.clearTeamPointsError();
     }
