@@ -4,20 +4,14 @@ import {
   Alert,
   View,
   StyleSheet,
-  StatusBar,
   Image,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   ListView,
   RefreshControl,
 } from 'react-native';
 
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from 'react-native-simple-radio-button';
+import StarRatingView from './StarRatingView';
 
 import AppStyles from '../AppStyles';
 
@@ -73,7 +67,6 @@ class TeamPointsView extends React.Component {
       refreshing: false
     });
     this.filterTeams(data, this.state.searchString);
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,14 +74,16 @@ class TeamPointsView extends React.Component {
   }
 
   confirmSavePoints(teamId, points, name, savePoints) {
-      Alert.alert(
-        'Olet antamassa ' + points + ' pistettä tiimille ' + name,
-        'Vahvista pisteet painamalla OK',
-        [
-          { text: 'OK', onPress: () => savePoints(teamId, points) },
-          { text: 'Peruuta' }
-        ]
-      )
+    savePoints(teamId, points);
+    //TODO: Commented out the confirmation, I felt it was unnecessary but have to double confirm
+    // Alert.alert(
+    //   'Olet antamassa ' + points + ' pistettä tiimille ' + name,
+    //   'Vahvista pisteet painamalla OK',
+    //   [
+    //     { text: 'OK', onPress: () => savePoints(teamId, points) },
+    //     { text: 'Peruuta' }
+    //   ]
+    // )
   }
 
   confirmClearPoints(teamId, name, clearPoints) {
@@ -124,34 +119,17 @@ class TeamPointsView extends React.Component {
           <View style={styles.teamText}>
             <Text numberOfLines={2} style={styles.teamName}>{team.teamName}</Text>
           </View>
-          <View style={styles.allButtons}>
+           <View style={styles.allButtons}> 
             <View>
-            <RadioForm
-              formHorizontal={true}
-              >
-              {radio_props.map((obj, i) => (
-              <RadioButton labelHorizontal={false} key={i} >
-                <RadioButtonInput
-                  obj={obj}
-                  index={i}
-                  isSelected={team.points - 1 === i}
-                  onPress={(value) => { confirmSavePoints(team.teamId, value, team.teamName, savePoints)}}
-                  borderWidth={1}
-                  buttonInnerColor={'#FFF'}
-                  buttonOuterColor={'#FFF'}
-                  buttonStyle={styles.radioButton}
-                />
-                <RadioButtonLabel
-                  obj={obj}
-                  index={i}
-                  labelHorizontal={false}
-                  onPress={(value) => { confirmSavePoints(team.teamId, value, team.teamName, savePoints)}}
-                  labelStyle={{fontSize: 16, color: '#FFF'}}
-                  labelWrapStyle={{}}
-                />
-              </RadioButton>
-            ))}
-              </RadioForm>
+        <StarRatingView
+          maxStars={5}
+          rating={team.points}
+          selectStar={require('../../../images/star3.png')}
+          unSelectStar={require('../../../images/star2.png')}
+          valueChanged={(value) => { confirmSavePoints(team.teamId, value, team.teamName, savePoints)}}
+          starSize={35}
+          interitemSpacing={5}
+        />
               </View>
               <TouchableOpacity
                 onPress={(value) => { confirmClearPoints(team.teamId, team.teamName, clearPoints) }}
@@ -170,7 +148,6 @@ class TeamPointsView extends React.Component {
   onPullRefresh() {
     this.props.refresh();
     this.setState({refreshing: true});
-
   }
 
   render() {
@@ -224,7 +201,7 @@ reactMixin(TeamPointsView.prototype, TimerMixin);
 const styles = StyleSheet.create({
   teamContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: "#FAFAFA"
   },
   headerStyle: {
