@@ -36,8 +36,8 @@ export default class StarRatingView extends React.Component {
       firstImageLayout: null,
       starSize: this.props.starSize,
     };
-    this._onLayoutChanged = this.onLayoutChanged.bind(this);
-    this._onStarPressed = this.onStarPressed.bind(this);
+    this.onLayoutChanged = this.onLayoutChanged.bind(this);
+    this.onStarPressed = this.onStarPressed.bind(this);
   }
 
   render() {
