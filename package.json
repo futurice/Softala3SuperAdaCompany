@@ -39,6 +39,7 @@
     "react": "^16.0.0-alpha.12",
     "react-native": "^0.47.1",
     "react-native-checkbox": "^1.1.0",
+    "react-native-i18n": "^2.0.4",
     "react-native-image-picker": "^0.26.3",
     "react-native-message-bar": "^2.0.1",
     "react-native-simple-radio-button": "^2.6.0",
