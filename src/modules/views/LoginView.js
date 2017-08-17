@@ -20,6 +20,9 @@ import {setAuthenticationToken} from '../../utils/authentication';
 import rest from '../../services/rest';
 import { NavigationActions } from 'react-navigation';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 class LoginView extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +60,7 @@ class LoginView extends React.Component {
         }}>
           <Image style={styles.logo} source={require('../../../images/superada_transparent.png')}/>
           <View style={styles.inputContainer}>
-            <Text style={styles.whiteFont}>Yrityksen nimi:</Text>
+            <TranslatedText style={styles.whiteFont} text={texts.loginCompanyName}/>
             <TextInput
               style={[styles.input, styles.whiteFont]}
               onChangeText={(companyName) => this.setState({companyName})}
@@ -76,7 +79,7 @@ class LoginView extends React.Component {
 
         <View style={styles.loginButtonContainer}>
           <TouchableOpacity disabled={this.props.auth.loading} onPress={() => this.props.login(this.state.companyName)} style={this.props.auth.loading ? styles.loginButtonLoading : styles.loginButton}>
-            <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
+            <TranslatedText style={styles.whiteFont} text={texts.login}/>
           </TouchableOpacity>
           { this.props.auth.loading &&
             <ActivityIndicator animating={true} color={ AppStyles.white } style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />

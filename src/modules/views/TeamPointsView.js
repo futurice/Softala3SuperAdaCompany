@@ -21,6 +21,9 @@ import TimerMixin from 'react-timer-mixin';
 import { connect } from 'react-redux';
 import rest from '../../services/rest';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 const radio_props = [
   { label: '1', value: 1 },
   { label: '2', value: 2 },
@@ -81,9 +84,9 @@ class TeamPointsView extends React.Component {
 
   confirmClearPoints(teamId, name, clearPoints) {
     Alert.alert(
-      'Olet poistamassa antamasi pisteet tiimiltä: ' + name,
-      'Vahvista pisteiden poisto painamalla OK',
-      [{ text: 'OK', onPress: () => clearPoints(teamId) }, { text: 'Peruuta' }],
+      getTranslated(texts.teamPointsYouAreRemoving) + name,
+      getTranslated(texts.teamPointsConfirmRemoving),
+      [{ text: getTranslated(texts.ok), onPress: () => clearPoints(teamId) }, { text: getTranslated(texts.cancel)}],
     );
   }
 
@@ -170,7 +173,7 @@ class TeamPointsView extends React.Component {
     return (
       <View style={styles.teamContainer}>
         <View style={styles.headerStyle}>
-          <Text style={styles.titleStyle}>Super-Ada joukkueet</Text>
+          <TranslatedText style={styles.titleStyle} text={texts.teamPointsTeams}/>
         </View>
         <View style={styles.search}>
           <Image
@@ -186,7 +189,7 @@ class TeamPointsView extends React.Component {
               this.filterTeams(this.state.data, searchString, true);
             }}
             value={this.state.searchString}
-            placeholder="Etsi joukkueen nimellä..."
+            placeholder={getTranslated(texts.teamPointsSearchTeam)}
           />
         </View>
         <ListView

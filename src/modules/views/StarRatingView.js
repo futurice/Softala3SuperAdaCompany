@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import StarView from './StarView';
 
+import { getTranslated, texts } from '../../utils/translation';
+
 export default class StarRatingView extends React.Component {
 
   constructor(props) {
@@ -65,13 +67,16 @@ export default class StarRatingView extends React.Component {
     if (this.state.rating === starNumber) {
       return;
     }
-    var name = this.props.teamName;
+    var teamName = this.props.teamName;
     Alert.alert(
-      'Olet antamassa ' + starNumber + ' pistettä tiimille ' + name,
-      'Vahvista pisteet painamalla OK',
+      getTranslated({
+        key: texts.teamPointsYouAreAdding, 
+        starNumber: starNumber,
+        teamName: teamName}),
+      getTranslated(texts.teamPointsConfirmAdd),
       [
         {
-          text: 'OK',
+          text: getTranslated(texts.ok),
           onPress: () => {
             var rating = starNumber;
             if (rating < 0) {
@@ -85,7 +90,7 @@ export default class StarRatingView extends React.Component {
             this.props.valueChanged(rating);
           },
         },
-        { text: 'Peruuta' },
+        { text: getTranslated(texts.cancel) },
       ],
     );
   }

@@ -11,8 +11,19 @@ I18n.translations = {
   fi,
 };
 
-function getTranslated(key) {
-  return I18n.t(key, { defaults: [{ message: 'missing translation!' }] });
+
+function getTranslated(context) {
+  var str = typeof(context) === 'string' ? context : context.key;
+  var translated = I18n.t(str, {
+    defaults: [{ message: 'missing translation!' }],
+  });
+  for (var key in context) {
+    if(context.hasOwnProperty(key) || key !== 'key') {
+      var element = context[key];
+      translated = translated.replace('${' +key +'}', element);
+    }
+  }
+  return translated;
 }
 
 function setLocale(locale) {
@@ -20,13 +31,16 @@ function setLocale(locale) {
 }
 
 var texts = {
+  ok: 'ok',
+  cancel: 'cancel',
   login: 'login',
-  welcomeTitle: 'welcomeTitle',
-  checkpointIntro: 'checkpointIntro',
-  quizIntro: 'quizIntro',
-  goodluck: 'goodluck',
-  editTeamButton: 'editTeamButton',
-  editTeamTitle: 'editTeamTitle',
+  loginCompanyName: 'loginCompanyName',
+  teamPointsTeams: 'teamPointsTeams',
+  teamPointsSearchTeam: 'teamPointsSearchTeam',
+  teamPointsYouAreRemoving: 'teamPointsYouAreRemoving',
+  teamPointsConfirmRemoving: 'teamPointsConfirmRemoving',
+  teamPointsYouAreAdding: 'teamPointsYouAreAdding',
+  teamPointsConfirmAdd: 'teamPointsConfirmAdd',
 };
 
 export { texts, getTranslated, setLocale };
