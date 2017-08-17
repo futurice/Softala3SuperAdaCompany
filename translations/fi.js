@@ -5,7 +5,8 @@ export default {
   loginCompanyName: 'Yrityksen nimi:',
   teamPointsTeams: 'Super-Ada joukkueet',
   teamPointsSearchTeam: 'Etsi joukkueen nimellä...',
-  teamPointsYouAreRemoving: 'Olet poistamassa antamasi pisteet tiimiltä: ',
+  teamPointsYouAreRemoving: 'Olet poistamassa antamasi pisteet tiimiltä ',
   teamPointsConfirmRemoving: 'Vahvista pisteiden poisto painamalla OK',
   teamPointsYouAreAdding: 'Olet antamassa ${starNumber} pistettä tiimille ${teamName}',
+  teamPointsConfirmAdd: 'Vahvista pisteet painamalla OK',
 };

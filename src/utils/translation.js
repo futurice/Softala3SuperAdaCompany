@@ -11,7 +11,6 @@ I18n.translations = {
   fi,
 };
 
-
 function getTranslated(context) {
   var str = typeof(context) === 'string' ? context : context.key;
   var translated = I18n.t(str, {
