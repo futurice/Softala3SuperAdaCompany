@@ -10,10 +10,15 @@ import {
   WebView,
   ListView,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 
 import styled from 'styled-components/native';
 import { texts } from '../../utils/translation';
+
+const Container = styled.View`
+  flex: 1;
+`;
 
 const TeamContainer = styled.View`
   background-color: ${() => AppStyles.darkRed};
@@ -27,13 +32,13 @@ const TeamContainer = styled.View`
 const TeamRightContainer = styled.View`
   flex: 1;
   flex-direction: column;
-  ${'' /* align-items: center; */};
 `;
 
 const TeamTitle = styled.Text`
   color: ${() => AppStyles.white};
   font-family: pt-sans;
   font-size: 30;
+  padding-left: 10px;
 `;
 const TeamPointsContainer = styled.View`
   align-self: stretch;
@@ -41,8 +46,8 @@ const TeamPointsContainer = styled.View`
   justify-content: space-around;
 `;
 const Point = styled.Image`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
 `;
 
 const TeamProfilePic = styled.Image`
@@ -85,6 +90,7 @@ import Clear from '../../../assets/x_white.png';
 const mapStateToProps = state => ({
   auth: state.auth.data,
   teams: state.teamlist.data,
+  refreshing: state.teamlist.loading,
 });
 const mapDispatchToProps = dispatch => ({
   refresh: () => dispatch(rest.actions.teamlist()),
@@ -173,7 +179,7 @@ export class MainView extends React.Component {
   );
 
   renderTeamPoints = team =>
-    [...Array(5).keys()].map(i => (
+    [...Array(5)].map((_, i) => (
       <TouchableOpacity key={i} onPress={this.setPointsConfirmation(team, i + 1)}>
         <Point source={i < team.points ? Star : StarGrey} />
       </TouchableOpacity>
@@ -213,10 +219,19 @@ export class MainView extends React.Component {
     ));
 
   render = () => (
-    <View>
+    <Container>
       {this.renderHeader()}
-      <ScrollView>{this.renderTeams()}</ScrollView>
-    </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={this.props.refresh}
+          />
+        }
+      >
+        {this.renderTeams()}
+      </ScrollView>
+    </Container>
   );
 }
 
