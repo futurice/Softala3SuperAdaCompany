@@ -8,16 +8,7 @@ import LoginView from '../views/Login';
 import MainView from '../views/Main';
 
 const StackNavigatorConfig = {
-  navigationOptions: {
-    ...Platform.select({
-      android: {
-        headerStyle: {
-          paddingTop: StatusBar.currentHeight,
-          height: StatusBar.currentHeight + 56,
-        }
-      }
-    })
-  }
+  navigationOptions: {}
   //headerMode: 'none',
 };
 
