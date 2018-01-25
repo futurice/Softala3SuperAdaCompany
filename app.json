@@ -2,8 +2,8 @@
   "expo": {
     "name": "Super-Ada Company App",
     "slug": "superada-company",
-    "version": "0.5.0",
-    "sdkVersion": "24.0.0",
+    "version": "0.6.0",
+    "sdkVersion": "25.0.0",
     "icon": "assets/icon.png",
     "splash": {
       "image": "assets/splash.png",
@@ -15,7 +15,7 @@
     ],
     "android": {
       "package": "com.superadacompany",
-      "versionCode": 10002,
+      "versionCode": 10003,
       "permissions": []
     },
     "ios": {
